@@ -11,51 +11,51 @@
         body {
             background-color: rgb(165, 209, 242);
         }
-        
+
         .mapdiv {
             background-image: url('./image/naver_map.png');
             width: 1200px;
             height: 941px;
         }
-        
+
         .camera {
             width: 48px;
         }
-        
+
         #파주 {
             position: absolute;
             left: 425px;
             top: 110px;
         }
-        
+
         #충주 {
             position: absolute;
             left: 590px;
             top: 240px;
         }
-        
+
         #videosource {
             display: none;
             width: 0px;
             height: 1080px;
         }
-        
+
         .video-wrapper {
             width: 100%;
             padding-left: 5px;
         }
-        
+
         .video-js {
             width: 100%;
             height: 100%;
             z-index: 1;
             background-color: transparent;
         }
-        
+
         .video-js .vjs-tech {
             position: relative;
         }
-        
+
         .video-js .vjs-big-play-button {
             top: calc(50% - 0.75em);
             left: calc(50% - 1.5em);
@@ -64,12 +64,12 @@
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="js/video.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#videosource").css("width", 0);
             $("#videosource").css("height", (window.innerHeight - 8));
 
             $('#파주')
-                .on('touchstart click', function(e) {
+                .on('touchstart click', function (e) {
                     e.preventDefault();
                     PrepareVideo("http://211.181.145.26:7080/gQDmTZGWixjPRKqxS9zt0E/YWzX4t7wcX44mhXgCJdM=.m3u8");
                     $("#videosource").css("height", (window.innerHeight - 8));
@@ -80,7 +80,7 @@
                 });
 
             $('#충주')
-                .on('touchstart click', function(e) {
+                .on('touchstart click', function (e) {
                     e.preventDefault();
                     PrepareVideo("http://211.181.145.26:7080/aW60Wd8JxAEPq9iUxLCAxuWApvqAMoNtqc4WdNaD2qE=.m3u8");
                     $("#videosource").css("height", (window.innerHeight - 8));
@@ -91,11 +91,11 @@
                 });
 
             $('#videosource')
-                .on('touchstart click', function(e) {
+                .on('touchstart click', function (e) {
                     e.preventDefault();
                     $('#videosource').animate({
                         width: '0'
-                    }, 'slow', function() {
+                    }, 'slow', function () {
                         $("#videosource").css("display", "none");
                     })
                 });
@@ -125,37 +125,15 @@
 <body>
     <div class="mapdiv">
         <video id='videosource' class="video-js" autoplay preload="auto" data-setup="{}">
-            <source src="http://211.181.145.27:7080/v2wraXqsQ3sv2yFvKO6VtR2gNw8zTVlyXWTvqXCmSGA=.m3u8" type="application/x-mpegURL" />
-        <!-- <source src="http://cctvsec.ktict.co.kr/99/+6/Z2ynVbmROt1uazpe+nCnjcQWVc0Tn1NKF0UH2WMnSEyvw+eFPkjaFZi2BQCSm" type="video/mp4"> -->
-            </video>
+            <source src="http://211.181.145.27:7080/v2wraXqsQ3sv2yFvKO6VtR2gNw8zTVlyXWTvqXCmSGA=.m3u8"
+                type="application/x-mpegURL" />
+            <!-- <source src="http://cctvsec.ktict.co.kr/99/+6/Z2ynVbmROt1uazpe+nCnjcQWVc0Tn1NKF0UH2WMnSEyvw+eFPkjaFZi2BQCSm" type="video/mp4"> -->
+        </video>
 
         <img id="파주" class="camera" src="image/camera_68.png">
 
         <img id="충주" class="camera" src="image/camera_68.png">
     </div>
-    <!-- <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="js/video.js"></script>
-    <script>
-        var image_url = "http://211.181.145.26:7080/gQDmTZGWixjPRKqxS9zt0E/YWzX4t7wcX44mhXgCJdM=.m3u8";
-        var player = videojs('video1', {
-            "controls": true,
-            "autoplay": true,
-            "preload": "auto",
-            "width": (window.innerWidth - 30),
-            "height": (window.innerHeight - 5),
-            'html5': {
-                'nativeAudioTracks': false
-            }
-        }, function onPlayerReady() {
-            this.src({
-                type: "application/x-mpegURL",
-                src: image_url
-            });
-            this.tech_.off('dblclick');
-            this.play();
-            this.requestFullscreen();
-        });
-    </script> -->
 </body>
 
 </html>
