@@ -4,11 +4,19 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "http://192.168.35.159:3000/map.html",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Haeseok Launch Chrome against localhost",
+            "url": "http://10.10.9.150:5500/map.html",
             "webRoot": "${workspaceFolder}"
         }
     ]
