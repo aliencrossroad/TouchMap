@@ -23,7 +23,7 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 
 // 주소-좌표 변환 객체를 생성합니다
 var geocoder = new kakao.maps.services.Geocoder();
-
+/*
 // 주소로 좌표를 검색합니다
 geocoder.addressSearch('서울시', function(result, status) {
 
@@ -47,7 +47,7 @@ geocoder.addressSearch('서울시', function(result, status) {
         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
         //map.setCenter(coords);
     } 
-});
+});*/
 
 //행정구역 구분
 $.getJSON("resources/json/CTPRVN.json", function(geojson) {
@@ -77,10 +77,11 @@ $.getJSON("resources/json/CTPRVN.json", function(geojson) {
 });
 
 var polygons=[];
+var selectCenter;
 
 //행정구역 폴리곤
 function displayArea(coordinates, name) {
- 
+
     var path = [];            //폴리곤 그려줄 path
     var points = [];        //중심좌표 구하기 위한 지역구 좌표들
     
@@ -100,7 +101,7 @@ function displayArea(coordinates, name) {
         strokeColor : '#004c80',
         strokeOpacity : 0.8,
         fillColor : '#fff',
-        fillOpacity : 0.7
+        fillOpacity : 0.7,
     });
     
     polygons.push(polygon);            //폴리곤 제거하기 위한 배열
@@ -130,19 +131,56 @@ function displayArea(coordinates, name) {
     // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 해당 지역 확대을 확대합니다.
     kakao.maps.event.addListener(polygon, 'click', function() {
         
-        // 현재 지도 레벨에서 2레벨 확대한 레벨
-        var level = map.getLevel()-2;
+        var level = 10;
         
-        // 지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다
-        map.setLevel(level, {anchor: centroid(points), animate: {
-            duration: 350            //확대 애니메이션 시간
-        }});            
-	
+        var center = centroid(points);
+
+        selectCenter = center;
+
+        if( map.getLevel() == 10 )
+        {
+            map.panTo(selectCenter);
+        }
+        else{
+             // 지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다
+            map.setLevel(level, {anchor: center, animate: {
+                duration: 350            //확대 애니메이션 시간
+            }});  
+        }
+                 
 		polygon.setOptions({
             fillColor : '#fff'
         });
+
     });
 }
+
+kakao.maps.event.addListener(map, 'bounds_changed', function() {
+    map.panTo(selectCenter);
+/*
+    geocoder.addressSearch(selectName, function(result, status) {
+        // 정상적으로 검색이 완료됐으면 
+        if (status === kakao.maps.services.Status.OK) {
+
+            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+            // 결과값으로 받은 위치를 마커로 표시합니다
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: coords
+            });
+
+            // 인포윈도우로 장소에 대한 설명을 표시합니다
+            var infowindow = new kakao.maps.InfoWindow({
+                content: '<div style="width:150px;text-align:center;padding:6px 0;">YTN</div>'
+            });
+            infowindow.open(map, marker);
+
+            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+            //map.setCenter(coords);
+        } 
+    });*/
+})
 
 //지도 위 표시되고 있는 폴리곤 제거
 function deletePolygon(polygons) {
