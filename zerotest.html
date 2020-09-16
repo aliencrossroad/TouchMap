@@ -12,6 +12,13 @@
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d30b430fc168d024cbfef307b239c005&libraries=services"></script>
     <script>
+        var initmaplevel = 13;
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+            mapOption = {
+                center: new kakao.maps.LatLng(36.9910, 127.9259), // 지도의 중심좌표 : 충주-남한의 중심이랍니다
+                level: initmaplevel // 지도의 확대 레벨
+            };
+
         $(document).ready(function() {
             $('#home')
                 .on('touchstart click', function(e) {
@@ -19,19 +26,26 @@
 
                     // 현재 지도의 레벨을 얻어옵니다
                     var level = map.getLevel();
+
                     // 지도를 초기레벨로 셋팅합니다
-                    map.setLevel(initmaplevel);
-                    // 지도 레벨을 표시합니다
-                    displayLevel();
+                    // 센터가 다르면 맞춰줌
+                    var center = map.getCenter();
+                    if (center != mapOption.center)
+                        map.panTo(mapOption.center);
+
+                    // 지도 레벨이 다르면 레벨 맞춰주고                        
+                    if (level != initmaplevel) {
+                        // 지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다
+                        map.setLevel(initmaplevel, {
+                            anchor: center,
+                            animate: {
+                                duration: 350 //확대 애니메이션 시간
+                            }
+                        });
+                    }
+
                 });
         })
-
-        var initmaplevel = 13;
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-            mapOption = {
-                center: new kakao.maps.LatLng(36.6429912198493, 127.903045504223), // 지도의 중심좌표
-                level: initmaplevel // 지도의 확대 레벨
-            };
 
         // 지도를 생성합니다    
         var map = new kakao.maps.Map(mapContainer, mapOption);
