@@ -3,51 +3,175 @@
 <head>
     <meta charset="utf-8">
     <title>주소로 장소 표시하기</title>
-    
+    <style>
+        #map {
+            width : 100%;
+            height : 1070px;
+        }
+    </style>
 </head>
 <body>
-<div id="map" style="width:100%;height:1070px;"></div>
-
+    <button onclick="Home()">HOME</button>
+    <div id="map"></div>
 <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript"src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d30b430fc168d024cbfef307b239c005&libraries=services"></script>
 <script>
+
+var centerCoordinate = {
+    x : 37.54421633484558,
+    y : 126.97017197882703
+};
+
+var polygons=[];
+var markers=[];
+var selectCenter;
+
+var mapInfo;
+
+$.ajax({ 
+    url: "resources/json/MapInfo.json", 
+    dataType: 'json', 
+    async: false, 
+    success: function(json){ 
+        mapInfo = json;   
+    } 
+});
+/*
+var mapInfo = {
+    서울특별시 : {
+        zoomlevel : 9,
+        cameraInfo : [
+            {
+                name : '상암',
+                url  : 'http://211.181.145.26:7080/gQDmTZGWixjPRKqxS9zt0E/YWzX4t7wcX44mhXgCJdM=.m3u8',
+                x  : 37.57921742953529,
+                y  : 126.89223322735533
+            },
+            {
+                name : '공덕',
+                url  : 'http://211.181.145.26:7080/aW60Wd8JxAEPq9iUxLCAxuWApvqAMoNtqc4WdNaD2qE=.m3u8',
+                x  : 37.54353684803795,
+                y  : 126.95199667222542
+            }
+        ]
+    },
+    경기도 : {
+        zoomlevel : 10,
+        cameraInfo : [
+           
+        ]
+    },
+    강원도 : {
+        zoomlevel : 10,
+        cameraInfo : [
+           
+        ]
+    },
+    경상남도 : {
+        zoomlevel : 10,
+        cameraInfo : [
+           
+        ]
+    },
+    경상북도 : {
+        zoomlevel : 10,
+        cameraInfo : [
+           
+        ]
+    },
+    광주광역시 : {
+        zoomlevel : 10,
+        cameraInfo : [
+           
+        ]
+    },
+    대구광역시 : {
+        zoomlevel : 10,
+        cameraInfo : [
+           
+        ]
+    },
+    대전광역시 : {
+        zoomlevel : 10,
+        cameraInfo : [
+           
+        ]
+    },
+    부산광역시 : {
+        zoomlevel : 10,
+        cameraInfo : [
+           
+        ]
+    },
+    울산광역시 : {
+        zoomlevel : 10,
+        cameraInfo : [
+           
+        ]
+    },
+    인천광역시 : {
+        zoomlevel : 10,
+        cameraInfo : [
+           
+        ]
+    },
+    전라남도 : {
+        zoomlevel : 10,
+        cameraInfo : [
+           
+        ]
+    },
+    전라북도 : {
+        zoomlevel : 10,
+        cameraInfo : [
+           
+        ]
+    },
+    제주특별자치도 : {
+        zoomlevel : 10,
+        cameraInfo : [
+           
+        ]
+    },
+    충청남도 : {
+        zoomlevel : 10,
+        cameraInfo : [
+           
+        ]
+    },
+    충청북도 : {
+        zoomlevel : 10,
+        cameraInfo : [
+           
+        ]
+    },
+    세종특별자치시 : {
+        zoomlevel : 8,
+        cameraInfo : [
+            {
+                name : '세종대학병원',
+                url  : 'http://211.181.145.26:7080/gQDmTZGWixjPRKqxS9zt0E/YWzX4t7wcX44mhXgCJdM=.m3u8',
+                x  : 36.5183994078192,
+                y  : 127.25825335440359
+            },
+            {
+                name : '세종시청',
+                url  : 'http://211.181.145.26:7080/aW60Wd8JxAEPq9iUxLCAxuWApvqAMoNtqc4WdNaD2qE=.m3u8',
+                x  : 36.4799743878589,
+                y  : 127.28954928364432
+            }
+        ]
+    }
+};
+*/
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
-        center: new kakao.maps.LatLng(36.6429912198493,127.903045504223), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(centerCoordinate.x,centerCoordinate.y), // 지도의 중심좌표
         level: 12 // 지도의 확대 레벨
     };  
 
 // 지도를 생성합니다    
 var map = new kakao.maps.Map(mapContainer, mapOption); 
-
-
-// 주소-좌표 변환 객체를 생성합니다
-var geocoder = new kakao.maps.services.Geocoder();
-/*
-// 주소로 좌표를 검색합니다
-geocoder.addressSearch('서울시', function(result, status) {
-
-    // 정상적으로 검색이 완료됐으면 
-     if (status === kakao.maps.services.Status.OK) {
-
-        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-        // 결과값으로 받은 위치를 마커로 표시합니다
-        var marker = new kakao.maps.Marker({
-            map: map,
-            position: coords
-        });
-
-        // 인포윈도우로 장소에 대한 설명을 표시합니다
-        var infowindow = new kakao.maps.InfoWindow({
-            content: '<div style="width:150px;text-align:center;padding:6px 0;">YTN</div>'
-        });
-        infowindow.open(map, marker);
-
-        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        //map.setCenter(coords);
-    } 
-});*/
 
 //행정구역 구분
 $.getJSON("resources/json/CTPRVN.json", function(geojson) {
@@ -70,14 +194,13 @@ $.getJSON("resources/json/CTPRVN.json", function(geojson) {
 			for( i =0; i<coordinates.length;i++)
 			{
 				var object = coordinates[i]; 
-				displayArea(object, name);
+                displayArea(object, name);
 			}
 		}
     })
 });
 
-var polygons=[];
-var selectCenter;
+insertMarker();
 
 //행정구역 폴리곤
 function displayArea(coordinates, name) {
@@ -103,7 +226,9 @@ function displayArea(coordinates, name) {
         fillColor : '#fff',
         fillOpacity : 0.7,
     });
-    
+
+    polygon.name = name;
+
     polygons.push(polygon);            //폴리곤 제거하기 위한 배열
 	 
     // 다각형에 mouseover 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 변경합니다 
@@ -130,14 +255,14 @@ function displayArea(coordinates, name) {
  
     // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 해당 지역 확대을 확대합니다.
     kakao.maps.event.addListener(polygon, 'click', function() {
-        
-        var level = 10;
-        
+        var level = mapInfo[polygon.name].zoomlevel;
         var center = centroid(points);
-
         selectCenter = center;
+        
+        visibleMarker('',false);
+        visibleMarker(polygon.name,true);
 
-        if( map.getLevel() == 10 )
+        if( map.getLevel() == level )
         {
             map.panTo(selectCenter);
         }
@@ -155,40 +280,86 @@ function displayArea(coordinates, name) {
     });
 }
 
-
-kakao.maps.event.addListener(map, 'bounds_changed', function() {
+kakao.maps.event.addListener(map, 'zoom_changed', function() {
     map.panTo(selectCenter);
-/*
-    geocoder.addressSearch(selectName, function(result, status) {
-        // 정상적으로 검색이 완료됐으면 
-        if (status === kakao.maps.services.Status.OK) {
-
-            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-            // 결과값으로 받은 위치를 마커로 표시합니다
-            var marker = new kakao.maps.Marker({
-                map: map,
-                position: coords
-            });
-
-            // 인포윈도우로 장소에 대한 설명을 표시합니다
-            var infowindow = new kakao.maps.InfoWindow({
-                content: '<div style="width:150px;text-align:center;padding:6px 0;">YTN</div>'
-            });
-            infowindow.open(map, marker);
-
-            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-            //map.setCenter(coords);
-        } 
-    });*/
 })
 
-//지도 위 표시되고 있는 폴리곤 제거
+function insertMarker(){
+    for(var sidoName in mapInfo)
+    {
+        markers[sidoName] = [];
+        for(var iter in mapInfo[sidoName]['cameraInfo'])
+        {
+            var camera = mapInfo[sidoName]['cameraInfo'][iter];
+
+            var imageSrc = './image/camera_68.png';
+            var imageSize = new kakao.maps.Size(64, 64);
+            var imageOption = {offset: new kakao.maps.Point(27, 69)};
+
+            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+            var markerPosition = new kakao.maps.LatLng(camera.x, camera.y);
+
+            var marker = new kakao.maps.Marker({
+                position: markerPosition,
+                image: markerImage // 마커이미지 설정 
+            });
+
+            marker.camera = camera;
+
+            kakao.maps.event.addListener(marker, 'click', function() {
+                alert(marker.camera.name);
+            });
+
+            
+            marker.setMap(map);
+            marker.setVisible(false);
+            markers[sidoName ].push(marker);
+        }
+    }
+}
+
+function visibleMarker(sidoName , bVisible)
+{
+    if( sidoName == '' )
+    {
+        for( var sido in markers)
+        {
+            var sidoList = markers[sido];
+            for(var i=0;i<sidoList.length;i++)
+            {
+                sidoList[i].setVisible(bVisible);
+            }
+        }
+    }
+    else
+    {
+        var sidoList = markers[sidoName];
+        if( sidoList == null )
+            return;
+        for(var i=0;i<sidoList.length;i++)
+        {
+            sidoList[i].setVisible(bVisible);
+        }
+    }
+}
+
+function Home()
+{
+    selectCenter = new kakao.maps.LatLng(centerCoordinate.x, centerCoordinate.y);        
+    map.setLevel(12, {anchor: selectCenter, animate: {
+                duration: 350            //확대 애니메이션 시간
+    }}); 
+
+    visibleMarker("",false);
+}
+
+//마커를 모두 삭제하자.
 function deletePolygon(polygons) {
     for (var i = 0; i < polygons.length; i++) {
         polygons[i].setMap(null);
     }
-    polygons = [];
+
+    polygons.deleteMarker();
 }
 
 //centroid 알고리즘 (폴리곤 중심좌표 구하기 위함)

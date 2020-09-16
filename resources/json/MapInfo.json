@@ -1,0 +1,126 @@
+{
+    "서울특별시" : {
+        "zoomlevel" : 9,
+        "cameraInfo" : [
+            {
+                "name" : "상암",
+                "url"  : "http://211.181.145.26:7080/gQDmTZGWixjPRKqxS9zt0E/YWzX4t7wcX44mhXgCJdM=.m3u8",
+                "x" : 37.57921742953529,
+                "y"  : 126.89223322735533
+            },
+            {
+                "name" : "공덕",
+                "url"  : "http://211.181.145.26:7080/aW60Wd8JxAEPq9iUxLCAxuWApvqAMoNtqc4WdNaD2qE=.m3u8",
+                "x"  : 37.54353684803795,
+                "y"  : 126.95199667222542
+            }
+        ]
+    },
+    "경기도" : {
+        "zoomlevel" : 10,
+        "cameraInfo" : [
+           
+        ]
+    },
+    "강원도" : {
+        "zoomlevel" : 10,
+        "cameraInfo" : [
+           
+        ]
+    },
+    "경상남도" : {
+        "zoomlevel" : 10,
+        "cameraInfo" : [
+           
+        ]
+    },
+    "경상북도" : {
+        "zoomlevel" : 10,
+        "cameraInfo" : [
+           
+        ]
+    },
+    "광주광역시" : {
+        "zoomlevel" : 10,
+        "cameraInfo" : [
+           
+        ]
+    },
+    "대구광역시" : {
+        "zoomlevel" : 10,
+        "cameraInfo" : [
+           
+        ]
+    },
+    "대전광역시" : {
+        "zoomlevel" : 10,
+        "cameraInfo" : [
+           
+        ]
+    },
+    "부산광역시" : {
+        "zoomlevel" : 10,
+        "cameraInfo" : [
+           
+        ]
+    },
+    "울산광역시" : {
+        "zoomlevel" : 10,
+        "cameraInfo" : [
+           
+        ]
+    },
+    "인천광역시" : {
+        "zoomlevel" : 10,
+        "cameraInfo" : [
+           
+        ]
+    },
+    "전라남도" : {
+        "zoomlevel" : 10,
+        "cameraInfo" : [
+           
+        ]
+    },
+    "전라북도" : {
+        "zoomlevel" : 10,
+        "cameraInfo" : [
+           
+        ]
+    },
+    "제주특별자치도" : {
+        "zoomlevel" : 10,
+        "cameraInfo" : [
+           
+        ]
+    },
+    "충청남도" : {
+        "zoomlevel" : 10,
+        "cameraInfo" : [
+           
+        ]
+    },
+    "충청북도" : {
+        "zoomlevel" : 10,
+        "cameraInfo" : [
+           
+        ]
+    },
+    "세종특별자치시" : {
+        "zoomlevel" : 8,
+        "cameraInfo" : [
+            {
+                "name" : "세종대학병원",
+                "url"  : "http://211.181.145.26:7080/gQDmTZGWixjPRKqxS9zt0E/YWzX4t7wcX44mhXgCJdM=.m3u8",
+                "x"  : 36.5183994078192,
+                "y"  : 127.25825335440359
+            },
+            {
+                "name" : "세종시청",
+                "url"  : "http://211.181.145.26:7080/aW60Wd8JxAEPq9iUxLCAxuWApvqAMoNtqc4WdNaD2qE=.m3u8",
+                "x"  : 36.4799743878589,
+                "y"  : 127.28954928364432
+            }
+        ]
+    }
+}
