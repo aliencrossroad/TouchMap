@@ -30,20 +30,20 @@
                     // 지도를 초기레벨로 셋팅합니다
                     // 센터가 다르면 맞춰줌
                     var center = map.getCenter();
-                    if (center != mapOption.center)
+
+                    let distance = getDistance(center, mapOption.center);
+                    if (distance > 1000)
                         map.panTo(mapOption.center);
 
-                    // 지도 레벨이 다르면 레벨 맞춰주고                        
+                    // 지도 레벨이 다르면 레벨 맞춰주고
                     if (level != initmaplevel) {
                         // 지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다
                         map.setLevel(initmaplevel, {
-                            anchor: center,
                             animate: {
                                 duration: 350 //확대 애니메이션 시간
                             }
                         });
                     }
-
                 });
         })
 
@@ -101,6 +101,28 @@
                 }
             })
         });
+
+        function getDistance(mapoint1, mapoint2) {
+            let lat1 = Math.round(mapoint1.getLat());
+            let lat2 = Math.round(mapoint2.getLat());
+            let lon1 = Math.round(mapoint1.getLng());
+            let lon2 = Math.round(mapoint2.getLng());
+
+            const R = 6371e3; // metres
+            const φ1 = lat1 * Math.PI / 180; // φ, λ in radians
+            const φ2 = lat2 * Math.PI / 180;
+            const Δφ = (lat2 - lat1) * Math.PI / 180;
+            const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+            const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+                Math.cos(φ1) * Math.cos(φ2) *
+                Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+            const d = R * c; // in metres            
+
+            return Math.round(d);
+        }
 
         var polygons = [];
         var selectCenter;
@@ -184,7 +206,8 @@
 
 
         kakao.maps.event.addListener(map, 'bounds_changed', function() {
-            map.panTo(selectCenter);
+            if (map.getLevel() != initmaplevel)
+                map.panTo(selectCenter);
             /*
                 geocoder.addressSearch(selectName, function(result, status) {
                     // 정상적으로 검색이 완료됐으면 
