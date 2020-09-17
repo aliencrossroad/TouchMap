@@ -35,7 +35,7 @@
         ]
     },
     "경상북도" : {
-        "zoomlevel" : 10,
+        "zoomlevel" : 11,
         "cameraInfo" : [
            
         ]
@@ -47,31 +47,31 @@
         ]
     },
     "대구광역시" : {
-        "zoomlevel" : 10,
+        "zoomlevel" : 8,
         "cameraInfo" : [
            
         ]
     },
     "대전광역시" : {
-        "zoomlevel" : 10,
+        "zoomlevel" : 8,
         "cameraInfo" : [
            
         ]
     },
     "부산광역시" : {
-        "zoomlevel" : 10,
+        "zoomlevel" : 9,
         "cameraInfo" : [
            
         ]
     },
     "울산광역시" : {
-        "zoomlevel" : 10,
+        "zoomlevel" : 9,
         "cameraInfo" : [
            
         ]
     },
     "인천광역시" : {
-        "zoomlevel" : 10,
+        "zoomlevel" : 8,
         "cameraInfo" : [
            
         ]
@@ -89,7 +89,7 @@
         ]
     },
     "제주특별자치도" : {
-        "zoomlevel" : 10,
+        "zoomlevel" :9,
         "cameraInfo" : [
            
         ]
