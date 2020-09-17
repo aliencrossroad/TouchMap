@@ -5,19 +5,70 @@
     <link href="css/styles.css" rel="stylesheet" />
     <meta charset="utf-8">
     <title>주소로 장소 표시하기</title>
+    <script>
+        $(document).ready(function() {
+            $("#videosource").css("width", 0);
+            $("#videosource").css("height", (window.innerHeight - 8));
+            $('#videosource')
+                .on('touchstart click', function(e) {
+                    e.preventDefault();
+                    $('#videosource').animate({
+                        width: '0'
+                    }, 'slow', function() {
+                        $("#videosource").css("display", "none");
+                    })
+                });
+        })
+
+        function PrepareVideo(image_url) {
+            var player = videojs('videosource', {
+                "controls": false,
+                "autoplay": false,
+                "preload": "auto",
+                'html5': {
+                    'nativeAudioTracks': false
+                }
+            }, function onPlayerReady() {
+                this.src({
+                    type: "application/x-mpegURL",
+                    src: image_url
+                });
+                this.tech_.off('dblclick');
+                this.play();
+                //this.requestFullscreen();
+            });
+        }
+    </script>
 </head>
 
 <body>
     <div id="map" style="width:100%;height:1070px;"></div>
+    <aside class="videolayer">
+        <video id='videosource' class="video-js" preload="auto" data-setup="{}"></video>
+        <!-- <img id="home" src="/image/map.png" alt="home image" srcset="/image/map.svg"> -->
+    </aside>
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d30b430fc168d024cbfef307b239c005&libraries=services"></script>
     <script>
         var initmaplevel = 13;
+        var centerCoordinate = { // 지도의 중심좌표 : 충주-남한의 중심이랍니다
+            x: 36.9910,
+            y: 127.9259
+        };
+
+        var polygons = [];
+        var markers = [];
+        var selectCenter;
+        var mapInfo;
+
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
             mapOption = {
-                center: new kakao.maps.LatLng(36.9910, 127.9259), // 지도의 중심좌표 : 충주-남한의 중심이랍니다
+                center: new kakao.maps.LatLng(centerCoordinate.x, centerCoordinate.y), // 지도의 중심좌표
                 level: initmaplevel // 지도의 확대 레벨
             };
+
+        // 지도를 생성합니다    
+        var map = new kakao.maps.Map(mapContainer, mapOption);
 
         $(document).ready(function() {
             $('#home')
@@ -47,61 +98,6 @@
                 });
         })
 
-        // 지도를 생성합니다    
-        var map = new kakao.maps.Map(mapContainer, mapOption);
-
-
-        // 주소-좌표 변환 객체를 생성합니다
-        var geocoder = new kakao.maps.services.Geocoder();
-        /*
-        // 주소로 좌표를 검색합니다
-        geocoder.addressSearch('서울시', function(result, status) {
-
-            // 정상적으로 검색이 완료됐으면 
-             if (status === kakao.maps.services.Status.OK) {
-
-                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-                // 결과값으로 받은 위치를 마커로 표시합니다
-                var marker = new kakao.maps.Marker({
-                    map: map,
-                    position: coords
-                });
-
-                // 인포윈도우로 장소에 대한 설명을 표시합니다
-                var infowindow = new kakao.maps.InfoWindow({
-                    content: '<div style="width:150px;text-align:center;padding:6px 0;">YTN</div>'
-                });
-                infowindow.open(map, marker);
-
-                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-                //map.setCenter(coords);
-            } 
-        });*/
-
-        //행정구역 구분
-        $.getJSON("resources/json/CTPRVN.json", function(geojson) {
-
-            var data = geojson.features;
-            var coordinates = []; //좌표 저장할 배열
-            var name = ''; //행정 구 이름
-
-            $.each(data, function(index, val) {
-
-                coordinates = val.geometry.coordinates;
-                name = val.properties.CTP_KOR_NM;
-
-                if (val.geometry.type == "Polygon") {
-                    displayArea(coordinates, name);
-                } else {
-                    for (i = 0; i < coordinates.length; i++) {
-                        var object = coordinates[i];
-                        displayArea(object, name);
-                    }
-                }
-            })
-        });
-
         function getDistance(mapoint1, mapoint2) {
             let lat1 = Math.round(mapoint1.getLat());
             let lat2 = Math.round(mapoint2.getLat());
@@ -124,8 +120,40 @@
             return Math.round(d);
         }
 
-        var polygons = [];
-        var selectCenter;
+        //행정구역 및 카메라 정보
+        $.ajax({
+            url: "resources/json/MapInfo.json",
+            dataType: 'json',
+            async: false,
+            success: function(json) {
+                mapInfo = json;
+            }
+        });
+
+        //행정구역 구분
+        $.getJSON("resources/json/CTPRVN.json", function(geojson) {
+            var data = geojson.features;
+            var coordinates = []; //좌표 저장할 배열
+            var name = ''; //행정 구 이름
+
+            $.each(data, function(index, val) {
+
+                coordinates = val.geometry.coordinates;
+                name = val.properties.CTP_KOR_NM;
+
+                if (val.geometry.type == "Polygon") {
+                    displayArea(coordinates, name);
+                } else {
+                    for (i = 0; i < coordinates.length; i++) {
+                        var object = coordinates[i];
+                        displayArea(object, name);
+                    }
+                }
+            })
+        });
+
+        //카메라 마커 추가
+        insertMarker();
 
         //행정구역 폴리곤
         function displayArea(coordinates, name) {
@@ -151,6 +179,8 @@
                 fillColor: '#fff',
                 fillOpacity: 0.7,
             });
+
+            polygon.name = name;
 
             polygons.push(polygon); //폴리곤 제거하기 위한 배열
 
@@ -178,14 +208,13 @@
 
             // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 해당 지역 확대을 확대합니다.
             kakao.maps.event.addListener(polygon, 'click', function() {
-
-                var level = 10;
-
+                var level = mapInfo[polygon.name].zoomlevel;
                 var center = centroid(points);
-
                 selectCenter = center;
 
-                if (map.getLevel() == 10) {
+                visibleMarker(polygon.name);
+
+                if (map.getLevel() == level) {
                     map.panTo(selectCenter);
                 } else {
                     // 지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다
@@ -204,41 +233,75 @@
             });
         }
 
-
-        kakao.maps.event.addListener(map, 'bounds_changed', function() {
-            if (map.getLevel() != initmaplevel)
-                map.panTo(selectCenter);
-            /*
-                geocoder.addressSearch(selectName, function(result, status) {
-                    // 정상적으로 검색이 완료됐으면 
-                    if (status === kakao.maps.services.Status.OK) {
-
-                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-                        // 결과값으로 받은 위치를 마커로 표시합니다
-                        var marker = new kakao.maps.Marker({
-                            map: map,
-                            position: coords
-                        });
-
-                        // 인포윈도우로 장소에 대한 설명을 표시합니다
-                        var infowindow = new kakao.maps.InfoWindow({
-                            content: '<div style="width:150px;text-align:center;padding:6px 0;">YTN</div>'
-                        });
-                        infowindow.open(map, marker);
-
-                        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-                        //map.setCenter(coords);
-                    } 
-                });*/
+        kakao.maps.event.addListener(map, 'zoom_changed', function() {
+            map.panTo(selectCenter);
         })
 
-        //지도 위 표시되고 있는 폴리곤 제거
-        function deletePolygon(polygons) {
-            for (var i = 0; i < polygons.length; i++) {
-                polygons[i].setMap(null);
+        function insertMarker() {
+            for (var sidoName in mapInfo) {
+                markers[sidoName] = [];
+                for (var iter in mapInfo[sidoName]['cameraInfo']) {
+                    var camera = mapInfo[sidoName]['cameraInfo'][iter];
+
+                    var imageSrc = './image/camera_68.png';
+                    var imageSize = new kakao.maps.Size(64, 64);
+                    var imageOption = {
+                        offset: new kakao.maps.Point(27, 69)
+                    };
+
+                    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+                    var markerPosition = new kakao.maps.LatLng(camera.x, camera.y);
+
+                    var marker = new kakao.maps.Marker({
+                        map: map,
+                        position: markerPosition,
+                        image: markerImage // 마커이미지 설정 
+                    });
+
+                    marker.camera = camera;
+
+                    kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker));
+
+                    marker.setVisible(false);
+                    markers[sidoName].push(marker);
+                }
             }
-            polygons = [];
+        }
+
+        function makeOverListener(map, marker) {
+            return function() {
+                PrepareVideo(marker.camera.url);
+                $("#videosource").css("height", (window.innerHeight - 8));
+                $("#videosource").css("display", "initial");
+                $('#videosource').animate({
+                    width: (window.innerWidth - 20)
+                }, 'slow');
+            };
+        }
+
+        function visibleMarker(sidoName) {
+            for (var sido in markers) {
+                var bVisible = (sido == sidoName);
+                var cameraList = markers[sido];
+
+                for (var iter in cameraList) {
+                    cameraList[iter].setVisible(bVisible);
+                }
+            }
+        }
+
+        function Home() {
+            selectCenter = new kakao.maps.LatLng(centerCoordinate.x, centerCoordinate.y);
+            map.setLevel(
+                12, {
+                    anchor: selectCenter,
+                    animate: {
+                        duration: 350 //확대 애니메이션 시간
+                    }
+                }
+            );
+
+            visibleMarker();
         }
 
         //centroid 알고리즘 (폴리곤 중심좌표 구하기 위함)
@@ -259,9 +322,6 @@
             return new kakao.maps.LatLng(x / area, y / area);
         }
     </script>
-    <aside class="menu">
-        <img id="home" src="/image/map.png" alt="home image" srcset="/image/map.svg">
-    </aside>
 </body>
 
 </html>
