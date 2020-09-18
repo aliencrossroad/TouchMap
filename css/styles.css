@@ -31,6 +31,8 @@ body {
 #videosource {
     position: absolute;
     display: none;
+    left: 0;
+    top: 0;
     width: 0px;
     height: 1080px;
 }
