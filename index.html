@@ -18,7 +18,7 @@
     <script>
        var initmaplevel = 13;
         var centerCoordinate = { // 지도의 중심좌표
-            lan: 34.2,
+            lan: 36.2,
             lon: 127.9259
         };
 
@@ -254,7 +254,7 @@
                         };
 
                         var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-                        var markerPosition = new kakao.maps.LatLng(camera.x, camera.y);
+                        var markerPosition = new kakao.maps.LatLng(camera.lan, camera.lon);
 
                         var marker = new kakao.maps.Marker({
                             map: map,
@@ -323,11 +323,11 @@
                     y += (p1.y + p2.y) * f;
                     area += f * 3;
                 }
-                return new kakao.maps.LatLng(x / area, y / area);
+                return new kakao.maps.LatLng( x / area , y / area);
             }
         }) // End ready
     </script>
-    
+
 </head>
 
 <body>
