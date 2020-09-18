@@ -23,7 +23,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Haeseok Launch Chrome against localhost",
-            "url": "http://10.10.9.150:5500/map.html",
+            "url": "http://10.10.9.150:5500/index.html",
             "webRoot": "${workspaceFolder}"
         }
     ]
