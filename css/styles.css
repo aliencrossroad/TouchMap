@@ -22,13 +22,14 @@ body {
 .videolayer {
     position: absolute;
     left: 0px;
-    top: 5px;
-    width: 80px;
+    top: 0px;
+    width: 1px;
     height: 200px;
     z-index: 5;
 }
 
 #videosource {
+    position: absolute;
     display: none;
     width: 0px;
     height: 1080px;
