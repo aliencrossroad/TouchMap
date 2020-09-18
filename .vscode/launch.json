@@ -9,6 +9,13 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
+            "url": "http://10.10.9.145:3000/index.html",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome against localhost",
             "url": "http://10.10.9.145:3000/zerotest.html",
             "webRoot": "${workspaceFolder}"
         },
@@ -17,13 +24,6 @@
             "request": "launch",
             "name": "Haeseok Launch Chrome against localhost",
             "url": "http://10.10.9.150:5500/map.html",
-            "webRoot": "${workspaceFolder}"
-        },
-        {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://10.10.9.145:3000/index.html",
             "webRoot": "${workspaceFolder}"
         }
     ]
