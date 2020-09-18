@@ -1,6 +1,6 @@
 {
     "서울특별시" : {
-        "zoomlevel" : 9,
+        "zoomlevel" : 8,
         "cameraInfo" : [
             {
                 "name" : "상암",
@@ -17,13 +17,13 @@
         ]
     },
     "경기도" : {
-        "zoomlevel" : 10,
+        "zoomlevel" : 11,
         "cameraInfo" : [
            
         ]
     },
     "강원도" : {
-        "zoomlevel" : 10,
+        "zoomlevel" : 11,
         "cameraInfo" : [
            
         ]
