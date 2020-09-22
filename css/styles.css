@@ -59,3 +59,11 @@
         top: calc(50% - 0.75em);
         left: calc(50% - 1.5em);
     }
+
+    #sketchcontainer {
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        pointer-events: all;
+        background-color: transparent;
+    }

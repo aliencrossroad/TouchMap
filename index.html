@@ -290,7 +290,7 @@
                         }
                     }
                 }
-
+/*
                 function Home() {
                     selectCenter = new kakao.maps.LatLng(centerCoordinate.x, centerCoordinate.y);
                     map.setLevel(
@@ -304,7 +304,7 @@
 
                     visibleMarker();
                 }
-
+*/
                 //centroid 알고리즘 (폴리곤 중심좌표 구하기 위함)
                 function centroid(points) {
                     var i, j, len, p1, p2, f, area, x, y;
@@ -322,52 +322,65 @@
                     }
                     return new kakao.maps.LatLng(x / area, y / area);
                 }
-                /*
-                                var COLOURS = [ '#ffEBCA'];
-                                var radius = 0;
+                
+                var COLOURS = [ '#1900FF' ];
+                var radius = 0;
+                var sketchCanvas = Sketch.create({
 
-                                Sketch.create({
+                    container: document.getElementById( 'sketchcontainer' ),
+                    autoclear: false,
+                    retina: 'auto',
 
-                                    container: document.getElementById( 'container' ),
-                                    autoclear: false,
-                                    retina: 'auto',
+                    setup: function() {
+                        console.log( 'setup' );
+                    },
 
-                                    setup: function() {
-                                        console.log( 'setup' );
-                                    },
+                    update: function() {
+                        radius = 2 + abs( sin( this.millis * 0.003 ) * 10 );
+                    },
 
-                                    update: function() {
-                                        radius = 2 + abs( sin( this.millis * 0.003 ) * 10 );
-                                    },
+                    // Event handlers
+                    /*
+                    keydown: function() {
+                        if ( this.keys.C ) this.clear();
+                    },
+                    */
 
-                                    // Event handlers
+                    // Mouse & touch events are merged, so handling touch events by default
+                    // and powering sketches using the touches array is recommended for easy
+                    // scalability. If you only need to handle the mouse / desktop browsers,
+                    // use the 0th touch element and you get wider device support for free.
+                    touchmove: function() {
+                        for ( var i = this.touches.length - 1, touch; i >= 0; i-- ) {
 
-                                    keydown: function() {
-                                        if ( this.keys.C ) this.clear();
-                                    },
+                            touch = this.touches[i];
 
-                                    // Mouse & touch events are merged, so handling touch events by default
-                                    // and powering sketches using the touches array is recommended for easy
-                                    // scalability. If you only need to handle the mouse / desktop browsers,
-                                    // use the 0th touch element and you get wider device support for free.
-                                    touchmove: function() {
+                            this.lineCap = 'round';
+                            this.lineJoin = 'round';
+                            this.fillStyle = this.strokeStyle = COLOURS[ i % COLOURS.length ];
+                            this.lineWidth = radius;
 
-                                        for ( var i = this.touches.length - 1, touch; i >= 0; i-- ) {
+                            this.beginPath();
+                            this.moveTo( touch.ox, touch.oy );
+                            this.lineTo( touch.x, touch.y );
+                            this.stroke();
+                        }
+                    }
+                });
 
-                                            touch = this.touches[i];
+                function enableSketch(enable)
+                {
+                    if( enable ){
+                        $("#sketchcontainer").css("pointer-events", "all");
+                    }
+                    else{
+                        sketchCanvas.clear();
+                        $("#sketchcontainer").css("pointer-events", "none");
+                    }
+                }
 
-                                            this.lineCap = 'round';
-                                            this.lineJoin = 'round';
-                                            this.fillStyle = this.strokeStyle = COLOURS[ i % COLOURS.length ];
-                                            this.lineWidth = radius;
+                enableSketch(false);
 
-                                            this.beginPath();
-                                            this.moveTo( touch.ox, touch.oy );
-                                            this.lineTo( touch.x, touch.y );
-                                            this.stroke();
-                                        }
-                                    }
-                                });*/
             }) // End ready
     </script>
 
@@ -377,8 +390,8 @@
     <div id="map"></div>
     <aside class="videolayer">
         <video id='videosource' class="video-js" preload="auto" data-setup="{}"></video>
+        <div id="sketchcontainer"></div>
         <img id="home" src="/image/map.png" alt="home image" srcset="/image/map.svg">
-        <!--<div id="container"></div>-->
     </aside>
 </body>
 
