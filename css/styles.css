@@ -20,6 +20,15 @@
         pointer-events: all;
     }
     
+    #pen {
+        position: absolute;
+        left: 1180px;
+        top: 200px;
+        width: 70px;
+        height: 70px;
+        pointer-events: all;
+    }
+    
     .videolayer {
         position: absolute;
         left: 0px;
