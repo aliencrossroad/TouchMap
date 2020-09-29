@@ -61,6 +61,16 @@ body {
     pointer-events: all;
 }
 
+#pen {
+    position: absolute;
+    left: 1700px;
+    top: 230px;
+    width: 100px;
+    height: 100px;
+    pointer-events: all;
+    z-index: 4;
+}
+
 #sketchcontainer {
     position: absolute;
     width: 100%;
@@ -68,14 +78,4 @@ body {
     pointer-events: all;
     background-color: transparent;
     z-index: 3;
-}
-
-#pen {
-    position: absolute;
-    left: 1180px;
-    top: 200px;
-    width: 70px;
-    height: 70px;
-    pointer-events: all;
-    z-index: 4;
 }
