@@ -24,8 +24,8 @@
         };
 
         var videoresolution = {
-            width: "100vw",
-            height: "100vh"
+            width: "100%",
+            height: "100%"
         };
 
         var polygons = [];
@@ -122,7 +122,6 @@
                         this.tech_.off('dblclick');
                         this.play();
                     });
-                    player.fill_ = true;
                 }
 
                 function getDistance(mapoint1, mapoint2) {
@@ -409,7 +408,7 @@
     <div id="map"></div>
     <aside class="toplayer">
         <div class="videolayer">
-            <video id='videosource' class="video-js" preload="auto" data-setup={}></video>
+            <video id='videosource' class="video-js" preload="auto" data-setup='{"fluid": true}'></video>
         </div>
         <div class="menulayer">
             <div id="sketchcontainer"></div>

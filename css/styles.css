@@ -30,6 +30,10 @@ body {
     vertical-align: middle;
 }
 
+video {
+    object-fit: fill;
+}
+
 #videosource {
     display: none block;
     position: absolute;
