@@ -109,13 +109,18 @@
                         'html5': {
                             'nativeAudioTracks': false
                         }
-                    }, function onPlayerReady() {
+                    }, function onPlayerReady(e) {
                         this.src({
                             type: "application/x-mpegURL",
                             src: image_url
                         });
                         this.tech_.off('dblclick');
                         this.play();
+                    }
+                    );
+
+                    player.on("play", function(){
+                        
                     });
                 }
 
