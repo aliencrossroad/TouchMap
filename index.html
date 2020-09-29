@@ -32,6 +32,8 @@
         var markers = [];
         var selectCenter;
         var mapInfo;
+        var posX;
+        var posY;
 
         $(document).ready(function() {
 
@@ -94,7 +96,9 @@
                     .on('touchstart click', function(e) {
                         e.preventDefault();
                         $('#videosource').animate({
-                            width: '0'
+                            width: '0',
+                            left: posX,
+                            top: posY
                         }, 'slow', function() {
                             $("#videosource").css("display", "none");
                             $("#videosource")[0].player.pause();
@@ -291,11 +295,19 @@
 
                 function makeOverListener(map, marker) {
                     return function() {
+                        var e = window.event;
+                        posX = e.clientX;
+                        posY = e.clientY;
                         PrepareVideo(marker.camera.url);
+
+                        $("#videosource").css("left", posX);
+                        $("#videosource").css("top", posY);
                         $("#videosource").css("height", videoresolution.height);
                         $("#videosource").css("display", "initial");
                         $('#videosource').animate({
-                            width: videoresolution.width
+                            width: videoresolution.width,
+                            left: 0,
+                            top: 0
                         }, 'slow');
                     };
                 }
@@ -393,11 +405,15 @@
 
 <body>
     <div id="map"></div>
-    <aside class="videolayer">
-        <video id='videosource' class="video-js" preload="auto" width="auto" height="auto" data-setup={}></video>
-        <div id="sketchcontainer"></div>
-        <img id="home" src="/image/globe.png" alt="home image" srcset="/image/globe.svg">
-        <img id="pen" src="/image/finger.png" alt="touch" srcset="/image/finger.svg">
+    <aside class="toplayer">
+        <div class="videolayer">
+            <video id='videosource' class="video-js" preload="auto" width="auto" height="auto" data-setup={}></video>
+        </div>
+        <div class="menulayer">
+            <div id="sketchcontainer"></div>
+            <img id="home" src="/image/globe.png" alt="home image" srcset="/image/globe.svg">
+            <img id="pen" src="/image/finger.png" alt="touch" srcset="/image/finger.svg">
+        </div>
     </aside>
 </body>
 
