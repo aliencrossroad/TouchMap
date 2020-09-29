@@ -25,7 +25,7 @@
 
         var videoresolution = {
             width: "100%",
-            height: "auto"
+            height: "100%"
         };
 
         var polygons = [];
@@ -91,12 +91,13 @@
                     });
 
                 $("#videosource").css("width", 0);
-                $("#videosource").css("height", videoresolution.height);
+                $("#videosource").css("height", 0);
                 $('#videosource')
                     .on('touchstart click', function(e) {
                         e.preventDefault();
                         $('#videosource').animate({
                             width: '0',
+                            height: '0',
                             left: posX,
                             top: posY
                         }, 'slow', function() {
@@ -120,8 +121,7 @@
                         });
                         this.tech_.off('dblclick');
                         this.play();
-                    }
-                    );
+                    });
                 }
 
                 function getDistance(mapoint1, mapoint2) {
@@ -303,10 +303,10 @@
 
                         $("#videosource").css("left", posX);
                         $("#videosource").css("top", posY);
-                        $("#videosource").css("height", videoresolution.height);
                         $("#videosource").css("display", "initial");
                         $('#videosource').animate({
                             width: videoresolution.width,
+                            height: videoresolution.height,
                             left: 0,
                             top: 0
                         }, 'slow');
@@ -408,7 +408,7 @@
     <div id="map"></div>
     <aside class="toplayer">
         <div class="videolayer">
-            <video id='videosource' class="video-js" preload="auto" width="auto" height="auto" data-setup={}></video>
+            <video id='videosource' class="video-js" preload="auto" data-setup={}></video>
         </div>
         <div class="menulayer">
             <div id="sketchcontainer"></div>
