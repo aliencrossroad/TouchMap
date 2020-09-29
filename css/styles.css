@@ -53,10 +53,10 @@ body {
 
 #home {
     position: absolute;
-    left: 1180px;
+    left: 1700px;
     top: 100px;
-    width: 70px;
-    height: 70px;
+    width: 100px;
+    height: 100px;
     z-index: 1;
     pointer-events: all;
 }
