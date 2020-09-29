@@ -34,8 +34,7 @@
         position: absolute;
         z-index: 2;
         pointer-events: all;
-        /* background-color: transparent; */
-        background-color: aqua;
+        background-color: transparent;
     }
     
     .video-js .vjs-big-play-button {
