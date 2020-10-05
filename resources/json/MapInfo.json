@@ -1,126 +1,141 @@
 {
-    "서울특별시" : {
-        "zoomlevel" : 9,
-        "cameraInfo" : [
-            {
-                "name" : "상암",
-                "url"  : "http://211.181.145.26:7080/gQDmTZGWixjPRKqxS9zt0E/YWzX4t7wcX44mhXgCJdM=.m3u8",
-                "lan" : 37.57921742953529,
-                "lon"  : 126.89223322735533
+    "서울특별시": {
+        "zoomlevel": 9,
+        "cameraInfo": [{
+                "name": "잠수교",
+                "url": "http://211.181.145.26:7080/bZEawXiPLhFbEaUDb7E1AJalBaZcpxPCzNb2CYbG7bY=.m3u8",
+                "lan": 37.514882,
+                "lon": 126.996446
             },
             {
-                "name" : "공덕",
-                "url"  : "http://211.181.145.26:7080/aW60Wd8JxAEPq9iUxLCAxuWApvqAMoNtqc4WdNaD2qE=.m3u8",
-                "lan"  : 37.54353684803795,
-                "lon"  : 126.95199667222542
+                "name": "한강대교",
+                "url": "http://211.181.145.26:7080/PwpMjmkkauSYMZfrqyh5ipXE+NdrgAsgY2Yn8sTRQYk=.m3u8",
+                "lan": 37.517645,
+                "lon": 126.958904
+            },
+            {
+                "name": "중랑교",
+                "url": "http://211.181.145.26:7080/TrRM8djzdGnfB4rJ1jSo+IHJnqmoxvKguv12xdM6XBM=.m3u8",
+                "lan": 37.593270,
+                "lon": 127.070299
             }
         ]
     },
-    "경기도" : {
-        "zoomlevel" : 11,
-        "cameraInfo" : [
-           
-        ]
-    },
-    "강원도" : {
-        "zoomlevel" : 11,
-        "cameraInfo" : [
-           
-        ]
-    },
-    "경상남도" : {
-        "zoomlevel" : 11,
-        "cameraInfo" : [
-           
-        ]
-    },
-    "경상북도" : {
-        "zoomlevel" : 11,
-        "cameraInfo" : [
-           
-        ]
-    },
-    "광주광역시" : {
-        "zoomlevel" : 10,
-        "cameraInfo" : [
-           
-        ]
-    },
-    "대구광역시" : {
-        "zoomlevel" : 10,
-        "cameraInfo" : [
-           
-        ]
-    },
-    "대전광역시" : {
-        "zoomlevel" : 9,
-        "cameraInfo" : [
-           
-        ]
-    },
-    "부산광역시" : {
-        "zoomlevel" : 9,
-        "cameraInfo" : [
-           
-        ]
-    },
-    "울산광역시" : {
-        "zoomlevel" : 9,
-        "cameraInfo" : [
-           
-        ]
-    },
-    "인천광역시" : {
-        "zoomlevel" : 9,
-        "cameraInfo" : [
-           
-        ]
-    },
-    "전라남도" : {
-        "zoomlevel" : 11,
-        "cameraInfo" : [
-           
-        ]
-    },
-    "전라북도" : {
-        "zoomlevel" : 10,
-        "cameraInfo" : [
-           
-        ]
-    },
-    "제주특별자치도" : {
-        "zoomlevel" :9,
-        "cameraInfo" : [
-           
-        ]
-    },
-    "충청남도" : {
-        "zoomlevel" : 10,
-        "cameraInfo" : [
-           
-        ]
-    },
-    "충청북도" : {
-        "zoomlevel" : 11,
-        "cameraInfo" : [
-           
-        ]
-    },
-    "세종특별자치시" : {
-        "zoomlevel" : 9,
-        "cameraInfo" : [
-            {
-                "name" : "세종대학병원",
-                "url"  : "http://211.181.145.26:7080/gQDmTZGWixjPRKqxS9zt0E/YWzX4t7wcX44mhXgCJdM=.m3u8",
-                "lan"  : 36.5183994078192,
-                "lon"  : 127.25825335440359
+    "경기도": {
+        "zoomlevel": 11,
+        "cameraInfo": [{
+                "name": "통일대교",
+                "url": "http://211.181.145.26:7080/gQDmTZGWixjPRKqxS9zt0E/YWzX4t7wcX44mhXgCJdM=.m3u8",
+                "lan": 37.903625,
+                "lon": 126.742720
             },
             {
-                "name" : "세종시청",
-                "url"  : "http://211.181.145.26:7080/aW60Wd8JxAEPq9iUxLCAxuWApvqAMoNtqc4WdNaD2qE=.m3u8",
-                "lan"  : 36.4799743878589,
-                "lon"  : 127.28954928364432
+                "name": "영평교",
+                "url": "http://211.181.145.26:7080/gx/vnC8fzPLaPnlV7r5iAhP4NDo00OfEcN25OwrOwdc=.m3u8",
+                "lan": 38.011051,
+                "lon": 127.214506
             }
         ]
+    },
+    "강원도": {
+        "zoomlevel": 11,
+        "cameraInfo": [{
+                "name": "홍천교",
+                "url": "http://211.181.145.26:7080/NkNWOq3qJ7asafu3as168yBGLEkPztewqGhVjK2PldM=.m3u8",
+                "lan": 37.687898,
+                "lon": 127.879109
+            },
+            {
+                "name": "소양강댐",
+                "url": "rtsp://203.237.1.51:554/Stream1",
+                "lan": 37.945708,
+                "lon": 127.814455
+            }
+        ]
+    },
+    "경상남도": {
+        "zoomlevel": 11,
+        "cameraInfo": [
+
+        ]
+    },
+    "경상북도": {
+        "zoomlevel": 11,
+        "cameraInfo": [
+
+        ]
+    },
+    "광주광역시": {
+        "zoomlevel": 10,
+        "cameraInfo": [
+
+        ]
+    },
+    "대구광역시": {
+        "zoomlevel": 10,
+        "cameraInfo": [
+
+        ]
+    },
+    "대전광역시": {
+        "zoomlevel": 9,
+        "cameraInfo": [
+
+        ]
+    },
+    "부산광역시": {
+        "zoomlevel": 9,
+        "cameraInfo": [
+
+        ]
+    },
+    "울산광역시": {
+        "zoomlevel": 9,
+        "cameraInfo": [
+
+        ]
+    },
+    "인천광역시": {
+        "zoomlevel": 9,
+        "cameraInfo": [
+
+        ]
+    },
+    "전라남도": {
+        "zoomlevel": 11,
+        "cameraInfo": [
+
+        ]
+    },
+    "전라북도": {
+        "zoomlevel": 10,
+        "cameraInfo": [
+
+        ]
+    },
+    "제주특별자치도": {
+        "zoomlevel": 9,
+        "cameraInfo": [
+
+        ]
+    },
+    "충청남도": {
+        "zoomlevel": 10,
+        "cameraInfo": [
+
+        ]
+    },
+    "충청북도": {
+        "zoomlevel": 11,
+        "cameraInfo": [{
+            "name": "목계교",
+            "url": "http://211.181.145.26:7080/aW60Wd8JxAEPq9iUxLCAxuWApvqAMoNtqc4WdNaD2qE=.m3u8",
+            "lan": 37.076169,
+            "lon": 127.880958
+        }]
+    },
+    "세종특별자치시": {
+        "zoomlevel": 9,
+        "cameraInfo": []
     }
 }
