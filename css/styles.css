@@ -56,9 +56,9 @@ video {
 }
 
 #home {
-    position: absolute;
-    left: 1700px;
+    position: fixed;
     top: 100px;
+    right: 100px;
     width: 100px;
     height: 100px;
     z-index: 1;
@@ -66,9 +66,9 @@ video {
 }
 
 #pen {
-    position: absolute;
-    left: 1700px;
+    position: fixed;
     top: 230px;
+    right: 100px;
     width: 100px;
     height: 100px;
     pointer-events: all;
