@@ -18,6 +18,12 @@
                 "url": "http://211.181.145.26:7080/TrRM8djzdGnfB4rJ1jSo+IHJnqmoxvKguv12xdM6XBM=.m3u8",
                 "lan": 37.593270,
                 "lon": 127.070299
+            },
+            {
+                "name": "서초IC",
+                "url": "http://live1.exmobile.hscdn.com/exlive/cctv0001.stream/playlist.m3u8",
+                "lan": 37.483486,
+                "lon": 127.026068
             }
         ]
     },
@@ -34,24 +40,23 @@
                 "url": "http://211.181.145.26:7080/gx/vnC8fzPLaPnlV7r5iAhP4NDo00OfEcN25OwrOwdc=.m3u8",
                 "lan": 38.011051,
                 "lon": 127.214506
+            },
+            {
+                "name": "동탄JC",
+                "url": "http://live1.exmobile.hscdn.com/exlive/cctv0038.stream/chunklist_w630103203.m3u8",
+                "lan": 37.178491,
+                "lon": 127.095915
             }
         ]
     },
     "강원도": {
         "zoomlevel": 11,
         "cameraInfo": [{
-                "name": "홍천교",
-                "url": "http://211.181.145.26:7080/NkNWOq3qJ7asafu3as168yBGLEkPztewqGhVjK2PldM=.m3u8",
-                "lan": 37.687898,
-                "lon": 127.879109
-            },
-            {
-                "name": "소양강댐",
-                "url": "rtsp://203.237.1.51:554/Stream1",
-                "lan": 37.945708,
-                "lon": 127.814455
-            }
-        ]
+            "name": "홍천교",
+            "url": "http://211.181.145.26:7080/NkNWOq3qJ7asafu3as168yBGLEkPztewqGhVjK2PldM=.m3u8",
+            "lan": 37.687898,
+            "lon": 127.879109
+        }]
     },
     "경상남도": {
         "zoomlevel": 11,
@@ -67,9 +72,12 @@
     },
     "광주광역시": {
         "zoomlevel": 10,
-        "cameraInfo": [
-
-        ]
+        "cameraInfo": [{
+            "name": "어등산호남대터널",
+            "url": "http://live5.exmobile.hscdn.com/exlive/cctv5503.stream/chunklist_w1789211123.m3u8",
+            "lan": 35.155634,
+            "lon": 126.767955
+        }]
     },
     "대구광역시": {
         "zoomlevel": 10,
