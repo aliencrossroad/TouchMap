@@ -30,7 +30,6 @@
 
         var polygons = [];
         var markers = [];
-        var labels = [];
         var selectCenter;
         var mapInfo;
         var posX;
@@ -267,7 +266,6 @@
                 function insertMarker() {
                     for (var sidoName in mapInfo) {
                         markers[sidoName] = [];
-                        labels[sidoName] = [];
                         for (var iter in mapInfo[sidoName]['cameraInfo']) {
                             var camera = mapInfo[sidoName]['cameraInfo'][iter];
 
@@ -292,19 +290,6 @@
 
                             marker.setVisible(false);
                             markers[sidoName].push(marker);
-
-                            // ----------------------------------- 커스텀 오버레이 테스트
-                            var content = '<div id="label"><span class="left"></span><span class="center">' + camera.name + '</span><span class="right"></span></div>';
-                            var customOverlay = new kakao.maps.CustomOverlay({
-                                map: map,
-                                position: markerPosition,
-                                content: content
-                            });
-
-                            customOverlay.setVisible(false);
-                            customOverlay.setMap(map);
-                            labels[sidoName].push(customOverlay);
-                            // ------------------------------------ 
                         }
                     }
                 }
@@ -332,11 +317,9 @@
                     for (var sido in markers) {
                         var bVisible = (sido == sidoName);
                         var cameraList = markers[sido];
-                        var labelList = labels[sido];
 
                         for (var iter in cameraList) {
                             cameraList[iter].setVisible(bVisible);
-                            labelList[iter].setVisible(bVisible);
                         }
                     }
                 }

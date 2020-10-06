@@ -12,6 +12,49 @@ body {
     zoom: 150%;
 }
 
+#label {
+    font: normal normal 700 20px label;
+    /* margin-bottom: 96px; */
+}
+
+#label * {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#label .left {
+    background-image: url("../image/tip_l.svg");
+    background-repeat: no-repeat;
+    background-position: 1px;
+    background-size: cover;
+    display: inline-block;
+    height: 26px;
+    overflow: hidden;
+    width: 8px;
+}
+
+#label .center {
+    background-image: url("../image/tip_bg.png");
+    background-position: center;
+    background-repeat: repeat-x;
+    background-size: contain;
+    display: inline-block;
+    height: 27px;
+    font-size: 20px;
+    line-height: 25px;
+}
+
+#label .right {
+    background-image: url("../image/tip_r.png");
+    background-repeat: no-repeat;
+    background-position: -1px;
+    background-size: cover;
+    display: inline-block;
+    height: 26px;
+    overflow: hidden;
+    width: 8px;
+}
+
 .toplayer {
     position: absolute;
     left: 0px;
@@ -82,4 +125,16 @@ video {
     pointer-events: all;
     background-color: transparent;
     z-index: 3;
+}
+
+@font-face {
+    font-family: label;
+    src: local("한글틀고딕"), url('Font/htgothic.ttf');
+}
+
+@font-face {
+    font-family: label;
+    src: local("Arial");
+    unicode-range: U+0020-007E;
+    font-style: normal;
 }
