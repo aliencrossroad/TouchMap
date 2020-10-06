@@ -14,7 +14,8 @@ body {
 
 #label {
     font: normal normal 700 20px label;
-    /* margin-bottom: 96px; */
+    margin-left: 5px;
+    margin-top: 46px;
 }
 
 #label * {
