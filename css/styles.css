@@ -40,9 +40,10 @@ body {
     background-repeat: repeat-x;
     background-size: contain;
     display: inline-block;
-    height: 27px;
+    height: 26px;
     font-size: 20px;
     line-height: 25px;
+    padding-top: 1px;
 }
 
 #label .right {
