@@ -82,7 +82,7 @@ video {
 #videosource {
     display: none block;
     position: absolute;
-    z-index: 2;
+    z-index: 1;
     pointer-events: all;
     background-color: transparent;
 }
@@ -106,7 +106,7 @@ video {
     right: 100px;
     width: 100px;
     height: 100px;
-    z-index: 1;
+    z-index: 3;
     pointer-events: all;
 }
 
@@ -126,7 +126,7 @@ video {
     height: 100%;
     pointer-events: all;
     background-color: transparent;
-    z-index: 3;
+    z-index: 2;
 }
 
 @font-face {
