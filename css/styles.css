@@ -120,6 +120,16 @@ video {
     z-index: 4;
 }
 
+#movetotouch {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 100px;
+    height: 100px;
+    pointer-events: all;
+    z-index: 4;
+}
+
 #sketchcontainer {
     position: absolute;
     width: 100%;
