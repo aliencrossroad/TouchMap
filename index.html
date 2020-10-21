@@ -84,26 +84,17 @@
                         }
                         visibleMarker();
 
-                        $('#pen').attr("alt", "touch");
-                        $('#pen').attr("srcset", "/image/finger.svg");
-                        enableSketch(false);
+                        PenEnable(false);
                     });
 
                 $('#pen')
                     .on('touchstart click', function(e) {
                         e.preventDefault();
                         if ($('#pen').attr("alt") == "touch") {
-                            $('#pen').attr("alt", "pen");
-                            $('#pen').attr("srcset", "/image/pencil.svg");
-                            enableSketch(true);
-                            $('#videosource').css("pointer-events", "none"); // 비디오에 판서 사용시 아웃 터치 안먹게
+                            PenEnable(true);
                         } else {
-                            $('#pen').attr("alt", "touch");
-                            $('#pen').attr("srcset", "/image/finger.svg");
-                            enableSketch(false);
-                            $('#videosource').css("pointer-events", "all");
+                            PenEnable(false);
                         }
-
                     });
 
                 $("#videosource").css("width", 0);
@@ -121,6 +112,20 @@
                             $("#videosource")[0].player.pause();
                         })
                     });
+
+                function PenEnable(flag) {
+                    if (flag == true) { // 펜
+                        $('#pen').attr("alt", "pen");
+                        $('#pen').attr("srcset", "/image/pencil.svg");
+                        enableSketch(true);
+                        $('#videosource').css("pointer-events", "none"); // 비디오에 판서 사용시 아웃 터치 안먹게
+                    } else { // 터치
+                        $('#pen').attr("alt", "touch");
+                        $('#pen').attr("srcset", "/image/finger.svg");
+                        enableSketch(false);
+                        $('#videosource').css("pointer-events", "all");
+                    }
+                }
 
                 function PrepareVideo(image_url) {
                     player.src({
