@@ -47,9 +47,27 @@
                 var mapTypeControl = new kakao.maps.MapTypeControl();
                 map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 
+                var player = videojs('videosource', {
+                        "controls": false,
+                        "autoplay": false,
+                        "preload": "auto",
+                        'html5': {
+                            'nativeAudioTracks': false
+                        }
+                    }, function onPlayerReady(e) {
+                        this.src({
+                            type: "application/x-mpegURL",
+                            src: ""
+                        });
+                        this.tech_.off('dblclick');
+                    }
+                );
+
                 $('#home')
                     .on('touchstart click', function(e) {
                         e.preventDefault();
+
+                        $('#videosource')[0].click();
 
                         // 현재 지도의 레벨을 얻어옵니다
                         var level = map.getLevel();
@@ -106,21 +124,11 @@
                     });
 
                 function PrepareVideo(image_url) {
-                    var player = videojs('videosource', {
-                        "controls": false,
-                        "autoplay": false,
-                        "preload": "auto",
-                        'html5': {
-                            'nativeAudioTracks': false
-                        }
-                    }, function onPlayerReady(e) {
-                        this.src({
+                    player.src({
                             type: "application/x-mpegURL",
                             src: image_url
                         });
-                        this.tech_.off('dblclick');
-                        this.play();
-                    });
+                    player.play();
                 }
 
                 function getDistance(mapoint1, mapoint2) {
