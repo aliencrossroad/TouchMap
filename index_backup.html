@@ -1,6 +1,4 @@
-<!-- https://github.com/aliencrossroad/TouchMap/ -->
 <!DOCTYPE html>
-<html>
 
 <head>
     <link href="css/video-js.css" rel="stylesheet" />
@@ -30,6 +28,7 @@
 
         var polygons = [];
         var markers = [];
+        var labels = [];
         var selectCenter;
         var mapInfo;
         var posX;
@@ -48,9 +47,26 @@
                 var mapTypeControl = new kakao.maps.MapTypeControl();
                 map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 
+                var player = videojs('videosource', {
+                    "controls": false,
+                    "autoplay": false,
+                    "preload": "auto",
+                    'html5': {
+                        'nativeAudioTracks': false
+                    }
+                }, function onPlayerReady(e) {
+                    this.src({
+                        type: "application/x-mpegURL",
+                        src: ""
+                    });
+                    this.tech_.off('dblclick');
+                });
+
                 $('#home')
                     .on('touchstart click', function(e) {
                         e.preventDefault();
+
+                        $('#videosource')[0].click();
 
                         // 현재 지도의 레벨을 얻어옵니다
                         var level = map.getLevel();
@@ -68,26 +84,17 @@
                         }
                         visibleMarker();
 
-                        $('#pen').attr("alt", "touch");
-                        $('#pen').attr("srcset", "/image/finger.svg");
-                        enableSketch(false);
+                        PenEnable(false);
                     });
 
                 $('#pen')
                     .on('touchstart click', function(e) {
                         e.preventDefault();
                         if ($('#pen').attr("alt") == "touch") {
-                            $('#pen').attr("alt", "pen");
-                            $('#pen').attr("srcset", "/image/pencil.svg");
-                            enableSketch(true);
-                            $('#videosource').css("pointer-events", "none"); // 비디오에 판서 사용시 아웃 터치 안먹게
+                            PenEnable(true);
                         } else {
-                            $('#pen').attr("alt", "touch");
-                            $('#pen').attr("srcset", "/image/finger.svg");
-                            enableSketch(false);
-                            $('#videosource').css("pointer-events", "all");
+                            PenEnable(false);
                         }
-
                     });
 
                 $("#videosource").css("width", 0);
@@ -106,22 +113,26 @@
                         })
                     });
 
+                function PenEnable(flag) {
+                    if (flag == true) { // 펜
+                        $('#pen').attr("alt", "pen");
+                        $('#pen').attr("srcset", "/image/pencil.svg");
+                        enableSketch(true);
+                        $('#videosource').css("pointer-events", "none"); // 비디오에 판서 사용시 아웃 터치 안먹게
+                    } else { // 터치
+                        $('#pen').attr("alt", "touch");
+                        $('#pen').attr("srcset", "/image/finger.svg");
+                        enableSketch(false);
+                        $('#videosource').css("pointer-events", "all");
+                    }
+                }
+
                 function PrepareVideo(image_url) {
-                    var player = videojs('videosource', {
-                        "controls": false,
-                        "autoplay": false,
-                        "preload": "auto",
-                        'html5': {
-                            'nativeAudioTracks': false
-                        }
-                    }, function onPlayerReady(e) {
-                        this.src({
-                            type: "application/x-mpegURL",
-                            src: image_url
-                        });
-                        this.tech_.off('dblclick');
-                        this.play();
+                    player.src({
+                        type: "application/x-mpegURL",
+                        src: image_url
                     });
+                    player.play();
                 }
 
                 function getDistance(mapoint1, mapoint2) {
@@ -266,6 +277,7 @@
                 function insertMarker() {
                     for (var sidoName in mapInfo) {
                         markers[sidoName] = [];
+                        labels[sidoName] = [];
                         for (var iter in mapInfo[sidoName]['cameraInfo']) {
                             var camera = mapInfo[sidoName]['cameraInfo'][iter];
 
@@ -290,6 +302,19 @@
 
                             marker.setVisible(false);
                             markers[sidoName].push(marker);
+
+                            // ----------------------------------- 커스텀 오버레이 테스트
+                            var content = '<div id="label"><span class="left"></span><span class="center">' + camera.name + '</span><span class="right"></span></div>';
+                            var customOverlay = new kakao.maps.CustomOverlay({
+                                map: map,
+                                position: markerPosition,
+                                content: content
+                            });
+
+                            customOverlay.setVisible(false);
+                            customOverlay.setMap(map);
+                            labels[sidoName].push(customOverlay);
+                            // ------------------------------------ 
                         }
                     }
                 }
@@ -317,9 +342,11 @@
                     for (var sido in markers) {
                         var bVisible = (sido == sidoName);
                         var cameraList = markers[sido];
+                        var labelList = labels[sido];
 
                         for (var iter in cameraList) {
                             cameraList[iter].setVisible(bVisible);
+                            labelList[iter].setVisible(bVisible);
                         }
                     }
                 }

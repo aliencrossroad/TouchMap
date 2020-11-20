@@ -18,6 +18,12 @@
                 "url": "http://live1.exmobile.hscdn.com/exlive/cctv0001.stream/playlist.m3u8",
                 "lan": 37.483486,
                 "lon": 127.026068
+            },
+            {
+                "name": "[수도권제1순환선] 송파",
+                "url": "http://cctvsec.ktict.co.kr/4/s/LxXi0q6AxIKn3bCJYNzFCW3kPWpDE6ngY/cvMmalj1yMy0VEJR20d9nn3CrR/c",
+                "lan": 37.475,
+                "lon": 127.12944
             }
         ]
     },
@@ -40,6 +46,13 @@
                 "url": "http://live1.exmobile.hscdn.com/exlive/cctv0038.stream/chunklist_w630103203.m3u8",
                 "lan": 37.178491,
                 "lon": 127.095915
+
+            },
+            {
+                "name": "[수도권제1순환선] 성남",
+                "url": "http://cctvsec.ktict.co.kr:8081/openapix008/2/chunks.m3u8?nimblesessionid=5826198&wmsAuthSign=c2VydmVyX3RpbWU9MTEvMTkvMjAyMCA3OjU4OjUxIEFNJmhhc2hfdmFsdWU9R3dQU2h3c3QwTk5ic3ladGt2R1hhUT09JnZhbGlkbWludXRlcz0xNTYwJmlkPTE2MDU3NjE4Nzc3ODQtMTYwNTc3NjMzMTkyOS0yJmNoZWNraXA9dHJ1ZQ==",
+                "lan": 37.42889,
+                "lon": 127.12361
             }
         ]
     },
