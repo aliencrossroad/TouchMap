@@ -1,0 +1,43 @@
+#addItem,
+#deleteItem {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    padding-left: 9px;
+    padding-right: 9px;
+    font: normal normal 18px label;
+}
+
+#saveData {
+    float: right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    padding-left: 9px;
+    padding-right: 9px;
+    font: normal normal 18px label;
+}
+
+#label {
+    font: normal normal 18px label;
+    margin-left: 58px;
+    margin-top: 2px;
+    color: white;
+}
+
+@font-face {
+    font-family: label;
+    src: local("나눔스퀘어 ExtraBold"), url('Font/NanumSquareEB.ttf');
+}
+
+@font-face {
+    font-family: label;
+    src: local("helvetica, sans-serif");
+    unicode-range: U+0020-007E;
+    font-style: normal;
+}

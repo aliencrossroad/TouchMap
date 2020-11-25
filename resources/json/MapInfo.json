@@ -5,25 +5,29 @@
                 "name": "잠수교",
                 "url": "http://211.181.145.26:7080/bZEawXiPLhFbEaUDb7E1AJalBaZcpxPCzNb2CYbG7bY=.m3u8",
                 "lan": 37.514882,
-                "lon": 126.985
+                "lon": 126.985,
+                "visible": true
             },
             {
                 "name": "중랑교",
                 "url": "http://211.181.145.26:7080/TrRM8djzdGnfB4rJ1jSo+IHJnqmoxvKguv12xdM6XBM=.m3u8",
                 "lan": 37.593270,
-                "lon": 127.070299
+                "lon": 127.070299,
+                "visible": true
             },
             {
                 "name": "서초IC",
                 "url": "http://live1.exmobile.hscdn.com/exlive/cctv0001.stream/playlist.m3u8",
                 "lan": 37.483486,
-                "lon": 127.026068
+                "lon": 127.026068,
+                "visible": true
             },
             {
                 "name": "[수도권제1순환선] 송파",
                 "url": "http://cctvsec.ktict.co.kr/4/s/LxXi0q6AxIKn3bCJYNzFCW3kPWpDE6ngY/cvMmalj1yMy0VEJR20d9nn3CrR/c",
                 "lan": 37.475,
-                "lon": 127.12944
+                "lon": 127.12944,
+                "visible": true
             }
         ]
     },
@@ -33,26 +37,30 @@
                 "name": "통일대교",
                 "url": "http://211.181.145.26:7080/gQDmTZGWixjPRKqxS9zt0E/YWzX4t7wcX44mhXgCJdM=.m3u8",
                 "lan": 37.903625,
-                "lon": 126.742720
+                "lon": 126.742720,
+                "visible": true
             },
             {
                 "name": "영평교",
                 "url": "http://211.181.145.26:7080/gx/vnC8fzPLaPnlV7r5iAhP4NDo00OfEcN25OwrOwdc=.m3u8",
                 "lan": 38.011051,
-                "lon": 127.214506
+                "lon": 127.214506,
+                "visible": true
             },
             {
                 "name": "동탄JC",
                 "url": "http://live1.exmobile.hscdn.com/exlive/cctv0038.stream/chunklist_w630103203.m3u8",
                 "lan": 37.178491,
-                "lon": 127.095915
+                "lon": 127.095915,
+                "visible": true
 
             },
             {
                 "name": "[수도권제1순환선] 성남",
                 "url": "http://cctvsec.ktict.co.kr:8081/openapix008/2/chunks.m3u8?nimblesessionid=5826198&wmsAuthSign=c2VydmVyX3RpbWU9MTEvMTkvMjAyMCA3OjU4OjUxIEFNJmhhc2hfdmFsdWU9R3dQU2h3c3QwTk5ic3ladGt2R1hhUT09JnZhbGlkbWludXRlcz0xNTYwJmlkPTE2MDU3NjE4Nzc3ODQtMTYwNTc3NjMzMTkyOS0yJmNoZWNraXA9dHJ1ZQ==",
                 "lan": 37.42889,
-                "lon": 127.12361
+                "lon": 127.12361,
+                "visible": true
             }
         ]
     },
@@ -62,7 +70,8 @@
             "name": "홍천교",
             "url": "http://211.181.145.26:7080/NkNWOq3qJ7asafu3as168yBGLEkPztewqGhVjK2PldM=.m3u8",
             "lan": 37.687898,
-            "lon": 127.879109
+            "lon": 127.879109,
+            "visible": true
         }]
     },
     "경상남도": {
@@ -83,7 +92,8 @@
             "name": "어등산호남대터널",
             "url": "http://live5.exmobile.hscdn.com/exlive/cctv5503.stream/chunklist_w1789211123.m3u8",
             "lan": 35.155634,
-            "lon": 126.767955
+            "lon": 126.767955,
+            "visible": true
         }]
     },
     "대구광역시": {
@@ -146,7 +156,8 @@
             "name": "목계교",
             "url": "http://211.181.145.26:7080/aW60Wd8JxAEPq9iUxLCAxuWApvqAMoNtqc4WdNaD2qE=.m3u8",
             "lan": 37.076169,
-            "lon": 127.880958
+            "lon": 127.880958,
+            "visible": true
         }]
     },
     "세종특별자치시": {
