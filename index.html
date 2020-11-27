@@ -286,9 +286,10 @@
                         labels[sidoName] = [];
                         for (var iter in mapInfo[sidoName]['cameraInfo']) {
                             var camera = mapInfo[sidoName]['cameraInfo'][iter];
+                            if (camera.visible == false) {
+                                continue;
+                            }
 
-                            // var imageSrc = './image/camera_68.png';
-                            // var imageSize = new kakao.maps.Size(64, 64);
                             var imageSrc = './image/cctv_icon.png';
                             var imageSize = new kakao.maps.Size(68, 72);
                             var imageOption = {
