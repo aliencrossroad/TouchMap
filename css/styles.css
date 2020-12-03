@@ -102,9 +102,19 @@ video {
     height: 100%;
 }
 
+#maptype {
+    position: fixed;
+    top: 130px;
+    right: 100px;
+    width: 100px;
+    height: 100px;
+    z-index: 3;
+    pointer-events: all;
+}
+
 #home {
     position: fixed;
-    top: 100px;
+    top: 260px;
     right: 100px;
     width: 100px;
     height: 100px;
@@ -114,7 +124,7 @@ video {
 
 #pen {
     position: fixed;
-    top: 230px;
+    top: 390px;
     right: 100px;
     width: 100px;
     height: 100px;

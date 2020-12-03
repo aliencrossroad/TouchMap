@@ -44,8 +44,8 @@
 
                 // 지도를 생성합니다    
                 var map = new kakao.maps.Map(mapContainer, mapOption);
-                var mapTypeControl = new kakao.maps.MapTypeControl();
-                map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+                //var mapTypeControl = new kakao.maps.MapTypeControl();
+                //map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 
                 var player = videojs('videosource', {
                     "controls": false,
@@ -106,6 +106,16 @@
                         }
                     });
 
+                $('#maptype')
+                    .on('touchstart click', function(e) {
+                        e.preventDefault();
+                        if ($('#maptype').attr("alt") == "roadmap") {
+                            ChangeMaptype("skyview");
+                        } else {
+                            ChangeMaptype("roadmap");
+                        }
+                    });
+
                 $("#videosource").css("width", 0);
                 $("#videosource").css("height", 0);
                 $('#videosource')
@@ -125,14 +135,35 @@
                 function PenEnable(flag) {
                     if (flag == true) { // 펜
                         $('#pen').attr("alt", "pen");
-                        $('#pen').attr("srcset", "/image/pencil.svg");
+                        $('#pen').attr("src", "/image/pen.png");
                         enableSketch(true);
                         $('#videosource').css("pointer-events", "none"); // 비디오에 판서 사용시 아웃 터치 안먹게
                     } else { // 터치
                         $('#pen').attr("alt", "touch");
-                        $('#pen').attr("srcset", "/image/finger.svg");
+                        $('#pen').attr("src", "/image/touch.png");
                         enableSketch(false);
                         $('#videosource').css("pointer-events", "all");
+                    }
+                }
+
+                function ChangeMaptype(maptype) {
+                    var roadmapControl = document.getElementById('btnRoadmap');
+                    var skyviewControl = document.getElementById('btnSkyview');
+                    if (maptype === 'roadmap') {
+                        map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP);
+                        roadmapControl.className = 'selected_btn';
+                        skyviewControl.className = 'btn';
+
+                        $('#maptype').attr("alt", "roadmap");
+                        $('#maptype').attr("src", "/image/map_01.png");
+
+                    } else {
+                        map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);
+                        skyviewControl.className = 'selected_btn';
+                        roadmapControl.className = 'btn';
+
+                        $('#maptype').attr("alt", "skyview");
+                        $('#maptype').attr("src", "/image/map_02.png");
                     }
                 }
 
@@ -448,14 +479,19 @@
 
 <body>
     <div id="map"></div>
+    <div class="custom_typecontrol radius_border">
+        <span id="btnRoadmap" class="selected_btn" onclick="setMapType('roadmap')">지도</span>
+        <span id="btnSkyview" class="btn" onclick="setMapType('skyview')">스카이뷰</span>
+    </div>
     <aside class="toplayer">
         <div class="videolayer">
             <video id='videosource' class="video-js" preload="auto" data-setup='{"fluid": true}'></video>
         </div>
         <div class="menulayer">
             <div id="sketchcontainer"></div>
-            <img id="home" src="/image/globe.png" alt="home image" srcset="/image/globe.svg">
-            <img id="pen" src="/image/finger.png" alt="touch" srcset="/image/finger.svg">
+            <img id="maptype" src="/image/map_01.png" alt="roadmap">
+            <img id="home" src="/image/home.png" alt="home image">
+            <img id="pen" src="/image/touch.png" alt="touch">
         </div>
     </aside>
 </body>
