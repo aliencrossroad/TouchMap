@@ -15,13 +15,16 @@
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
     <script type="text/javascript" charset="utf-8">
+        var mapdataServer = "http://10.10.9.145:3000";
         var mapInfo;
         var agrid;
+        var DBdata;
+        var selectedDBdata;
 
         // 칼럼정의
         var columnDefs = [{
             headerName: "시도",
-            field: "sido",
+            field: "sidoname",
             sortable: true,
             editable: true,
             filter: true,
@@ -81,21 +84,45 @@
             var eGridDiv = document.querySelector('#myGrid');
             agrid = new agGrid.Grid(eGridDiv, gridOptions);
 
-            agGrid
-                .simpleHttpRequest({
-                    url: 'resources/json/MapInfo.json'
-                })
-                .then(function(data) {
-                    MakeCameraDataListFromMapInfo(data);
-                    gridOptions.api.setRowData(rowData);
+            GetAllMapsFromDB();
+
+            // 맵데이터를 선택하면 해당 데이터를 가져와서 그리드에 뿌려줌
+            $('#mapcombobox')
+                .on('change', function(e) {
+
+                    $.ajax({
+                        type: "GET",
+                        contentType: "application/json;charset=utf-8",
+                        url: mapdataServer + "/mapinfos",
+                        dataType: 'json',
+                        async: false,
+                        success: function(data) {
+                            DBdata = data;
+                        }
+                    });
+
+                    DBdata.forEach(mapinfo => {
+                        if (mapinfo.mapname == this.value) {
+                            selectedDBdata = mapinfo;
+                            mapInfo = MakeMapInfoFromDBData(selectedDBdata);
+                        }
+                    });
+
+                    //ShowMapDataFromJson();
+                    gridOptions.api.setRowData([]);
+
+                    MakeMapInfoFromDBData(selectedDBdata);
+                    MakeCameraDataListFromMapInfo(mapInfo);
+                    agrid.gridOptions.api.setRowData(rowData);
                 });
         })
 
         function MakeCameraDataListFromMapInfo(data) {
+            rowData = [];
             for (var sidoName in data) {
                 for (var iter in data[sidoName]['cameraInfo']) {
                     rowData.push({
-                        sido: sidoName,
+                        sidoname: data[sidoName].sidoname,
                         name: data[sidoName]['cameraInfo'][iter].name,
                         url: data[sidoName]['cameraInfo'][iter].url,
                         lan: data[sidoName]['cameraInfo'][iter].lan,
@@ -105,6 +132,71 @@
                 }
             }
         }
+
+        function MakeMapInfoFromDBData(DBdata) {
+            mapInfo = JSON.parse(JSON.stringify(DBdata.sidolist));
+        }
+
+        function GetAllMapsFromDB() {
+            $.ajax({
+                type: "GET",
+                url: mapdataServer + "/mapinfos",
+                dataType: 'json',
+                async: false,
+                success: function(json) {
+                    DBdata = json;
+                }
+            });
+
+            var select = document.getElementById("mapcombobox");
+            $('#mapcombobox option').remove();
+            var option = document.createElement('option');
+            option.value = option.text = "맵선택";
+            select.appendChild(option);
+
+            DBdata.forEach(element => {
+                option = document.createElement('option');
+                option.value = option.text = element.mapname;
+                select.appendChild(option);
+            });
+        }
+
+        function ShowMapDataFromJson() {
+            var eGridDiv = document.querySelector('#myGrid');
+            agrid = new agGrid.Grid(eGridDiv, gridOptions);
+
+            agGrid
+                .simpleHttpRequest({
+                    url: 'resources/json/MapInfo.json'
+                })
+                .then(function(data) {
+                    MakeCameraDataListFromMapInfo(data);
+                    gridOptions.api.setRowData(rowData);
+                });
+        }
+
+        function getZoomLevel(sidoname) {
+            let zoomlevel = {
+                "서울특별시": 9,
+                "경기도": 11,
+                "강원도": 11,
+                "경상남도": 11,
+                "경상북도": 11,
+                "광주광역시": 10,
+                "대구광역시": 10,
+                "대전광역시": 9,
+                "부산광역시": 9,
+                "울산광역시": 9,
+                "인천광역시": 9,
+                "전라남도": 11,
+                "전라북도": 10,
+                "제주특별자치도": 9,
+                "충청남도": 10,
+                "충청북도": 11,
+                "세종특별자치시": 9
+            };
+            return zoomlevel[sidoname];
+        }
     </script>
 </head>
 
@@ -112,6 +204,11 @@
     <div class="buttons">
         <button id="addItem" onclick="onAddCamera()">Add Camera</button>
         <button id="deleteItem" onclick="onDeleteCamera()">Delete Camera</button>
+
+        <select name="maplist" id="mapcombobox">
+            <option value="">맵선택</option>
+        </select>
+
         <button id="saveData" onclick="onSaveData()">Save Data</button>
     </div>
     <div id="myGrid" style="height: 600px; width:100%;" class="ag-theme-alpine"></div>
@@ -119,7 +216,7 @@
     <script>
         function onAddCamera() {
             let newRow = {
-                sido: "서울특별시",
+                sidoname: "서울특별시",
                 name: "",
                 url: "",
                 lan: 0,
@@ -144,26 +241,48 @@
         }
 
         function onSaveData() {
-            MakeMapInfoFromCameraDataList(rowData);
+            MakeDBDataFromCameraDataList(rowData);
 
-            $.ajax({
-                type: "POST",
-                url: "/js/saveConfig.js",
-                data: {
-                    mapInfo
-                }
-            });
+            // -1이면 create로
+            // 아니면 id로 찾아서 수정으로            
+            if (selectedDBdata.id == -1) {
+                $.ajax({
+                    type: "GET",
+                    contentType: "application/json;charset=utf-8",
+                    url: mapdataServer + "/mapinfos/count",
+                    async: false,
+                    success: function(count) {
+                        selectedDBdata.id = count.count + 1;
+                    }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    url: mapdataServer + "/mapinfos",
+                    data: JSON.stringify(MakeDBDataFromCameraDataList(rowData)),
+                    dataType: 'json'
+                });
+            } else {
+                $.ajax({
+                    type: "PATCH",
+                    contentType: "application/json;charset=utf-8",
+                    url: mapdataServer + "/mapinfos/" + selectedDBdata.id,
+                    data: JSON.stringify(MakeDBDataFromCameraDataList(rowData)),
+                    dataType: 'json'
+                });
+            }
         }
 
         function MakeMapInfoFromCameraDataList(rowData) {
             mapInfo = [];
-            rowData.forEach(data => {
-                if (mapInfo.includes(data.sido) == false) {
-                    mapInfo.push(data.sido);
-                    mapInfo[data.sido] = [];
+            rowData.forEach(element => {
+                if (mapInfo.includes(element.sidoname) == false) {
+                    mapInfo.push(element.sidoname);
+                    mapInfo[element.sidoname] = [];
                 }
 
-                mapInfo[data.sido].push({
+                mapInfo[data.sidoname].push({
                     "name": data.name,
                     "url": data.url,
                     "lan": data.lan,
@@ -171,6 +290,47 @@
                     "visible": data.visible
                 });
             });
+        }
+
+        function MakeDBDataFromCameraDataList(rowData) {
+
+            var ADBdata = {
+                id: -1,
+                mapname: "newmap",
+                sidolist: []
+            };
+
+            // 선택된 데이터가 없으면 새 데이터로
+            if (selectedDBdata != undefined) {
+                ADBdata.id = selectedDBdata.id;
+                ADBdata.mapname = selectedDBdata.mapname;
+            }
+
+            rowData.forEach(element => {
+                if (ADBdata.sidolist.some(e => e.sidoname === element.sidoname) == false) {
+                    ADBdata.sidolist.push({
+                        sidoname: element.sidoname,
+                        zoomlevel: getZoomLevel(element.sidoname),
+                        cameraInfo: []
+                    });
+                }
+
+                var i;
+                for (i = 0; i < ADBdata.sidolist.length; i++) {
+                    if (ADBdata.sidolist[i].sidoname === element.sidoname) {
+                        ADBdata.sidolist[i].cameraInfo.push({
+                            "name": element.name,
+                            "url": element.url,
+                            "lan": element.lan,
+                            "lon": element.lon,
+                            "visible": element.visible
+                        });
+
+                    }
+                }
+            });
+
+            return ADBdata;
         }
     </script>
 </body>
