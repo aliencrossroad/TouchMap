@@ -15,7 +15,7 @@
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
     <script type="text/javascript" charset="utf-8">
-        var mapdataServer = "http://10.10.9.145:3000";
+        var mapdataServer = "http://localhost:3000";
         var mapInfo;
         var agrid;
         var DBdata;
@@ -77,7 +77,8 @@
 
         var gridOptions = {
             columnDefs: columnDefs,
-            rowSelection: 'multiple'
+            rowSelection: 'multiple',
+            domLayout: 'autoHeight',
         };
 
         $(document).ready(function() {
@@ -197,23 +198,7 @@
             };
             return zoomlevel[sidoname];
         }
-    </script>
-</head>
 
-<body>
-    <div class="buttons">
-        <button id="addItem" onclick="onAddCamera()">Add Camera</button>
-        <button id="deleteItem" onclick="onDeleteCamera()">Delete Camera</button>
-
-        <select name="maplist" id="mapcombobox">
-            <option value="">맵선택</option>
-        </select>
-
-        <button id="saveData" onclick="onSaveData()">Save Data</button>
-    </div>
-    <div id="myGrid" style="height: 600px; width:100%;" class="ag-theme-alpine"></div>
-
-    <script>
         function onAddCamera() {
             let newRow = {
                 sidoname: "서울특별시",
@@ -333,6 +318,25 @@
             return ADBdata;
         }
     </script>
+</head>
+
+<body>
+    <header>
+        <div class="buttons">
+            <button id="addItem" onclick="onAddCamera()">Add Camera</button>
+            <button id="deleteItem" onclick="onDeleteCamera()">Delete Camera</button>
+
+            <select name="maplist" id="mapcombobox">
+                <option value="">맵선택</option>
+            </select>
+
+            <button id="saveData" onclick="onSaveData()">Save Data</button>
+        </div>
+    </header>
+
+    <main>
+        <div id="myGrid"  class="ag-theme-alpine"></div>
+    </main> 
 </body>
 
 </html>
