@@ -1,0 +1,1080 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "dataserver",
+    "version": "0.0.1",
+    "description": "dataserver",
+    "contact": {
+      "name": "aliencrossroad",
+      "email": "einlee@gmail.com"
+    }
+  },
+  "paths": {
+    "/cameralist/count": {
+      "get": {
+        "x-controller-name": "CameralistController",
+        "x-operation-name": "count",
+        "tags": [
+          "CameralistController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Cameralist model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Cameralist.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Cameralist>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "CameralistController.count"
+      }
+    },
+    "/cameralist/{id}": {
+      "put": {
+        "x-controller-name": "CameralistController",
+        "x-operation-name": "replaceById",
+        "tags": [
+          "CameralistController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Cameralist PUT success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Cameralist"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "CameralistController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "CameralistController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "CameralistController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Cameralist PATCH success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CameralistPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "CameralistController.updateById"
+      },
+      "get": {
+        "x-controller-name": "CameralistController",
+        "x-operation-name": "findById",
+        "tags": [
+          "CameralistController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Cameralist model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CameralistWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cameralist.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "CameralistController.findById"
+      },
+      "delete": {
+        "x-controller-name": "CameralistController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "CameralistController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Cameralist DELETE success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "CameralistController.deleteById"
+      }
+    },
+    "/cameralist": {
+      "post": {
+        "x-controller-name": "CameralistController",
+        "x-operation-name": "create",
+        "tags": [
+          "CameralistController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Cameralist model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cameralist"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewCameralist"
+              }
+            }
+          }
+        },
+        "operationId": "CameralistController.create"
+      },
+      "patch": {
+        "x-controller-name": "CameralistController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "CameralistController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Cameralist PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Cameralist.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Cameralist>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CameralistPartial"
+              }
+            }
+          }
+        },
+        "operationId": "CameralistController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "CameralistController",
+        "x-operation-name": "find",
+        "tags": [
+          "CameralistController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Cameralist model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CameralistWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cameralist.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "CameralistController.find"
+      }
+    },
+    "/ping": {
+      "get": {
+        "x-controller-name": "PingController",
+        "x-operation-name": "ping",
+        "tags": [
+          "PingController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ping Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PingResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "PingController.ping"
+      }
+    },
+    "/sidolist/count": {
+      "get": {
+        "x-controller-name": "SidolistController",
+        "x-operation-name": "count",
+        "tags": [
+          "SidolistController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sidolist model count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Sidolist.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Sidolist>"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "SidolistController.count"
+      }
+    },
+    "/sidolist/{id}": {
+      "put": {
+        "x-controller-name": "SidolistController",
+        "x-operation-name": "replaceById",
+        "tags": [
+          "SidolistController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Sidolist PUT success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Sidolist"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "SidolistController.replaceById"
+      },
+      "patch": {
+        "x-controller-name": "SidolistController",
+        "x-operation-name": "updateById",
+        "tags": [
+          "SidolistController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Sidolist PATCH success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SidolistPartial"
+              }
+            }
+          },
+          "x-parameter-index": 1
+        },
+        "operationId": "SidolistController.updateById"
+      },
+      "get": {
+        "x-controller-name": "SidolistController",
+        "x-operation-name": "findById",
+        "tags": [
+          "SidolistController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sidolist model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SidolistWithRelations"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sidolist.Filter"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "SidolistController.findById"
+      },
+      "delete": {
+        "x-controller-name": "SidolistController",
+        "x-operation-name": "deleteById",
+        "tags": [
+          "SidolistController"
+        ],
+        "responses": {
+          "204": {
+            "description": "Sidolist DELETE success"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "number"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "SidolistController.deleteById"
+      }
+    },
+    "/sidolist": {
+      "post": {
+        "x-controller-name": "SidolistController",
+        "x-operation-name": "create",
+        "tags": [
+          "SidolistController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sidolist model instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sidolist"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewSidolist"
+              }
+            }
+          }
+        },
+        "operationId": "SidolistController.create"
+      },
+      "patch": {
+        "x-controller-name": "SidolistController",
+        "x-operation-name": "updateAll",
+        "tags": [
+          "SidolistController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sidolist PATCH success count",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loopback.Count"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Sidolist.WhereFilter",
+                  "additionalProperties": true,
+                  "x-typescript-type": "@loopback/repository#Where<Sidolist>"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SidolistPartial"
+              }
+            }
+          }
+        },
+        "operationId": "SidolistController.updateAll"
+      },
+      "get": {
+        "x-controller-name": "SidolistController",
+        "x-operation-name": "find",
+        "tags": [
+          "SidolistController"
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of Sidolist model instances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SidolistWithRelations"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sidolist.Filter1"
+                }
+              }
+            }
+          }
+        ],
+        "operationId": "SidolistController.find"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Cameralist": {
+        "title": "Cameralist",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "cameralist": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "cameralist"
+        ],
+        "additionalProperties": false
+      },
+      "NewCameralist": {
+        "title": "NewCameralist",
+        "type": "object",
+        "description": "(tsType: Omit<Cameralist, 'id'>, schemaOptions: { title: 'NewCameralist', exclude: [ 'id' ] })",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "cameralist": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "cameralist"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Cameralist, 'id'>"
+      },
+      "CameralistWithRelations": {
+        "title": "CameralistWithRelations",
+        "type": "object",
+        "description": "(tsType: CameralistWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "cameralist": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "cameralist"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "CameralistWithRelations"
+      },
+      "CameralistPartial": {
+        "title": "CameralistPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Cameralist>, schemaOptions: { partial: true })",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "cameralist": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Cameralist>"
+      },
+      "Sidolist": {
+        "title": "Sidolist",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "sidolist": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "sidolist"
+        ],
+        "additionalProperties": false
+      },
+      "NewSidolist": {
+        "title": "NewSidolist",
+        "type": "object",
+        "description": "(tsType: Omit<Sidolist, 'id'>, schemaOptions: { title: 'NewSidolist', exclude: [ 'id' ] })",
+        "properties": {
+          "sidolist": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "sidolist"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "Omit<Sidolist, 'id'>"
+      },
+      "SidolistWithRelations": {
+        "title": "SidolistWithRelations",
+        "type": "object",
+        "description": "(tsType: SidolistWithRelations, schemaOptions: { includeRelations: true })",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "sidolist": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "sidolist"
+        ],
+        "additionalProperties": false,
+        "x-typescript-type": "SidolistWithRelations"
+      },
+      "SidolistPartial": {
+        "title": "SidolistPartial",
+        "type": "object",
+        "description": "(tsType: Partial<Sidolist>, schemaOptions: { partial: true })",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "sidolist": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "Partial<Sidolist>"
+      },
+      "loopback.Count": {
+        "type": "object",
+        "title": "loopback.Count",
+        "x-typescript-type": "@loopback/repository#Count",
+        "properties": {
+          "count": {
+            "type": "number"
+          }
+        }
+      },
+      "Cameralist.Filter": {
+        "type": "object",
+        "title": "Cameralist.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "cameralist": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "id",
+                    "name",
+                    "cameralist"
+                  ],
+                  "example": "id"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "Cameralist.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Cameralist>"
+      },
+      "Cameralist.Filter1": {
+        "type": "object",
+        "title": "Cameralist.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "Cameralist.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "name": {
+                    "type": "boolean"
+                  },
+                  "cameralist": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "id",
+                    "name",
+                    "cameralist"
+                  ],
+                  "example": "id"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "Cameralist.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Cameralist>"
+      },
+      "PingResponse": {
+        "type": "object",
+        "title": "PingResponse",
+        "properties": {
+          "greeting": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "headers": {
+            "type": "object",
+            "properties": {
+              "Content-Type": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "Sidolist.Filter": {
+        "type": "object",
+        "title": "Sidolist.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "sidolist": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "id",
+                    "sidolist"
+                  ],
+                  "example": "id"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "Sidolist.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Sidolist>"
+      },
+      "Sidolist.Filter1": {
+        "type": "object",
+        "title": "Sidolist.Filter",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 100
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "order": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "where": {
+            "title": "Sidolist.WhereFilter",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "fields": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "boolean"
+                  },
+                  "sidolist": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "id",
+                    "sidolist"
+                  ],
+                  "example": "id"
+                },
+                "uniqueItems": true
+              }
+            ],
+            "title": "Sidolist.Fields"
+          }
+        },
+        "additionalProperties": false,
+        "x-typescript-type": "@loopback/repository#Filter<Sidolist>"
+      }
+    }
+  }
+}

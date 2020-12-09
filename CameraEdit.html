@@ -19,7 +19,13 @@
         var mapInfo;
         var agrid;
         var DBdata;
-        var selectedDBdata;
+        var selectedDBdata = {
+            id: undefined,
+            name: "",
+            cameralist: []
+        };
+
+        var onairname = "방송용";
 
         // 칼럼정의
         var columnDefs = [{
@@ -85,36 +91,36 @@
             var eGridDiv = document.querySelector('#myGrid');
             agrid = new agGrid.Grid(eGridDiv, gridOptions);
 
-            GetAllMapsFromDB();
+            UpdateMapNames();
+            gridOptions.api.setRowData(selectedDBdata.cameralist); // 데이터 초기화
 
             // 맵데이터를 선택하면 해당 데이터를 가져와서 그리드에 뿌려줌
             $('#mapcombobox')
                 .on('change', function(e) {
+                    // 선택 메뉴가 맵선택이면 새리스트
+                    if (this.value === "맵선택") {
+                        selectedDBdata = {
+                            id: undefined,
+                            name: "",
+                            cameralist: []
+                        };
+                        gridOptions.api.setRowData(selectedDBdata.cameralist);
+                        return;
+                    }
 
-                    $.ajax({
-                        type: "GET",
-                        contentType: "application/json;charset=utf-8",
-                        url: mapdataServer + "/mapinfos",
-                        dataType: 'json',
-                        async: false,
-                        success: function(data) {
-                            DBdata = data;
-                        }
-                    });
+                    selectedDBdata = GetSelectedMapFromDB(this.value);
+                    // $.ajax({
+                    //     type: "GET",
+                    //     contentType: "application/json;charset=utf-8",
+                    //     url: mapdataServer + "/cameralist?filter={\"where\": {\"name\": \"" + this.value + "\"}}",
+                    //     dataType: 'json',
+                    //     async: false,
+                    //     success: function(data) {
+                    //         selectedDBdata = data[0];
+                    //     }
+                    // });
 
-                    DBdata.forEach(mapinfo => {
-                        if (mapinfo.mapname == this.value) {
-                            selectedDBdata = mapinfo;
-                            mapInfo = MakeMapInfoFromDBData(selectedDBdata);
-                        }
-                    });
-
-                    //ShowMapDataFromJson();
-                    gridOptions.api.setRowData([]);
-
-                    MakeMapInfoFromDBData(selectedDBdata);
-                    MakeCameraDataListFromMapInfo(mapInfo);
-                    agrid.gridOptions.api.setRowData(rowData);
+                    agrid.gridOptions.api.setRowData(selectedDBdata.cameralist);
                 });
         })
 
@@ -134,20 +140,12 @@
             }
         }
 
-        function MakeMapInfoFromDBData(DBdata) {
-            mapInfo = JSON.parse(JSON.stringify(DBdata.sidolist));
-        }
+        // function MakeMapInfoFromDBData(DBdata) {
+        //     mapInfo = JSON.parse(JSON.stringify(DBdata.cameralist));
+        // }
 
-        function GetAllMapsFromDB() {
-            $.ajax({
-                type: "GET",
-                url: mapdataServer + "/mapinfos",
-                dataType: 'json',
-                async: false,
-                success: function(json) {
-                    DBdata = json;
-                }
-            });
+        function UpdateMapNames() {
+            let maplist = GetAllMapNamesFromDB();
 
             var select = document.getElementById("mapcombobox");
             $('#mapcombobox option').remove();
@@ -155,9 +153,9 @@
             option.value = option.text = "맵선택";
             select.appendChild(option);
 
-            DBdata.forEach(element => {
+            maplist.forEach(element => {
                 option = document.createElement('option');
-                option.value = option.text = element.mapname;
+                option.value = option.text = element.name;
                 select.appendChild(option);
             });
         }
@@ -201,15 +199,16 @@
 
         function onAddCamera() {
             let newRow = {
-                sidoname: "서울특별시",
                 name: "",
                 url: "",
                 lan: 0,
                 lon: 0,
-                visible: true
+                visible: true,
+                sidocode: 1,
+                sidoname: "서울특별시"
             };
-            rowData.push(newRow);
-            gridOptions.api.setRowData(rowData);
+            selectedDBdata.cameralist.push(newRow);
+            gridOptions.api.setRowData(selectedDBdata.cameralist);
         }
 
         function onDeleteCamera() {
@@ -219,44 +218,165 @@
             }
 
             selectedRows.reverse().forEach(function(selectedRow) {
-                rowData.splice(selectedRow.rowIndex, 1);
+                selectedDBdata.cameralist.splice(selectedRow.rowIndex, 1);
             });
 
-            gridOptions.api.setRowData(rowData);
+            gridOptions.api.setRowData(selectedDBdata.cameralist);
+        }
+
+        function onDeleteData() {
+            DeleteMapOnDB();
         }
 
         function onSaveData() {
-            MakeDBDataFromCameraDataList(rowData);
-
-            // -1이면 create로
-            // 아니면 id로 찾아서 수정으로            
-            if (selectedDBdata.id == -1) {
-                $.ajax({
-                    type: "GET",
-                    contentType: "application/json;charset=utf-8",
-                    url: mapdataServer + "/mapinfos/count",
-                    async: false,
-                    success: function(count) {
-                        selectedDBdata.id = count.count + 1;
-                    }
-                });
-
-                $.ajax({
-                    type: "POST",
-                    contentType: "application/json;charset=utf-8",
-                    url: mapdataServer + "/mapinfos",
-                    data: JSON.stringify(MakeDBDataFromCameraDataList(rowData)),
-                    dataType: 'json'
-                });
-            } else {
-                $.ajax({
-                    type: "PATCH",
-                    contentType: "application/json;charset=utf-8",
-                    url: mapdataServer + "/mapinfos/" + selectedDBdata.id,
-                    data: JSON.stringify(MakeDBDataFromCameraDataList(rowData)),
-                    dataType: 'json'
-                });
+            // id가 없으면 새로 저장 
+            if (selectedDBdata.id === undefined) {
+                // 새리스트인 경우
+                // 새맵이름이 없으면 새맵이름을 입력하도록 커서를 옮겨줌
+                if ($('#newname').val() === undefined) {
+                    $('#newname').focus();
+                } else { // 이름 있으면 새이름으로 저장
+                    SaveNewMapOnDB();
+                }
+            } else { // 아니면 id로 저장
+                UpdateMapOnDB();
             }
+        }
+
+        function onSaveNewData() {
+            // 새맵 저장            
+            SaveNewMapOnDB();
+        }
+
+        // 방송용 맵 확인
+        function onShowOnairData() {
+            selectedDBdata = GetSelectedMapFromDB(onairname);
+            agrid.gridOptions.api.setRowData(selectedDBdata.cameralist);
+        }
+
+        // 방송용 맵 저장
+        function onSaveOnairData() {
+            SaveOnairMaptoDB();
+        }
+
+        // 해당 이름의 맵데이터 가져오기
+        function GetSelectedMapFromDB(mapname) {
+            var selectedmapdata;
+            $.ajax({
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                url: mapdataServer + "/cameralist?filter={\"where\": {\"name\": \"" + mapname + "\"}}",
+                dataType: 'json',
+                async: false,
+                success: function(data) {
+                    selectedmapdata = data[0];
+                }
+            });
+            return selectedmapdata;
+        }
+
+        // 새 맵 데이터 저장
+        function SaveNewMapOnDB() {
+            selectedDBdata = {
+                name: $('#newname').val(),
+                cameralist: selectedDBdata.cameralist
+            }
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                url: mapdataServer + "/cameralist",
+                data: JSON.stringify(selectedDBdata),
+                dataType: 'json'
+            });
+        }
+
+        // 맵데이터 업데이트
+        function UpdateMapOnDB() {
+            if (selectedDBdata.id === undefined) {
+                return;
+            }
+
+            $.ajax({
+                type: "PATCH",
+                contentType: "application/json;charset=utf-8",
+                url: mapdataServer + "/cameralist/" + selectedDBdata.id,
+                data: JSON.stringify(selectedDBdata),
+                dataType: 'json'
+            });
+        }
+
+        // 맵데이터 삭제
+        function DeleteMapOnDB() {
+            if (selectedDBdata.id === undefined) {
+                return;
+            }
+
+            $.ajax({
+                type: "DELETE",
+                contentType: "application/json;charset=utf-8",
+                url: mapdataServer + "/cameralist/" + selectedDBdata.id,
+                dataType: 'json'
+            });
+        }
+
+        // 맵이름 다 가져오기
+        function GetAllMapNamesFromDB() {
+            var mapnames = [];
+            $.ajax({
+                type: "GET",
+                url: mapdataServer + "//cameralist?filter={\"fields\":{\"name\":true}}",
+                dataType: 'json',
+                async: false,
+                success: function(maps) {
+                    mapnames = maps;
+                }
+            });
+            return mapnames;
+        }
+
+        // 방송용 맵 저장
+        function SaveOnairMaptoDB() {
+            // 아이템이 없으면 아웃
+            if (selectedDBdata.cameralist.length === 0) {
+                return;
+            }
+            // 방송용 이름 맵 찾기
+            var onairmaps = [];
+            $.ajax({
+                type: "GET",
+                url: mapdataServer + "/cameralist?filter={\"where\": {\"name\": " + onairname + "}}",
+                dataType: 'json',
+                async: false,
+                success: function(maps) {
+                    onairmaps = maps;
+                }
+            });
+
+            // 지우기
+            onairmaps.forEach(element => {
+                $.ajax({
+                    type: "DELETE",
+                    contentType: "application/json;charset=utf-8",
+                    url: mapdataServer + "/cameralist/" + element.id,
+                    dataType: 'json'
+                });
+            });
+
+            // 선택된 아이템으로 방송용 아이템으로 만들기
+            let onairmap = {
+                name: onairname,
+                cameralist: selectedDBdata.cameralist
+            }
+
+            // 방송용 이름으로 저장
+            $.ajax({
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                url: mapdataServer + "/cameralist",
+                data: JSON.stringify(onairmap),
+                dataType: 'json'
+            });
         }
 
         function MakeMapInfoFromCameraDataList(rowData) {
@@ -317,26 +437,55 @@
 
             return ADBdata;
         }
+
+        function encodeQueryData(data) {
+            const ret = [];
+            for (let d in data) {
+                if (typeof data[d] === 'object' || typeof data[d] === 'array') {
+                    for (let arrD in data[d]) {
+                        ret.push(`${encodeURIComponent(d)}[]=${encodeURIComponent(data[d][arrD])}`)
+                    }
+                } else if (typeof data[d] === 'null' || typeof data[d] === 'undefined') {
+                    ret.push(encodeURIComponent(d))
+                } else {
+                    ret.push(`${encodeURIComponent(d)}=${encodeURIComponent(data[d])}`)
+                }
+
+            }
+            return ret.join('&');
+        }
     </script>
 </head>
 
 <body>
     <header>
         <div class="buttons">
-            <button id="addItem" onclick="onAddCamera()">Add Camera</button>
-            <button id="deleteItem" onclick="onDeleteCamera()">Delete Camera</button>
+            <div class="leftbuttons">
+                <button id="addItem" class="topitem" onclick="onAddCamera()">Add Camera</button>
+                <button id="deleteItem" class="topitem" onclick="onDeleteCamera()">Delete Camera</button>
 
-            <select name="maplist" id="mapcombobox">
-                <option value="">맵선택</option>
-            </select>
+                <select name="maplist" id="mapcombobox" class="topitem">
+                    <option value="">맵선택</option>
+                </select>
+                <button id="deleteData" class="topitem" onclick="onDeleteData()">맵 삭제</button>
+                <button id="saveData" class="topitem" onclick="onSaveData()">맵 저장</button>
 
-            <button id="saveData" onclick="onSaveData()">Save Data</button>
+                <form id="newfilenameform">
+                    <input type="text" id="newname" class="topitem cursor rq-form-element" placeholder="새 맵 이름">
+                    <button id="saveNewData" class="topitem" onclick="onSaveNewData()">새 맵으로 저장</button>
+                </form>
+
+            </div>
+            <div class="rightbuttons">
+                <button id="showOnairData" class="topitem" onclick="onShowOnairData()">방송맵 확인</button>
+                <button id="saveOnairData" class="topitem" onclick="onSaveOnairData()">방송맵 저장</button>
+            </div>
         </div>
     </header>
 
     <main>
-        <div id="myGrid"  class="ag-theme-alpine"></div>
-    </main> 
+        <div id="myGrid" class="ag-theme-alpine"></div>
+    </main>
 </body>
 
 </html>

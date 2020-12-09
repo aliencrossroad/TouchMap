@@ -3,7 +3,7 @@ import {Mapinfo, MapinfoRelations} from '../models';
 import {SaveonairDataSource} from '../datasources';
 import {inject} from '@loopback/core';
 
-export class MapinfoRepository extends DefaultCrudRepository<
+export class SaveonairRepository extends DefaultCrudRepository<
   Mapinfo,
   typeof Mapinfo.prototype.id,
   MapinfoRelations

@@ -1,0 +1,13 @@
+{
+  "ids": {
+    "Cameralist": 8
+  },
+  "models": {
+    "Cameralist": {
+      "1": "{\"name\":\"맵1\",\"cameralist\":[{\"name\":\"잠수교\",\"url\":\"http://211.181.145.26:7080/bZEawXiPLhFbEaUDb7E1AJalBaZcpxPCzNb2CYbG7bY=.m3u8\",\"lan\":37.514882,\"lon\":126.985,\"visible\":true,\"sidocode\":1,\"sidoname\":\"서울특별시\"},{\"name\":\"중랑교\",\"url\":\"http://211.181.145.26:7080/TrRM8djzdGnfB4rJ1jSo+IHJnqmoxvKguv12xdM6XBM=.m3u8\",\"lan\":37.59327,\"lon\":127.070299,\"visible\":true,\"sidocode\":1,\"sidoname\":\"서울특별시\"},{\"name\":\"[경부선] 수원\",\"url\":\"http://cctvsec.ktict.co.kr/75/QAUXu/W0O2j/e24rd+qQ2wKLAW/bRl7sOeNlU+J0NT0F4WVwyLqBIXM/MidUpv5l\",\"lan\":\"37.26611\",\"lon\":\"127.10389\",\"visible\":true,\"sidocode\":1,\"sidoname\":\"경기도\"}],\"id\":1}",
+      "2": "{\"name\":\"맵2\",\"cameralist\":[{\"name\":\"서초IC\",\"url\":\"http://live1.exmobile.hscdn.com/exlive/cctv0001.stream/playlist.m3u8\",\"lan\":37.483486,\"lon\":127.026068,\"visible\":true,\"sidocode\":1,\"sidoname\":\"서울특별시\"},{\"name\":\"[수도권제1순환선] 송파\",\"url\":\"http://cctvsec.ktict.co.kr/4/s/LxXi0q6AxIKn3bCJYNzFCW3kPWpDE6ngY/cvMmalj7KnH+xJ/hHyHp9aq0LO5j\",\"lan\":37.475,\"lon\":127.12944,\"visible\":true,\"sidocode\":1,\"sidoname\":\"서울특별시\"}],\"id\":2}",
+      "4": "{\"name\":\"맵3\",\"cameralist\":[{\"name\":\"테스트\",\"url\":\"http://cctvsec.ktict.co.kr/2/NPDmquwMtzVDaThW97PKEm+bloI7IFX3ntwLkyuKaG+9HAMw/ozsY8fj11a6eedL\",\"lan\":0,\"lon\":0,\"visible\":true,\"sidocode\":1,\"sidoname\":\"서울특별시\"}],\"id\":4}",
+      "7": "{\"name\":\"방송용\",\"cameralist\":[{\"name\":\"잠수교\",\"url\":\"http://211.181.145.26:7080/bZEawXiPLhFbEaUDb7E1AJalBaZcpxPCzNb2CYbG7bY=.m3u8\",\"lan\":37.514882,\"lon\":126.985,\"visible\":true,\"sidocode\":1,\"sidoname\":\"서울특별시\"},{\"name\":\"중랑교\",\"url\":\"http://211.181.145.26:7080/TrRM8djzdGnfB4rJ1jSo+IHJnqmoxvKguv12xdM6XBM=.m3u8\",\"lan\":37.59327,\"lon\":127.070299,\"visible\":true,\"sidocode\":1,\"sidoname\":\"서울특별시\"},{\"name\":\"[경부선] 수원\",\"url\":\"http://cctvsec.ktict.co.kr/75/QAUXu/W0O2j/e24rd+qQ2wKLAW/bRl7sOeNlU+J0NT0F4WVwyLqBIXM/MidUpv5l\",\"lan\":\"37.26611\",\"lon\":\"127.10389\",\"visible\":true,\"sidocode\":1,\"sidoname\":\"경기도\"}],\"id\":7}"
+    }
+  }
+}

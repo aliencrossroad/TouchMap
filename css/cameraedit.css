@@ -10,57 +10,45 @@
     font-style: normal;
 }
 
+body,
+html {
+    padding: 0.1rem;
+    height: 100%;
+}
+
 header {
     position: fixed;
-    top: 0;
-    left: 0.6rem;
-    right: 0.6rem;
-    height: 60px;
-    background: rgb(255, 255, 255);
+    width: calc(100% - 23px);
+    height: 40px;
+    background-color: white;
     z-index: 10;
 }
 
-h1, p {
+h1,
+p {
     margin: 0;
 }
-  
+
 main {
-    padding: 0.1rem;
-    height: 100%;  
+    position: relative;
+    padding-top: 40px;
     z-index: 0;
-}
-
-body {
-    padding-top: 50px;
-}
-
-body, html {
-    height: 100%;
 }
 
 * {
     box-sizing: border-box;
 }
 
-#mapcombobox,
-#addItem,
-#deleteItem {
-    position: relative;
-    display: inline-block;
-    margin-right: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding-top: 5px;
-    padding-bottom: 3px;
-    padding-left: 9px;
-    padding-right: 9px;
-    font: normal normal 18px label;
+.leftbuttons {
+    float: left;
 }
 
-#saveData {
+.rightbuttons {
     float: right;
-    margin-top: 10px;
-    margin-bottom: 10px;
+}
+
+.topitem {
+    display: inline-block;
     padding-top: 5px;
     padding-bottom: 3px;
     padding-left: 9px;
@@ -68,9 +56,46 @@ body, html {
     font: normal normal 18px label;
 }
 
-#label {
+#mapcombobox {
+    margin-left: 20px;
+}
+
+#deleteData {
+    margin-left: 10px;
+}
+
+#newfilenameform {
+    display: inline-block;
     font: normal normal 18px label;
-    margin-left: 58px;
-    margin-top: 2px;
-    color: white;
+    margin-left: 20px;
+}
+
+.cursor {
+    position: relative;
+}
+
+.cursor i {
+    position: absolute;
+    width: 1px;
+    height: 80%;
+    background-color: rgb(253, 67, 67);
+    left: 5px;
+    top: 10%;
+    animation-name: blink;
+    animation-duration: 800ms;
+    animation-iteration-count: infinite;
+    opacity: 1;
+}
+
+.cursor input:focus+i {
+    display: none;
+}
+
+@keyframes blink {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
