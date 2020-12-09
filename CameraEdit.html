@@ -79,8 +79,6 @@
             values: [true, false]
         }
 
-        var rowData = [];
-
         var gridOptions = {
             columnDefs: columnDefs,
             rowSelection: 'multiple',
@@ -109,40 +107,9 @@
                     }
 
                     selectedDBdata = GetSelectedMapFromDB(this.value);
-                    // $.ajax({
-                    //     type: "GET",
-                    //     contentType: "application/json;charset=utf-8",
-                    //     url: mapdataServer + "/cameralist?filter={\"where\": {\"name\": \"" + this.value + "\"}}",
-                    //     dataType: 'json',
-                    //     async: false,
-                    //     success: function(data) {
-                    //         selectedDBdata = data[0];
-                    //     }
-                    // });
-
                     agrid.gridOptions.api.setRowData(selectedDBdata.cameralist);
                 });
         })
-
-        function MakeCameraDataListFromMapInfo(data) {
-            rowData = [];
-            for (var sidoName in data) {
-                for (var iter in data[sidoName]['cameraInfo']) {
-                    rowData.push({
-                        sidoname: data[sidoName].sidoname,
-                        name: data[sidoName]['cameraInfo'][iter].name,
-                        url: data[sidoName]['cameraInfo'][iter].url,
-                        lan: data[sidoName]['cameraInfo'][iter].lan,
-                        lon: data[sidoName]['cameraInfo'][iter].lon,
-                        visible: data[sidoName]['cameraInfo'][iter].visible
-                    });
-                }
-            }
-        }
-
-        // function MakeMapInfoFromDBData(DBdata) {
-        //     mapInfo = JSON.parse(JSON.stringify(DBdata.cameralist));
-        // }
 
         function UpdateMapNames() {
             let maplist = GetAllMapNamesFromDB();
@@ -377,82 +344,6 @@
                 data: JSON.stringify(onairmap),
                 dataType: 'json'
             });
-        }
-
-        function MakeMapInfoFromCameraDataList(rowData) {
-            mapInfo = [];
-            rowData.forEach(element => {
-                if (mapInfo.includes(element.sidoname) == false) {
-                    mapInfo.push(element.sidoname);
-                    mapInfo[element.sidoname] = [];
-                }
-
-                mapInfo[data.sidoname].push({
-                    "name": data.name,
-                    "url": data.url,
-                    "lan": data.lan,
-                    "lon": data.lon,
-                    "visible": data.visible
-                });
-            });
-        }
-
-        function MakeDBDataFromCameraDataList(rowData) {
-
-            var ADBdata = {
-                id: -1,
-                mapname: "newmap",
-                sidolist: []
-            };
-
-            // 선택된 데이터가 없으면 새 데이터로
-            if (selectedDBdata != undefined) {
-                ADBdata.id = selectedDBdata.id;
-                ADBdata.mapname = selectedDBdata.mapname;
-            }
-
-            rowData.forEach(element => {
-                if (ADBdata.sidolist.some(e => e.sidoname === element.sidoname) == false) {
-                    ADBdata.sidolist.push({
-                        sidoname: element.sidoname,
-                        zoomlevel: getZoomLevel(element.sidoname),
-                        cameraInfo: []
-                    });
-                }
-
-                var i;
-                for (i = 0; i < ADBdata.sidolist.length; i++) {
-                    if (ADBdata.sidolist[i].sidoname === element.sidoname) {
-                        ADBdata.sidolist[i].cameraInfo.push({
-                            "name": element.name,
-                            "url": element.url,
-                            "lan": element.lan,
-                            "lon": element.lon,
-                            "visible": element.visible
-                        });
-
-                    }
-                }
-            });
-
-            return ADBdata;
-        }
-
-        function encodeQueryData(data) {
-            const ret = [];
-            for (let d in data) {
-                if (typeof data[d] === 'object' || typeof data[d] === 'array') {
-                    for (let arrD in data[d]) {
-                        ret.push(`${encodeURIComponent(d)}[]=${encodeURIComponent(data[d][arrD])}`)
-                    }
-                } else if (typeof data[d] === 'null' || typeof data[d] === 'undefined') {
-                    ret.push(encodeURIComponent(d))
-                } else {
-                    ret.push(`${encodeURIComponent(d)}=${encodeURIComponent(data[d])}`)
-                }
-
-            }
-            return ret.join('&');
         }
     </script>
 </head>
