@@ -153,7 +153,7 @@ video {
 
 @font-face {
     font-family: label;
-    src: local("나눔스퀘어 ExtraBold"), url('Font/NanumSquareEB.ttf');
+    src: local("나눔스퀘어 ExtraBold"), url('/font/NanumSquareEB.ttf');
 }
 
 @font-face {
