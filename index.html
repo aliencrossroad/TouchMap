@@ -322,49 +322,49 @@
                     for (var sidoName in mapInfo) {
                         markers[sidoName] = [];
                         labels[sidoName] = [];
-
-                        selectedDBdata.forEach(element => {
-                            var imageSrc = './image/cctv_icon.png';
-                            var imageSize = new kakao.maps.Size(68, 72);
-                            var imageOption = {
-                                offset: new kakao.maps.Point(0, 36)
-                            };
-
-                            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-                            var markerPosition = new kakao.maps.LatLng(camera.lan, camera.lon);
-
-                            var marker = new kakao.maps.Marker({
-                                map: map,
-                                clickable: true,
-                                zIndex: 3,
-                                position: markerPosition,
-                                image: markerImage // 마커이미지 설정                                                                 
-                            });
-
-                            marker.camera = camera;
-
-                            kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker));
-
-                            marker.setVisible(false);
-                            markers[sidoName].push(marker);
-
-                            // ----------------------------------- 커스텀 오버레이                            
-                            var content = '<div id="label"><span class="center"><p id="labeltext">' + camera.name + '</p></span><span class="right"></span></div>';
-                            var customOverlay = new kakao.maps.CustomOverlay({
-                                map: map,
-                                position: markerPosition,
-                                content: content,
-                                xAnchor: 0,
-                                yAnchor: 0.5,
-                                zIndex: 2
-                            });
-
-                            customOverlay.setVisible(false);
-                            customOverlay.setMap(map);
-                            labels[sidoName].push(customOverlay);
-                            // ------------------------------------ 
-                        });
                     }
+
+                    selectedDBdata.cameralist.forEach(element => {
+                        var imageSrc = './image/cctv_icon.png';
+                        var imageSize = new kakao.maps.Size(68, 72);
+                        var imageOption = {
+                            offset: new kakao.maps.Point(0, 36)
+                        };
+
+                        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+                        var markerPosition = new kakao.maps.LatLng(element.lan, element.lon);
+
+                        var marker = new kakao.maps.Marker({
+                            map: map,
+                            clickable: true,
+                            zIndex: 3,
+                            position: markerPosition,
+                            image: markerImage // 마커이미지 설정                                                                 
+                        });
+
+                        marker.camera = element;
+
+                        kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker));
+
+                        marker.setVisible(false);
+                        markers[element.sidoname].push(marker);
+
+                        // ----------------------------------- 커스텀 오버레이                            
+                        var content = '<div id="label"><span class="center"><p id="labeltext">' + element.name + '</p></span><span class="right"></span></div>';
+                        var customOverlay = new kakao.maps.CustomOverlay({
+                            map: map,
+                            position: markerPosition,
+                            content: content,
+                            xAnchor: 0,
+                            yAnchor: 0.5,
+                            zIndex: 2
+                        });
+
+                        customOverlay.setVisible(false);
+                        customOverlay.setMap(map);
+                        labels[element.sidoname].push(customOverlay);
+                        // ------------------------------------ 
+                    });
 
                     // for (var sidoName in mapInfo) {
                     //     markers[sidoName] = [];
