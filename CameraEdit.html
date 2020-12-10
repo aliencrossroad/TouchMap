@@ -312,7 +312,7 @@
             var onairmaps = [];
             $.ajax({
                 type: "GET",
-                url: mapdataServer + "/cameralist?filter={\"where\": {\"name\": " + onairname + "}}",
+                url: mapdataServer + "/cameralist?filter={\"where\": {\"name\": \"" + onairname + "\"}}",
                 dataType: 'json',
                 async: false,
                 success: function(maps) {
