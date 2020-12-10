@@ -1,0 +1,53 @@
+{
+    "서울특별시": {
+        "zoomlevel": 9
+    },
+    "경기도": {
+        "zoomlevel": 11
+    },
+    "강원도": {
+        "zoomlevel": 11
+    },
+    "경상남도": {
+        "zoomlevel": 11
+    },
+    "경상북도": {
+        "zoomlevel": 11
+    },
+    "광주광역시": {
+        "zoomlevel": 10
+    },
+    "대구광역시": {
+        "zoomlevel": 10
+    },
+    "대전광역시": {
+        "zoomlevel": 9
+    },
+    "부산광역시": {
+        "zoomlevel": 9
+    },
+    "울산광역시": {
+        "zoomlevel": 9
+    },
+    "인천광역시": {
+        "zoomlevel": 9
+    },
+    "전라남도": {
+        "zoomlevel": 11
+    },
+    "전라북도": {
+        "zoomlevel": 10
+    },
+    "제주특별자치도": {
+        "zoomlevel": 9
+    },
+    "충청남도": {
+        "zoomlevel": 10
+    },
+    "충청북도": {
+        "zoomlevel": 11
+    },
+    "세종특별자치시": {
+        "zoomlevel": 9
+    }
+}
