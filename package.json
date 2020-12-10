@@ -17,8 +17,5 @@
     "url": "https://github.com/aliencrossroad/TouchMap/issues"
   },
   "homepage": "https://github.com/aliencrossroad/TouchMap#readme",
-  "dependencies": {
-    "ag-grid-community": "^24.1.0",
-    "bootstrap-table": "^1.18.0"
-  }
+  "dependencies": {}
 }
