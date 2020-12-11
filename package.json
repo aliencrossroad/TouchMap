@@ -1,5 +1,5 @@
 {
-    "name": "@ytntri/touchmap",
+    "name": "ytntri-touchmap",
     "version": "1.0.0",
     "description": "YTN Touchscreen Map CCTV System",
     "main": "index.html",
