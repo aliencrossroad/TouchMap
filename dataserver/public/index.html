@@ -36,7 +36,7 @@
         var selectSidoName;
         var point;
 
-        var mapdataServer = "http://10.10.9.150:3000";
+        var mapdataServer = "http://10.10.9.145:3000";
         var selectedDBdata;
         var onairname = "방송용";
 
@@ -87,7 +87,7 @@
                         selectZoomlevel = initmaplevel;
 
                         map.panTo(mapOption.center);
-                       
+
                         visibleMarker();
 
                         PenEnable(false);
@@ -287,24 +287,23 @@
                         var level = mapInfo[polygon.name].zoomlevel;
                         point = window.event;
 
-                        if( selectSidoName == polygon.name ) {
-                            if( selectZoomlevel >= level ) {
+                        if (selectSidoName == polygon.name) {
+                            if (selectZoomlevel >= level) {
                                 selectZoomlevel = level - 2;
                             }
-                            
+
                             selectSidoName = polygon.name;
-                            
-                            var x = point.clientX - (window.innerWidth/2);
-                            var y = point.clientY - (window.innerHeight/2);
+
+                            var x = point.clientX - (window.innerWidth / 2);
+                            var y = point.clientY - (window.innerHeight / 2);
                             x = x - (x * 0.338);
                             y = y - (y * 0.338);
-                            map.panBy(x,y);
-                            
+                            map.panBy(x, y);
+
                             polygon.setOptions({
                                 fillColor: '#fff'
                             });
-                        }
-                        else {
+                        } else {
                             var center = centroid(points);
 
                             selectSidoName = polygon.name;
@@ -324,17 +323,16 @@
                     });
                 }
 
-                kakao.maps.event.addListener(map, 'zoom_changed', function() {
-                })
+                kakao.maps.event.addListener(map, 'zoom_changed', function() {})
 
                 kakao.maps.event.addListener(map, 'center_changed', function() {
                     visibleMarker(selectSidoName);
-                    if( selectZoomlevel != null ) {
+                    if (selectZoomlevel != null) {
                         map.setLevel(selectZoomlevel, {
-                                    animate: {
-                                        duration: 350 //확대 애니메이션 시간
-                                    }
-                                });
+                            animate: {
+                                duration: 350 //확대 애니메이션 시간
+                            }
+                        });
                     }
                 })
 
@@ -344,7 +342,11 @@
                         labels[sidoName] = [];
                     }
 
-                    selectedDBdata.cameralist.forEach(element => {
+                    selectedDBdata.cameralist.forEach(function(element) {
+                        if (element.visible === false) {
+                            return;
+                        }
+
                         var imageSrc = './image/cctv_icon.png';
                         var imageSize = new kakao.maps.Size(68, 72);
                         var imageOption = {
