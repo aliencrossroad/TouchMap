@@ -325,10 +325,10 @@
                 }
 
                 kakao.maps.event.addListener(map, 'zoom_changed', function() {
-                    visibleMarker(selectSidoName);
                 })
 
                 kakao.maps.event.addListener(map, 'center_changed', function() {
+                    visibleMarker(selectSidoName);
                     if( selectZoomlevel != null ) {
                         map.setLevel(selectZoomlevel, {
                                     animate: {
