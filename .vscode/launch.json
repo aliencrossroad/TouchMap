@@ -8,7 +8,11 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
+<<<<<<< HEAD
             "url": "http://10.10.9.150:5500/index.html",
+=======
+            "url": "http://10.10.9.145:5500/CameraEdit.html",
+>>>>>>> 8468a985ba24b49d0512569f047f284e2577aa8b
             "webRoot": "${workspaceFolder}"
         },
         {

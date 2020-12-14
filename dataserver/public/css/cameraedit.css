@@ -1,0 +1,101 @@
+@font-face {
+    font-family: label;
+    src: local("나눔스퀘어 ExtraBold"), url('/font/NanumSquareEB.ttf');
+}
+
+@font-face {
+    font-family: label;
+    src: local("helvetica, sans-serif");
+    unicode-range: U+0020-007E;
+    font-style: normal;
+}
+
+body,
+html {
+    padding: 0.1rem;
+    height: 100%;
+}
+
+header {
+    position: fixed;
+    width: calc(100% - 23px);
+    height: 40px;
+    background-color: white;
+    z-index: 10;
+}
+
+h1,
+p {
+    margin: 0;
+}
+
+main {
+    position: relative;
+    padding-top: 40px;
+    z-index: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.leftbuttons {
+    float: left;
+}
+
+.rightbuttons {
+    float: right;
+}
+
+.topitem {
+    display: inline-block;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    padding-left: 9px;
+    padding-right: 9px;
+    font: normal normal 18px label;
+}
+
+#mapcombobox {
+    margin-left: 20px;
+}
+
+#deleteData {
+    margin-left: 10px;
+}
+
+#newfilenameform {
+    display: inline-block;
+    font: normal normal 18px label;
+    margin-left: 20px;
+}
+
+.cursor {
+    position: relative;
+}
+
+.cursor i {
+    position: absolute;
+    width: 1px;
+    height: 80%;
+    background-color: rgb(253, 67, 67);
+    left: 5px;
+    top: 10%;
+    animation-name: blink;
+    animation-duration: 800ms;
+    animation-iteration-count: infinite;
+    opacity: 1;
+}
+
+.cursor input:focus+i {
+    display: none;
+}
+
+@keyframes blink {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

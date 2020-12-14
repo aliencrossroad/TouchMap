@@ -1,0 +1,164 @@
+body {
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    zoom: 150%;
+}
+
+#label {
+    font: normal normal 18px label;
+    margin-left: 58px;
+    margin-top: 2px;
+    color: white;
+}
+
+#label * {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#label .left {
+    background-image: url("../image/cctv_icon.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 68px;
+    height: 72px;
+}
+
+#label .center {
+    background-image: url("../image/cctv_bar_1.png");
+    background-repeat: repeat-x;
+    background-size: contain;
+    /* background-position-y: -21px; */
+    height: 72px;
+    padding-left: 15px;
+}
+
+#label .right {
+    background-image: url("../image/cctv_bar_2.png");
+    background-repeat: no-repeat;
+    background-position-x: 0px;
+    /* background-position-y: -21px; */
+    background-size: contain;
+    height: 72px;
+    width: 16px;
+}
+
+#labeltext {
+    margin-top: 27px;
+    margin-left: 0px;
+    margin-right: 5px;
+    transform: scaleX(1.08);
+    text-shadow: 1px 1px 2px #00000040;
+}
+
+.toplayer {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    pointer-events: none;
+}
+
+.videolayer {
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+video {
+    object-fit: fill;
+}
+
+#videosource {
+    display: none block;
+    position: absolute;
+    z-index: 1;
+    pointer-events: all;
+    background-color: transparent;
+}
+
+.video-js .vjs-big-play-button {
+    top: calc(50% - 0.75em);
+    left: calc(50% - 1.5em);
+}
+
+.menulayer {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+#maptype {
+    position: fixed;
+    top: 130px;
+    right: 100px;
+    width: 100px;
+    height: 100px;
+    z-index: 3;
+    pointer-events: all;
+}
+
+#home {
+    position: fixed;
+    top: 260px;
+    right: 100px;
+    width: 100px;
+    height: 100px;
+    z-index: 3;
+    pointer-events: all;
+}
+
+#pen {
+    position: fixed;
+    top: 390px;
+    right: 100px;
+    width: 100px;
+    height: 100px;
+    pointer-events: all;
+    z-index: 4;
+}
+
+#movetotouch {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 100px;
+    height: 100px;
+    pointer-events: all;
+    z-index: 4;
+}
+
+#sketchcontainer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: all;
+    background-color: transparent;
+    z-index: 2;
+}
+
+@font-face {
+    font-family: label;
+    src: local("나눔스퀘어 ExtraBold"), url('/font/NanumSquareEB.ttf');
+}
+
+@font-face {
+    font-family: label;
+    src: local("helvetica, sans-serif");
+    unicode-range: U+0020-007E;
+    font-style: normal;
+}

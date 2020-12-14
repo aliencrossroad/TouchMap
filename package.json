@@ -1,24 +1,24 @@
 {
-  "name": "TouchMap",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aliencrossroad/TouchMap.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/aliencrossroad/TouchMap/issues"
-  },
-  "homepage": "https://github.com/aliencrossroad/TouchMap#readme",
-  "dependencies": {
-    "ag-grid-community": "^24.1.0",
-    "bootstrap-table": "^1.18.0"
-  }
+    "name": "ytntri-touchmap",
+    "version": "1.0.0",
+    "description": "YTN Touchscreen Map CCTV System",
+    "main": "index.html",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/aliencrossroad/TouchMap.git"
+    },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com/"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/aliencrossroad/TouchMap/issues"
+    },
+    "homepage": "https://github.com/aliencrossroad/TouchMap#readme",
+    "dependencies": {}
 }
