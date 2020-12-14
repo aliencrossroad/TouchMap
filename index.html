@@ -29,10 +29,12 @@
         var polygons = [];
         var markers = [];
         var labels = [];
-        var selectCenter;
         var mapInfo;
         var posX;
         var posY;
+        var selectZoomlevel;
+        var selectSidoName;
+        var point;
 
         var mapdataServer = "http://localhost:3000";
         var selectedDBdata;
@@ -81,20 +83,11 @@
 
                         $('#videosource')[0].click();
 
-                        // 현재 지도의 레벨을 얻어옵니다
-                        var level = map.getLevel();
+                        selectSidoName = null;
+                        selectZoomlevel = initmaplevel;
 
-                        selectCenter = mapOption.center;
-
-                        // 지도 레벨이 다르면 레벨 맞춰주고
-                        if (level != initmaplevel) {
-                            // 지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다
-                            map.setLevel(initmaplevel, {
-                                animate: {
-                                    duration: 350 //확대 애니메이션 시간
-                                }
-                            });
-                        }
+                        map.panTo(mapOption.center);
+                       
                         visibleMarker();
 
                         PenEnable(false);
@@ -287,35 +280,62 @@
                         });
                     });
 
+
                     // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 해당 지역 확대을 확대합니다.
-                    kakao.maps.event.addListener(polygon, 'click', function() {
+                    kakao.maps.event.addListener(polygon, 'click', function(mouseEvent) {
+
                         var level = mapInfo[polygon.name].zoomlevel;
-                        var center = centroid(points);
-                        selectCenter = center;
+                        point = window.event;
 
-                        visibleMarker(polygon.name);
-
-                        if (map.getLevel() == level) {
-                            map.panTo(selectCenter);
-                        } else {
-                            // 지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다
-                            map.setLevel(level, {
-                                anchor: center,
-                                animate: {
-                                    duration: 350 //확대 애니메이션 시간
-                                }
+                        if( selectSidoName == polygon.name ) {
+                            if( selectZoomlevel >= level ) {
+                                selectZoomlevel = level - 1;
+                            }
+                            
+                            selectSidoName = polygon.name;
+                            
+                            var x = point.clientX - (window.innerWidth/2);
+                            var y = point.clientY - (window.innerHeight/2);
+                            x = x - (x * 0.338);
+                            y = y - (y * 0.338);
+                            map.panBy(x,y);
+                            
+                            polygon.setOptions({
+                                fillColor: '#fff'
                             });
                         }
+                        else {
+                            var center = centroid(points);
 
-                        polygon.setOptions({
-                            fillColor: '#fff'
-                        });
+                            selectSidoName = polygon.name;
+                            selectZoomlevel = level;
 
+                            if (map.getLevel() == level) {
+                                map.panTo(center);
+                            } else {
+                                // 지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다
+                                map.panTo(center);
+                            }
+
+                            polygon.setOptions({
+                                fillColor: '#fff'
+                            });
+                        }
                     });
                 }
 
                 kakao.maps.event.addListener(map, 'zoom_changed', function() {
-                    map.panTo(selectCenter);
+                    visibleMarker(selectSidoName);
+                })
+
+                kakao.maps.event.addListener(map, 'center_changed', function() {
+                    if( selectZoomlevel != null ) {
+                        map.setLevel(selectZoomlevel, {
+                                    animate: {
+                                        duration: 350 //확대 애니메이션 시간
+                                    }
+                                });
+                    }
                 })
 
                 function insertMarker() {
