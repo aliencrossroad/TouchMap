@@ -37,6 +37,8 @@
         var point;
         var selectedDBdata;
         var onairname = "방송용";
+        var openAPIUrl = "http://openapi.its.go.kr:8081/api/NCCTVInfo?key=1605772996947&ReqType=2&MinX=127.100000&MaxX=128.890000&MinY=34.100000 &MaxY=39.100000&type=ex&cctvtype=1"
+        var openAPIData;
 
         $(document).ready(function() {
 
@@ -199,6 +201,27 @@
                     async: false,
                     success: function(json) {
                         mapInfo = json;
+                    }
+                });
+
+                // 도로공사 최신 스트림 URL로 변경
+                $.ajax({
+                    url: openAPIUrl,
+                    dataType: 'xml',
+                    async: false,
+                    success: function(xml) {
+                        openAPIData = $(xml).find("data");
+                        $(openAPIData).find('coordx').each(function(i, e){
+                            var coordx = $(this).text();
+                            var coordy = $(this).parent().find('coordy').text();
+                            var cctvurl = $(this).parent().find('cctvurl').text();
+
+                            $.each(selectedDBdata.cameralist, function(n, item) {
+                                if( (coordy == item.lan ) && (coordx == item.lon )){
+                                    item.url = cctvurl;
+                                }
+                            });
+                        });
                     }
                 });
 
