@@ -35,7 +35,6 @@
         var selectZoomlevel;
         var selectSidoName;
         var point;
-        var mapdataServer = window.location.hostname;
         var selectedDBdata;
         var onairname = "방송용";
 
@@ -555,7 +554,7 @@
             $.ajax({
                 type: "GET",
                 contentType: "application/json;charset=utf-8",
-                url: mapdataServer + "/cameralist?filter={\"where\": {\"name\": \"" + mapname + "\"}}",
+                url: "/cameralist?filter={\"where\": {\"name\": \"" + mapname + "\"}}",
                 dataType: 'json',
                 async: false,
                 success: function(data) {
