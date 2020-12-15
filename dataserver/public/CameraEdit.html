@@ -251,7 +251,7 @@
             $.ajax({
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
-                url: mapdataServer + "/cameralist",
+                url: "/cameralist",
                 data: JSON.stringify(selectedDBdata),
                 dataType: 'json'
             });
@@ -266,7 +266,7 @@
             $.ajax({
                 type: "PATCH",
                 contentType: "application/json;charset=utf-8",
-                url: mapdataServer + "/cameralist/" + selectedDBdata.id,
+                url: "/cameralist/" + selectedDBdata.id,
                 data: JSON.stringify(selectedDBdata),
                 dataType: 'json'
             });
@@ -281,7 +281,7 @@
             $.ajax({
                 type: "DELETE",
                 contentType: "application/json;charset=utf-8",
-                url: mapdataServer + "/cameralist/" + selectedDBdata.id,
+                url: "/cameralist/" + selectedDBdata.id,
                 dataType: 'json'
             });
         }
@@ -291,7 +291,7 @@
             var mapnames = [];
             $.ajax({
                 type: "GET",
-                url: mapdataServer + "//cameralist?filter={\"fields\":{\"name\":true}}",
+                url: "/cameralist?filter={\"fields\":{\"name\":true}}",
                 dataType: 'json',
                 async: false,
                 success: function(maps) {
@@ -311,7 +311,7 @@
             var onairmaps = [];
             $.ajax({
                 type: "GET",
-                url: mapdataServer + "/cameralist?filter={\"where\": {\"name\": \"" + onairname + "\"}}",
+                url: "/cameralist?filter={\"where\": {\"name\": \"" + onairname + "\"}}",
                 dataType: 'json',
                 async: false,
                 success: function(maps) {
@@ -324,7 +324,7 @@
                 $.ajax({
                     type: "DELETE",
                     contentType: "application/json;charset=utf-8",
-                    url: mapdataServer + "/cameralist/" + element.id,
+                    url: "/cameralist/" + element.id,
                     dataType: 'json'
                 });
             });
@@ -339,7 +339,7 @@
             $.ajax({
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
-                url: mapdataServer + "/cameralist",
+                url: "/cameralist",
                 data: JSON.stringify(onairmap),
                 dataType: 'json'
             });
