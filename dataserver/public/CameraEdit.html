@@ -15,7 +15,6 @@
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
     <script type="text/javascript" charset="utf-8">
-        var mapdataServer = window.location.hostname;
         var mapInfo;
         var agrid;
         var DBdata;
@@ -232,7 +231,7 @@
             $.ajax({
                 type: "GET",
                 contentType: "application/json;charset=utf-8",
-                url: mapdataServer + "/cameralist?filter={\"where\": {\"name\": \"" + mapname + "\"}}",
+                url: "/cameralist?filter={\"where\": {\"name\": \"" + mapname + "\"}}",
                 dataType: 'json',
                 async: false,
                 success: function(data) {
