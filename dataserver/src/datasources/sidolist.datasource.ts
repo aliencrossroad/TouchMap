@@ -5,7 +5,7 @@ const config = {
   name: 'sidolist',
   connector: 'memory',
   localStorage: 'sidolist',
-  file: './sidolist.json'
+  file: 'sidolist.json'
 };
 
 // Observe application's life cycle to disconnect the datasource when
