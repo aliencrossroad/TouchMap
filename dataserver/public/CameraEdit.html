@@ -66,6 +66,9 @@
             editable: true,
             filter: true,
             type: Boolean
+        }, {
+            headerName: "영상 미리보기",
+            cellRenderer: onPlayCellRendererFunc
         }];
 
         columnDefs[0].cellEditor = 'agSelectCellEditor';
@@ -161,6 +164,15 @@
                 "세종특별자치시": 9
             };
             return zoomlevel[sidoname];
+        }
+
+        function onPlayClicked(url) {
+
+        }
+
+        function onPlayCellRendererFunc(params) {
+            var url = params.data.url;
+            return '<button onClick=onPlayClicked("' + url + '")>재생</button>';
         }
 
         function onAddCamera() {
