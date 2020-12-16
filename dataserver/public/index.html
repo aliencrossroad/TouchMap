@@ -41,6 +41,10 @@
         var openAPIData;
 
         $(document).ready(function() {
+                var mapname = new URLSearchParams(location.search).get("mapname");    
+                if( null != mapname ){
+                    onairname = mapname;
+                }
 
                 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
                     mapOption = {
