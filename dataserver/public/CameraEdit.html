@@ -178,7 +178,8 @@
                         $("#videosource")[0].player.pause();
                     })
                 });
-                        // 도로공사 최신 스트림 URL로 변경
+            
+            // 도로공사 최신 스트림 URL목록 요청
             $.ajax({
                 url: openAPIUrl,
                 dataType: 'xml',
@@ -263,6 +264,9 @@
 
         function onPlayCellRendererFunc(params) {
             var url = params.data.url;
+            if( url == "" ){
+                return '';
+            }
             return '<button onClick=onPlayClicked("' + url + '")>재생</button>';
         }
 
