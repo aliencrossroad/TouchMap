@@ -13,10 +13,12 @@
         },
         {
             "type": "chrome",
-            "request": "launch",
+            "trace" : true,
+            "request": "attach",
+            "port":9222,
             "name": "Haeseok Launch Chrome against localhost",
-            "url": "http://10.10.9.150:5500/dataserver/public/index.html",
-            "webRoot": "${workspaceFolder}"
+            "url": "http://localhost:3000/",
+            "webRoot": "${workspaceFolder}",
         }
     ]
 } 
