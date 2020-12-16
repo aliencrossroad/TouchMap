@@ -15,9 +15,6 @@
         {
             "type": "chrome",
             "request": "launch",
-            "port":9222,
-            "sourceMaps":true,
-            "trace":true,
             "name": "Haeseok Launch Chrome against localhost",
             "url": "http://10.10.9.150:3000/CameraEdit.html",
             "webRoot": "${workspaceFolder}/dataserver/public/",

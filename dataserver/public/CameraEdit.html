@@ -2,9 +2,11 @@
 <html lang="en">
 
 <head>
+    <link href="css/video-js.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
     <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-alpine.css">
     <link href="css/cameraedit.css" rel="stylesheet" />
+    <link href="css/loading.css" rel="stylesheet" />
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +16,8 @@
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+    <script type="text/javascript" src="js/video.js"></script>
+    <script type="text/javascript" src="js/jquery.loading.js"></script>
     <script type="text/javascript" charset="utf-8">
         var mapInfo;
         var agrid;
@@ -25,6 +29,15 @@
         };
 
         var onairname = "방송용";
+
+        var videoresolution = {
+            width: "100%",
+            height: "100%"
+        };
+
+        var xhttp;
+        var openAPIUrl = "http://openapi.its.go.kr:8081/api/NCCTVInfo?key=1605772996947&ReqType=2&MinX=127.100000&MaxX=128.890000&MinY=34.100000 &MaxY=39.100000&type=ex&cctvtype=1"
+        var openAPIData;
 
         // 칼럼정의
         var columnDefs = [{
@@ -109,8 +122,71 @@
                     }
 
                     selectedDBdata = GetSelectedMapFromDB(this.value);
+
+                    $(openAPIData).find('coordx').each(function(i, e){
+                        var coordx = $(this).text();
+                        var coordy = $(this).parent().find('coordy').text();
+                        var cctvurl = $(this).parent().find('cctvurl').text();
+
+                        $.each(selectedDBdata.cameralist, function(n, item) {
+                            if( (coordy == item.lan ) && (coordx == item.lon )){
+                                item.url = cctvurl;
+                            }
+                        });
+                    });
+
                     agrid.gridOptions.api.setRowData(selectedDBdata.cameralist);
                 });
+
+            var player = videojs('videosource', {
+                "controls": false,
+                "autoplay": false,
+                "preload": "auto",
+                'html5': {
+                    'nativeAudioTracks': false
+                }
+            }, function onPlayerReady(e) {
+                this.src({
+                    type: "application/x-mpegURL",
+                    src: ""
+                });
+                this.tech_.off('dblclick');
+            });
+
+            xhttp = new XMLHttpRequest();
+            xhttp.onload = function() {
+                player.src({
+                    type: "application/x-mpegURL",
+                    src: xhttp.responseURL
+                });
+                player.play();
+            };
+
+            
+            $("#videosource").css("width", 0);
+            $("#videosource").css("height", 0);
+            $('#videosource')
+                .on('touchstart click', function(e) {
+                    e.preventDefault();
+                    $('#videosource').animate({
+                        width: '0',
+                        height: '0',
+                        left: posX,
+                        top: posY
+                    }, 'slow', function() {
+                        $("#videosource").css("display", "none");
+                        $("#videosource")[0].player.pause();
+                    })
+                });
+                        // 도로공사 최신 스트림 URL로 변경
+            $.ajax({
+                url: openAPIUrl,
+                dataType: 'xml',
+                async: false,
+                success: function(xml) {
+                    openAPIData = $(xml).find("data");
+                }
+            });
         })
 
         function UpdateMapNames() {
@@ -167,7 +243,22 @@
         }
 
         function onPlayClicked(url) {
+            xhttp.open('GET', url, false);
+            xhttp.send();
 
+            var e = window.event;
+            posX = e.clientX;
+            posY = e.clientY;
+
+            $("#videosource").css("left", posX);
+            $("#videosource").css("top", posY);
+            $("#videosource").css("display", "initial");
+            $('#videosource').animate({
+                width: videoresolution.width,
+                height: videoresolution.height,
+                left: 0,
+                top: 0
+            }, 'slow');
         }
 
         function onPlayCellRendererFunc(params) {
@@ -359,7 +450,7 @@
     </script>
 </head>
 
-<body>
+<body>    
     <header>
         <div class="buttons">
             <div class="leftbuttons">
@@ -384,10 +475,13 @@
             </div>
         </div>
     </header>
-
     <main>
         <div id="myGrid" class="ag-theme-alpine"></div>
     </main>
+    <aside class="toplayer">
+        <div class="videolayer">
+            <video id='videosource' class="video-js" preload="auto" data-setup='{"fluid": true}'></video>
+        </div>
+    </aside>
 </body>
-
 </html>
