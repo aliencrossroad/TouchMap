@@ -9,8 +9,9 @@
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "http://10.10.9.145:3000/index.html",
-            "webRoot": "${workspaceFolder}"
+            "webRoot": "${workspaceFolder}/dataserver/public/"
         },
+
         {
             "type": "chrome",
             "request": "launch",
@@ -19,7 +20,7 @@
             "trace":true,
             "name": "Haeseok Launch Chrome against localhost",
             "url": "http://10.10.9.150:3000/CameraEdit.html",
-            "webRoot": "${workspaceFolder}",
+            "webRoot": "${workspaceFolder}/dataserver/public/",
         }
     ]
 } 
