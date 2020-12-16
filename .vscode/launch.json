@@ -19,8 +19,8 @@
             "sourceMaps":true,
             "trace":true,
             "name": "Haeseok Launch Chrome against localhost",
-            "url": "http://10.10.9.150:3000/dataserver/public/CameraEdit.html",
-            "webRoot": "${workspaceFolder}",
+            "url": "http://10.10.9.150:3000/CameraEdit.html",
+            "webRoot": "${workspaceFolder}/dataserver/public/",
         }
     ]
 } 
