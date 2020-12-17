@@ -301,6 +301,15 @@
 
         function onDeleteData() {
             DeleteMapOnDB();
+            // 콤보박스 맵선택으로 바꾸고 그리드 리프래시
+            UpdateMapNames();
+            $('#mapcombobox option').val("맵선택");
+            selectedDBdata = {
+                id: undefined,
+                name: "",
+                cameralist: []
+            };
+            gridOptions.api.setRowData(selectedDBdata.cameralist); // 데이터 초기화
         }
 
         function onSaveData() {
@@ -316,6 +325,10 @@
             } else { // 아니면 id로 저장
                 UpdateMapOnDB();
             }
+
+            UpdateMapNames();
+            $('#mapcombobox option').val(selectedDBdata.name);
+            gridOptions.api.setRowData(selectedDBdata.cameralist);
         }
 
         function onSaveNewData() {
