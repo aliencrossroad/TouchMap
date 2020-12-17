@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <link href="css/video-js.css" rel="stylesheet"/>
+    <link href="css/video-js.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
     <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-alpine.css">
     <link href="css/cameraedit.css" rel="stylesheet" />
@@ -46,6 +46,8 @@
             sortable: true,
             editable: true,
             filter: true,
+            headerCheckboxSelection: true,
+            headerCheckboxSelectionFilteredOnly: true,
             checkboxSelection: true
         }, {
             headerName: "이름",
@@ -123,13 +125,13 @@
 
                     selectedDBdata = GetSelectedMapFromDB(this.value);
 
-                    $(openAPIData).find('coordx').each(function(i, e){
+                    $(openAPIData).find('coordx').each(function(i, e) {
                         var coordx = $(this).text();
                         var coordy = $(this).parent().find('coordy').text();
                         var cctvurl = $(this).parent().find('cctvurl').text();
 
                         $.each(selectedDBdata.cameralist, function(n, item) {
-                            if( (coordy == item.lan ) && (coordx == item.lon )){
+                            if ((coordy == item.lan) && (coordx == item.lon)) {
                                 item.url = cctvurl;
                             }
                         });
@@ -162,7 +164,7 @@
                 player.play();
             };
 
-            
+
             $("#videosource").css("width", 0);
             $("#videosource").css("height", 0);
             $('#videosource')
@@ -178,7 +180,7 @@
                         $("#videosource")[0].player.pause();
                     })
                 });
-            
+
             // 도로공사 최신 스트림 URL목록 요청
             $.ajax({
                 url: openAPIUrl,
@@ -264,7 +266,7 @@
 
         function onPlayCellRendererFunc(params) {
             var url = params.data.url;
-            if( url == "" ){
+            if (url == "") {
                 return '';
             }
             return '<button onClick=onPlayClicked("' + url + '")>재생</button>';
@@ -322,7 +324,7 @@
         }
 
         function onShowMap() {
-            var name = $("#mapcombobox option:selected").val(); 
+            var name = $("#mapcombobox option:selected").val();
             var win = window.open("/index.html?mapname=" + name);
         }
 
@@ -459,7 +461,7 @@
     </script>
 </head>
 
-<body>    
+<body>
     <header>
         <div class="buttons">
             <div class="leftbuttons">
@@ -493,4 +495,5 @@
         </div>
     </aside>
 </body>
+
 </html>
