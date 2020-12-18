@@ -10,6 +10,18 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: grid;
+    src: local("나눔바른고딕"), url('/font/NanumBarunGothic.ttf');
+}
+
+@font-face {
+    font-family: grid;
+    src: local("helvetica, sans-serif");
+    unicode-range: U+0020-007E;
+    font-style: normal;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -36,6 +48,14 @@ main {
     z-index: 0;
 }
 
+.ag-theme-alpine .ag-header-cell-label {
+    font: normal normal 20px grid;
+}
+
+.ag-theme-alpine .ag-cell {
+    font: normal normal 18px grid;
+}
+
 .leftbuttons {
     float: left;
 }
@@ -50,7 +70,8 @@ main {
     padding-bottom: 3px;
     padding-left: 9px;
     padding-right: 9px;
-    font: normal normal 18px label;
+    /* font: normal normal 18px label; */
+    font: normal normal 18px grid;
 }
 
 .previewbutton {
@@ -59,7 +80,8 @@ main {
     padding-bottom: 3px;
     padding-left: 23px;
     padding-right: 23px;
-    font: normal normal 18px label;
+    /* font: normal normal 18px label; */
+    font: normal normal 18px grid;
 }
 
 #mapcombobox {
