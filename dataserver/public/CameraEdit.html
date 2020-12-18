@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
     <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-alpine.css">
     <link href="css/cameraedit.css" rel="stylesheet" />
-    <link href="css/loading.css" rel="stylesheet" />
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +16,6 @@
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
     <script type="text/javascript" src="js/video.js"></script>
-    <script type="text/javascript" src="js/jquery.loading.js"></script>
     <script type="text/javascript" charset="utf-8">
         var mapInfo;
         var agrid;
@@ -83,6 +81,7 @@
             type: Boolean
         }, {
             headerName: "영상 미리보기",
+            field: "url",
             cellRenderer: onPlayCellRendererFunc
         }];
 
@@ -260,7 +259,7 @@
                 width: videoresolution.width,
                 height: videoresolution.height,
                 left: 0,
-                top: 0
+                top: document.documentElement.scrollTop,
             }, 'slow');
         }
 
@@ -269,7 +268,7 @@
             if (url == "") {
                 return '';
             }
-            return '<button onClick=onPlayClicked("' + url + '")>재생</button>';
+            return '<button class="previewbutton" onClick=onPlayClicked("' + url + '")>재생</button>';
         }
 
         function onAddCamera() {

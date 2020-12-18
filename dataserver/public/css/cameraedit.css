@@ -56,6 +56,15 @@ main {
     font: normal normal 18px label;
 }
 
+.previewbutton {
+    display: inline-block;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    padding-left: 23px;
+    padding-right: 23px;
+    font: normal normal 18px label;
+}
+
 #mapcombobox {
     margin-left: 20px;
 }
