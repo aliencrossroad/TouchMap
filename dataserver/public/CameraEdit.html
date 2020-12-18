@@ -303,7 +303,7 @@
             DeleteMapOnDB();
             // 콤보박스 맵선택으로 바꾸고 그리드 리프래시
             UpdateMapNames();
-            $('#mapcombobox option').val("맵선택");
+            $("#mapcombobox").val("맵선택").attr("selected", "selected");
             selectedDBdata = {
                 id: undefined,
                 name: "",
@@ -325,15 +325,14 @@
             } else { // 아니면 id로 저장
                 UpdateMapOnDB();
             }
-
-            UpdateMapNames();
-            $('#mapcombobox option').val(selectedDBdata.name);
-            gridOptions.api.setRowData(selectedDBdata.cameralist);
         }
 
         function onSaveNewData() {
             // 새맵 저장            
             SaveNewMapOnDB();
+            UpdateMapNames();
+            $("#mapcombobox").val(selectedDBdata.name).attr("selected", "selected");
+            gridOptions.api.setRowData(selectedDBdata.cameralist);
         }
 
         function onShowMap() {
@@ -487,10 +486,8 @@
                 <button id="deleteData" class="topitem" onclick="onDeleteData()">맵 삭제</button>
                 <button id="saveData" class="topitem" onclick="onSaveData()">맵 저장</button>
 
-                <form id="newfilenameform">
-                    <input type="text" id="newname" class="topitem cursor rq-form-element" placeholder="새 맵 이름">
-                    <button id="saveNewData" class="topitem" onclick="onSaveNewData()">새 맵으로 저장</button>
-                </form>
+                <input type="text" id="newname" class="topitem cursor rq-form-element" placeholder="새 맵 이름">
+                <button id="saveNewData" class="topitem" onclick="onSaveNewData()">새 맵으로 저장</button>
                 <button id="showmap" class="topitem" onclick="onShowMap()">지도 확인</button>
             </div>
             <div class="rightbuttons">

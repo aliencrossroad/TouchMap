@@ -64,12 +64,6 @@ main {
     margin-left: 10px;
 }
 
-#newfilenameform {
-    display: inline-block;
-    font: normal normal 18px label;
-    margin-left: 20px;
-}
-
 .cursor {
     position: relative;
 }
