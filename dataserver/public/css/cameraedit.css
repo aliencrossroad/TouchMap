@@ -70,8 +70,8 @@ main {
     padding-bottom: 3px;
     padding-left: 9px;
     padding-right: 9px;
-    /* font: normal normal 18px label; */
-    font: normal normal 18px grid;
+    font: normal semi-condensed 18px label;
+    /* font: bold normal 18px grid; */
 }
 
 .previewbutton {
@@ -80,12 +80,17 @@ main {
     padding-bottom: 3px;
     padding-left: 23px;
     padding-right: 23px;
-    /* font: normal normal 18px label; */
-    font: normal normal 18px grid;
+    font: normal ultra-expanded 18px label;
+    /* font: bold normal 18px grid; */
 }
 
 #mapcombobox {
     margin-left: 20px;
+    font: normal normal 18px grid;
+}
+
+#newname {
+    font: normal normal 18px grid;
 }
 
 #deleteData {

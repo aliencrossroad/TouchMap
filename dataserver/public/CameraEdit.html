@@ -268,7 +268,7 @@
             if (url == "") {
                 return '';
             }
-            return '<button class="previewbutton" onClick=onPlayClicked("' + url + '")>재생</button>';
+            return '<button class="previewbutton" onClick=onPlayClicked("' + url + '")>Play</button>';
         }
 
         function onAddCamera() {
@@ -327,7 +327,7 @@
         }
 
         function onSaveNewData() {
-            // 새맵 저장            
+            // 새맵 저장                        
             SaveNewMapOnDB();
             UpdateMapNames();
             $("#mapcombobox").val(selectedDBdata.name).attr("selected", "selected");
