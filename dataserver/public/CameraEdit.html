@@ -368,9 +368,21 @@
 
         // 새 맵 데이터 저장
         function SaveNewMapOnDB() {
-            selectedDBdata = {
-                name: $('#newname').val(),
-                cameralist: selectedDBdata.cameralist
+            // 선택된 항목 없으면 전체 저장
+            var selectedRows = gridOptions.api.getSelectedNodes();
+            if (!selectedRows || selectedRows.length === 0) {
+                selectedDBdata = {
+                    name: $('#newname').val(),
+                    cameralist: selectedDBdata.cameralist
+                }
+            } else { // 선택된 항목 있으면 선택항목으로 새 맵 만들어 저장
+                selectedDBdata = {
+                    name: $('#newname').val(),
+                    cameralist: []
+                }
+                selectedRows.forEach(function(selectedRow) {
+                    selectedDBdata.cameralist.push(selectedRow.data);
+                });
             }
 
             $.ajax({
