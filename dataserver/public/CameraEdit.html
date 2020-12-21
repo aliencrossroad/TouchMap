@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
 
 <head>
     <link href="css/video-js.css" rel="stylesheet" />
@@ -489,24 +489,20 @@
 <body>
     <header>
         <div class="buttons">
-            <div class="leftbuttons">
-                <button id="addItem" class="topitem" onclick="onAddCamera()">Add Camera</button>
-                <button id="deleteItem" class="topitem" onclick="onDeleteCamera()">Delete Camera</button>
+            <button id="addItem" class="topitem" onclick="onAddCamera()">Add Camera</button>
+            <button id="deleteItem" class="topitem" onclick="onDeleteCamera()">Delete Camera</button>
 
-                <select name="maplist" id="mapcombobox" class="topitem">
+            <select name="maplist" id="mapcombobox" class="topitem">
                     <option value="">맵선택</option>
                 </select>
-                <button id="deleteData" class="topitem" onclick="onDeleteData()">맵 삭제</button>
-                <button id="saveData" class="topitem" onclick="onSaveData()">맵 저장</button>
+            <button id="deleteData" class="topitem" onclick="onDeleteData()">맵 삭제</button>
+            <button id="saveData" class="topitem" onclick="onSaveData()">맵 저장</button>
 
-                <input type="text" id="newname" class="topitem cursor rq-form-element" placeholder="새 맵 이름">
-                <button id="saveNewData" class="topitem" onclick="onSaveNewData()">새 맵으로 저장</button>
-                <button id="showmap" class="topitem" onclick="onShowMap()">지도 확인</button>
-            </div>
-            <div class="rightbuttons">
-                <button id="showOnairData" class="topitem" onclick="onShowOnairData()">방송맵 확인</button>
-                <button id="saveOnairData" class="topitem" onclick="onSaveOnairData()">방송맵 저장</button>
-            </div>
+            <input type="text" id="newname" class="topitem cursor rq-form-element" placeholder="새 맵 이름">
+            <button id="saveNewData" class="topitem" onclick="onSaveNewData()">새 맵으로 저장</button>
+            <button id="showmap" class="topitem" onclick="onShowMap()">지도 확인</button>
+            <button id="showOnairData" class="topitem" onclick="onShowOnairData()">방송맵 확인</button>
+            <button id="saveOnairData" class="topitem" onclick="onSaveOnairData()">방송맵 저장</button>
         </div>
     </header>
     <main>

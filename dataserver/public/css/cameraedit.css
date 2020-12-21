@@ -31,11 +31,12 @@ body {
 }
 
 header {
-    position: fixed;
+    position: sticky;
+    top: 0;
     padding-top: 15px;
-    padding-left: 0.2rem;
-    padding-right: 0.2rem;
-    padding-bottom: 0.2rem;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    padding-bottom: 5px;
     width: 100%;
     background-color: white;
     z-index: 10;
@@ -43,8 +44,7 @@ header {
 
 main {
     position: relative;
-    padding: 0.2rem;
-    padding-top: 55px;
+    padding: 0.3rem;
     z-index: 0;
 }
 
@@ -54,14 +54,6 @@ main {
 
 .ag-theme-alpine .ag-cell {
     font: normal normal 18px grid;
-}
-
-.leftbuttons {
-    float: left;
-}
-
-.rightbuttons {
-    float: right;
 }
 
 .topitem {
@@ -95,6 +87,10 @@ main {
 
 #deleteData {
     margin-left: 10px;
+}
+
+#showmap {
+    margin-left: 25px;
 }
 
 .cursor {
