@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+    <link href="css/admin.css" rel="stylesheet" />
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> YTN 지도 터치 Administration </title>
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d30b430fc168d024cbfef307b239c005&libraries=services"></script>
+    <script type="text/javascript" charset="utf-8">
+        var geocoder = new kakao.maps.services.Geocoder();
+        var openAPIUrl = "http://openapi.its.go.kr:8081/api/NCCTVInfo?key=1605772996947&ReqType=2&MinX=127.100000&MaxX=128.890000&MinY=34.100000 &MaxY=39.100000&type=ex&cctvtype=1"
+            // var openAPIData;
+
+        var newDBdata = {
+            name: "",
+            cameralist: []
+        };
+
+        var sidoDic = {};
+        SidoFilter();
+
+        $(document).ready(function() {
+            UpdateMapNames();
+        })
+
+
+        function GetRoadCCTVJson() {
+            // 일단 도로공사 CCTV 가져와서
+            $.ajax({
+                url: openAPIUrl,
+                dataType: "xml",
+                async: false,
+                success: function(xml) {
+                    let openAPIData = $(xml).find("data");
+                    MakeXmlToJson(openAPIData);
+                }
+            });
+
+
+        }
+
+        function MakeXmlToJson(xmlData) {
+            cameraArray = [];
+            $(xmlData).find("cctvname").each(function(i, e) {
+
+                let newRow = {
+                    name: "",
+                    url: "",
+                    lan: 0,
+                    lon: 0,
+                    visible: true,
+                    sidocode: 1,
+                    sidoname: ""
+                };
+
+                newRow.name = $(this).text();
+                newRow.url = $(this).parent().find("cctvurl").text();
+                newRow.lan = $(this).parent().find("coordy").text();
+                newRow.lon = $(this).parent().find("coordx").text();
+                var coord = new kakao.maps.LatLng(newRow.lan, newRow.lon);
+
+                var callback = function(result, status) {
+                    if (status === kakao.maps.services.Status.OK) {
+                        newRow.sidoname = result[0].address.region_1depth_name;
+                        newRow.sidoname = sidoDic[newRow.sidoname];
+                        newDBdata.cameralist.push(newRow);
+
+                        $(CCTVResult).val(JSON.stringify(newDBdata.cameralist));
+                    }
+                };
+
+                geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+            });
+        }
+
+        function onImportToMap() {
+            // 새맵 이름이 있거나 선택된 맵이 없으면 새맵으로 임포트
+            if (($('#newname').val() !== '') ||
+                ($("#mapcombobox option:selected").val() === "맵선택")) {
+                newDBdata.name = $('#newname').val();
+                SaveNewMapOnDB();
+            } else {
+                // 선택된 맵이 있으면 해당맵으로 임포트
+                newDBdata.name = $("#mapcombobox option:selected").val();
+                SaveMapOnDB();
+            }
+
+
+        }
+
+        function SaveNewMapOnDB() {
+            $.ajax({
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                url: "/cameralist",
+                data: JSON.stringify(newDBdata),
+                dataType: 'json',
+                async: false,
+                success: function() {
+                    $('#newname').val('');
+                    UpdateMapNames();
+                }
+            });
+        }
+
+        function SaveMapOnDB() {
+            // 해당 맵데이터 가져오기
+            var selectedmapdata;
+            $.ajax({
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                url: "/cameralist?filter={\"where\": {\"name\": \"" + newDBdata.name + "\"}}",
+                dataType: 'json',
+                async: false,
+                success: function(data) {
+                    selectedmapdata = data[0];
+
+                    newDBdata.cameralist.forEach(element => {
+                        selectedmapdata.cameralist.push(element);
+                    });
+                    UpdateMapOnDB(selectedmapdata);
+                }
+            });
+
+        }
+
+        // 맵데이터 업데이트
+        function UpdateMapOnDB(mapdata) {
+            if (mapdata.id === undefined) {
+                return;
+            }
+
+            $.ajax({
+                type: "PATCH",
+                contentType: "application/json;charset=utf-8",
+                url: "/cameralist/" + mapdata.id,
+                data: JSON.stringify(mapdata),
+                dataType: 'json'
+            });
+        }
+
+        function UpdateMapNames() {
+            let maplist = GetAllMapNamesFromDB();
+
+            var select = document.getElementById("mapcombobox");
+            $('#mapcombobox option').remove();
+            var option = document.createElement('option');
+            option.value = option.text = "맵선택";
+            select.appendChild(option);
+
+            maplist.forEach(element => {
+                option = document.createElement('option');
+                option.value = option.text = element.name;
+                select.appendChild(option);
+            });
+        }
+
+        function GetAllMapNamesFromDB() {
+            var mapnames = [];
+            $.ajax({
+                type: "GET",
+                url: "/cameralist?filter={\"fields\":{\"name\":true}}",
+                dataType: 'json',
+                async: false,
+                success: function(maps) {
+                    mapnames = maps;
+                }
+            });
+            return mapnames;
+        }
+
+        function SidoFilter() {
+            sidoDic["서울"] = "서울특별시";
+            sidoDic["경기"] = "경기도";
+            sidoDic["강원"] = "강원도";
+            sidoDic["경남"] = "경상남도";
+            sidoDic["경북"] = "경상북도";
+            sidoDic["광주"] = "광주광역시";
+            sidoDic["대구"] = "대구광역시";
+            sidoDic["대전"] = "대전광역시";
+            sidoDic["부산"] = "부산광역시";
+            sidoDic["울산"] = "울산광역시";
+            sidoDic["인천"] = "인천광역시";
+            sidoDic["전남"] = "전라남도";
+            sidoDic["전북"] = "전라북도";
+            sidoDic["제주"] = "제주특별자치도";
+            sidoDic["충남"] = "충청남도";
+            sidoDic["충북"] = "충청북도";
+            sidoDic["세종"] = "세종특별자치시";
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+    </header>
+
+    <main>
+        <div class="area1">
+            <button id="GetRoadCCTVJson" class="topitem" onclick="GetRoadCCTVJson()">도로공사 Json 가져오기</button>
+            <textarea class="textarea is-code will-clear" id="CCTVResult" name="data" data-gramm_editor="false" spellcheck="false" autofocus placeholder="" rows="5"></textarea>
+            <div class="newmap">
+                <select name="maplist" id="mapcombobox" class="topitem">
+                    <option value="">맵선택</option>
+                </select>
+
+                <button id="importtoMap" class="topitem" onclick="onImportToMap()">임포트</button>
+
+                <input type="text" id="newname" class="topitem cursor rq-form-element" placeholder="새 맵 이름">
+            </div>
+        </div>
+
+    </main>
+    <footer>
+    </footer>
+
+</body>
+
+</html>

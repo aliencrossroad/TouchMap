@@ -1,0 +1,63 @@
+@font-face {
+    font-family: label;
+    src: local("나눔스퀘어 ExtraBold"), url('/font/NanumSquareEB.ttf');
+}
+
+@font-face {
+    font-family: label;
+    src: local("helvetica, sans-serif");
+    unicode-range: U+0020-007E;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: grid;
+    src: local("나눔바른고딕"), url('/font/NanumBarunGothic.ttf');
+}
+
+@font-face {
+    font-family: grid;
+    src: local("helvetica, sans-serif");
+    unicode-range: U+0020-007E;
+    font-style: normal;
+}
+
+header,
+footer {
+    height: 1px;
+    background-color: black;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.area1 {
+    min-width: 200px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 10px;
+}
+
+.topitem {
+    padding-top: 5px;
+    padding-bottom: 3px;
+    padding-left: 9px;
+    padding-right: 9px;
+    font: normal semi-condensed 18px label;
+}
+
+#CCTVResult {
+    margin-top: 10px;
+    min-width: 400px;
+    min-height: 300px;
+}
+
+.newmap {
+    flex-direction: row;
+    padding-top: 10px;
+}
