@@ -82,6 +82,7 @@ main {
 }
 
 #newname {
+    margin-left: 20px;
     font: normal normal 18px grid;
 }
 

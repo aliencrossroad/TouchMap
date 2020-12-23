@@ -321,17 +321,43 @@
                 } else { // 이름 있으면 새이름으로 저장
                     SaveNewMapOnDB();
                 }
-            } else { // 아니면 id로 저장
+            } else { // 아니면 id로 저장                
                 UpdateMapOnDB();
             }
         }
 
         function onSaveNewData() {
-            // 새맵 저장                        
-            SaveNewMapOnDB();
+            var nowmap = $("#mapcombobox option:selected").val();
+            var newmap = $('#newname').val();
+            var existedData;
+
+            // 새맵이름이 없는 이름이면 새맵으로 저장
+            var options = [];
+            $('#mapcombobox option').each(function() {
+                options.push($(this).val());
+            });
+
+            if (options.includes(newmap) === true) {
+                // 있는 이름이면 카메라리스트만 추가해줌
+                existedData = GetSelectedMapFromDB(newmap);
+                var selectedRows = gridOptions.api.getSelectedNodes();
+                if (!selectedRows || selectedRows.length === 0) {
+                    return;
+                }
+
+                selectedRows.forEach(function(selectedRow) {
+                    existedData.cameralist.push(selectedRow.data);
+                });
+
+                UpdateMapOnDB(existedData);
+            } else {
+                // 없는 이름이면 새맵으로 추가
+                SaveNewMapOnDB();
+            }
+
             UpdateMapNames();
-            $("#mapcombobox").val(selectedDBdata.name).attr("selected", "selected");
-            gridOptions.api.setRowData(selectedDBdata.cameralist);
+            $("#mapcombobox").val(nowmap).attr("selected", "selected");
+            gridOptions.api.deselectAll();
         }
 
         function onShowMap() {
@@ -393,7 +419,7 @@
                 dataType: 'json'
             });
 
-            $('#newname').val(undefined);
+            //$('#newname').val(undefined);
         }
 
         // 맵데이터 업데이트
@@ -407,6 +433,21 @@
                 contentType: "application/json;charset=utf-8",
                 url: "/cameralist/" + selectedDBdata.id,
                 data: JSON.stringify(selectedDBdata),
+                dataType: 'json'
+            });
+        }
+
+        // 맵데이터 업데이트
+        function UpdateMapOnDB(mapdata) {
+            if (mapdata.id === undefined) {
+                return;
+            }
+
+            $.ajax({
+                type: "PATCH",
+                contentType: "application/json;charset=utf-8",
+                url: "/cameralist/" + mapdata.id,
+                data: JSON.stringify(mapdata),
                 dataType: 'json'
             });
         }
