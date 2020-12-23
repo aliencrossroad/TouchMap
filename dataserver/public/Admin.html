@@ -72,6 +72,7 @@
                         newRow.sidoname = sidoDic[newRow.sidoname];
                         newDBdata.cameralist.push(newRow);
                     }
+
                     // 마지막에 결과 뿌리기
                     xmlDataCount--;
                     if (xmlDataCount === 0) {
@@ -86,7 +87,7 @@
 
         function onImportToMap() {
             // 그리드에 있는 카메라 데이터로 변환해서 넣기
-            newDBdata.cameralist = JSON.parse((CCTVResult).val());
+            newDBdata.cameralist = JSON.parse($(CCTVResult).val());
 
             if (Array.isArray(newDBdata.cameralist))
                 $('#area1result').text("데이터수: " + newDBdata.cameralist.length);

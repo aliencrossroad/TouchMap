@@ -18,7 +18,7 @@ export class Cameralist extends Entity {
   @property({
     type: 'array',
     itemType: 'object',
-    required: true,
+    required: false,
   })
   cameralist: object[];
 
