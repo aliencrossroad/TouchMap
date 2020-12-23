@@ -82,7 +82,13 @@
                 };
 
                 geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+                sleepFor(20);
             });
+        }
+
+        function sleepFor( sleepDuration ){
+            var now = new Date().getTime();
+            while(new Date().getTime() < now + sleepDuration){ } 
         }
 
         function onImportToMap() {
