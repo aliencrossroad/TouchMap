@@ -69,6 +69,8 @@
                         newDBdata.cameralist.push(newRow);
 
                         $(CCTVResult).val(JSON.stringify(newDBdata.cameralist));
+                    } else {
+                        newRow.sidoname = '';     
                     }
                 };
 
