@@ -28,6 +28,11 @@
 
 
         function GetRoadCCTVJson() {
+            $('#area1result').text("");
+            // 객체 초기화
+            newDBdata.name = "";
+            newDBdata.cameralist = [];
+
             // 일단 도로공사 CCTV 가져와서
             $.ajax({
                 url: openAPIUrl,
@@ -38,12 +43,11 @@
                     MakeXmlToJson(openAPIData);
                 }
             });
-
-
         }
 
         function MakeXmlToJson(xmlData) {
-            cameraArray = [];
+            var xmlDataCount = $(xmlData).find("cctvname").length;
+            var totalStr = "전체CCTV수: " + xmlDataCount;
             $(xmlData).find("cctvname").each(function(i, e) {
 
                 let newRow = {
@@ -67,10 +71,13 @@
                         newRow.sidoname = result[0].address.region_1depth_name;
                         newRow.sidoname = sidoDic[newRow.sidoname];
                         newDBdata.cameralist.push(newRow);
+                    }
 
+                    // 마지막에 결과 뿌리기
+                    xmlDataCount--;
+                    if (xmlDataCount === 0) {
                         $(CCTVResult).val(JSON.stringify(newDBdata.cameralist));
-                    } else {
-                        newRow.sidoname = '';     
+                        $('#area1result').text(totalStr + ", 데이터수: " + newDBdata.cameralist.length);
                     }
                 };
 
@@ -79,6 +86,11 @@
         }
 
         function onImportToMap() {
+            // 그리드에 있는 카메라 데이터로 변환해서 넣기
+            newDBdata.cameralist = JSON.parse($(CCTVResult).val());
+
+            if (Array.isArray(newDBdata.cameralist))
+                $('#area1result').text("데이터수: " + newDBdata.cameralist.length);
             // 새맵 이름이 있거나 선택된 맵이 없으면 새맵으로 임포트
             if (($('#newname').val() !== '') ||
                 ($("#mapcombobox option:selected").val() === "맵선택")) {
@@ -89,8 +101,6 @@
                 newDBdata.name = $("#mapcombobox option:selected").val();
                 SaveMapOnDB();
             }
-
-
         }
 
         function SaveNewMapOnDB() {
@@ -104,6 +114,7 @@
                 success: function() {
                     $('#newname').val('');
                     UpdateMapNames();
+                    $('#area1result').text("데이터수: " + newDBdata.cameralist.length + ", 저장완료!");
                 }
             });
         }
@@ -124,6 +135,7 @@
                         selectedmapdata.cameralist.push(element);
                     });
                     UpdateMapOnDB(selectedmapdata);
+                    $('#area1result').text("데이터수: " + newDBdata.cameralist.length + ", 전체 데이터수: " + selectedmapdata.cameralist.length + ", 저장완료!");
                 }
             });
 
@@ -192,6 +204,34 @@
             sidoDic["충남"] = "충청남도";
             sidoDic["충북"] = "충청북도";
             sidoDic["세종"] = "세종특별자치시";
+
+            sidoDic["서울시"] = "서울특별시";
+            sidoDic["광주시"] = "광주광역시";
+            sidoDic["대구시"] = "대구광역시";
+            sidoDic["대전시"] = "대전광역시";
+            sidoDic["부산시"] = "부산광역시";
+            sidoDic["울산시"] = "울산광역시";
+            sidoDic["인천시"] = "인천광역시";
+            sidoDic["제주도"] = "제주특별자치도";
+            sidoDic["세종시"] = "세종특별자치시";
+
+            sidoDic["서울특별시"] = "서울특별시";
+            sidoDic["경기도"] = "경기도";
+            sidoDic["강원도"] = "강원도";
+            sidoDic["경상남도"] = "경상남도";
+            sidoDic["경상북도"] = "경상북도";
+            sidoDic["광주광역시"] = "광주광역시";
+            sidoDic["대구광역시"] = "대구광역시";
+            sidoDic["대전광역시"] = "대전광역시";
+            sidoDic["부산광역시"] = "부산광역시";
+            sidoDic["울산광역시"] = "울산광역시";
+            sidoDic["인천광역시"] = "인천광역시";
+            sidoDic["전라남도"] = "전라남도";
+            sidoDic["전라북도"] = "전라북도";
+            sidoDic["제주특별자치도"] = "제주특별자치도";
+            sidoDic["충청남도"] = "충청남도";
+            sidoDic["충청북도"] = "충청북도";
+            sidoDic["세종특별자치시"] = "세종특별자치시";
         }
     </script>
 </head>
@@ -212,6 +252,7 @@
                 <button id="importtoMap" class="topitem" onclick="onImportToMap()">임포트</button>
 
                 <input type="text" id="newname" class="topitem cursor rq-form-element" placeholder="새 맵 이름">
+                <p id="area1result"></p>
             </div>
         </div>
 
