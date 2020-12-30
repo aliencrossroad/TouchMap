@@ -40,11 +40,22 @@
         var onairname = "방송용";
         var openAPIUrl = "http://openapi.its.go.kr:8081/api/NCCTVInfo?key=1605772996947&ReqType=2&MinX=127.100000&MaxX=128.890000&MinY=34.100000 &MaxY=39.100000&type=ex&cctvtype=1"
         var openAPIData;
+        var cameraData;
+        var viewType = 0; //0 : 기본, 1 : 카메라 확인 
 
         $(document).ready(function() {
-                var mapname = new URLSearchParams(location.search).get("mapname");    
-                if( null != mapname ){
+                var mapname = new URLSearchParams(location.search).get("mapname");
+                cameraData = new URLSearchParams(location.search).get("cameradata");    
+                if( null != mapname && '' != mapname){
                     onairname = mapname;
+                }
+                else if ( null != cameraData && '' != cameraData)
+                {
+                    selectedDBdata = new Object();
+                    selectedDBdata.cameralist = new Array();
+                    selectedDBdata.cameralist[0] = JSON.parse(cameraData);
+                    selectedDBdata.cameralist[0].visible = true;
+                    viewType = 1;
                 }
 
                 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -209,9 +220,6 @@
                     return Math.round(d);
                 }
 
-                // REST로 온에어 카메라 정보 가져오기
-                selectedDBdata = GetSelectedMapFromDB(onairname);
-
                 //행정구역 및 카메라 정보
                 $.ajax({
                     url: "resources/json/MapInfo.json",
@@ -222,26 +230,33 @@
                     }
                 });
 
-                // 도로공사 최신 스트림 URL로 변경
-                $.ajax({
+                
+                if( viewType == 0 ) {
+                    // REST로 온에어 카메라 정보 가져오기
+                    selectedDBdata = GetSelectedMapFromDB(onairname);
+
+                    // 도로공사 최신 스트림 URL로 변경
+                    $.ajax({
                     url: openAPIUrl,
                     dataType: 'xml',
                     async: false,
                     success: function(xml) {
-                        openAPIData = $(xml).find("data");
-                        $(openAPIData).find('coordx').each(function(i, e){
-                            var coordx = $(this).text();
-                            var coordy = $(this).parent().find('coordy').text();
-                            var cctvurl = $(this).parent().find('cctvurl').text();
+                            openAPIData = $(xml).find("data");
+                            $(openAPIData).find('coordx').each(function(i, e){
+                                var coordx = $(this).text();
+                                var coordy = $(this).parent().find('coordy').text();
+                                var cctvurl = $(this).parent().find('cctvurl').text();
 
-                            $.each(selectedDBdata.cameralist, function(n, item) {
-                                if( (coordy == item.lan ) && (coordx == item.lon )){
-                                    item.url = cctvurl;
-                                }
+                                $.each(selectedDBdata.cameralist, function(n, item) {
+                                    if( (coordy == item.lan ) && (coordx == item.lon )){
+                                        item.url = cctvurl;
+                                    }
+                                });
                             });
-                        });
-                    }
-                });
+                        }
+                    });
+                }
+                
 
                 //행정구역 구분
                 $.getJSON("resources/json/CTPRVN.json", function(geojson) {
@@ -403,7 +418,12 @@
 
                         kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker));
 
-                        marker.setVisible(false);
+                        if( viewType == 0 ){
+                            marker.setVisible(false);
+                        }else{
+                            marker.setVisible(true);
+                        }
+                        
                         markers[element.sidoname].push(marker);
 
                         // ----------------------------------- 커스텀 오버레이                            
@@ -496,6 +516,10 @@
                 }
 
                 function visibleMarker(sidoName) {
+                    if( viewType == 1 ){
+                        return;
+                    }
+
                     for (var sido in markers) {
                         var bVisible = (sido == sidoName);
                         var cameraList = markers[sido];

@@ -83,6 +83,10 @@
             headerName: "영상 미리보기",
             field: "url",
             cellRenderer: onPlayCellRendererFunc
+        }, {
+            headerName: "카메라 위치",
+            field: "lan",
+            cellRenderer: onCameraLocatCellRendererFunc
         }];
 
         columnDefs[0].cellEditor = 'agSelectCellEditor';
@@ -263,12 +267,25 @@
             }, 'slow');
         }
 
+        function onCameraLocatClicked(data) {
+            var win = window.open("/index.html?cameradata=" + data);
+        }
+
         function onPlayCellRendererFunc(params) {
             var url = params.data.url;
             if (url == "") {
                 return '';
             }
             return '<button class="previewbutton" onClick=onPlayClicked("' + url + '")>Play</button>';
+        }
+
+        function onCameraLocatCellRendererFunc(params) {
+            var lan = params.data.lan;
+            if (lan == "") {
+                return '';
+            }
+            var enc = encodeURI(JSON.stringify(params.data));
+            return '<button class="previewbutton" onClick=onCameraLocatClicked("' + enc + '")>지도</button>';
         }
 
         function onAddCamera() {
