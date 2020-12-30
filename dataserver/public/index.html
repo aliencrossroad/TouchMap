@@ -237,20 +237,21 @@
 
                     // 도로공사 최신 스트림 URL로 변경
                     $.ajax({
-                    url: openAPIUrl,
-                    dataType: 'xml',
-                    async: false,
-                    success: function(xml) {
-                        openAPIData = $(xml).find("data");
-                        $(openAPIData).find('coordx').each(function(i, e) {
-                            var coordx = $(this).text();
-                            var coordy = $(this).parent().find('coordy').text();
-                            var cctvurl = $(this).parent().find('cctvurl').text();
+                        url: openAPIUrl,
+                        dataType: 'xml',
+                        async: false,
+                        success: function(xml) {
+                            openAPIData = $(xml).find("data");
+                            $(openAPIData).find('coordx').each(function(i, e) {
+                                var coordx = $(this).text();
+                                var coordy = $(this).parent().find('coordy').text();
+                                var cctvurl = $(this).parent().find('cctvurl').text();
 
-                            $.each(selectedDBdata.cameralist, function(n, item) {
-                                if ((coordy == item.lan) && (coordx == item.lon)) {
-                                    item.url = cctvurl;
-                                }
+                                $.each(selectedDBdata.cameralist, function(n, item) {
+                                    if ((coordy == item.lan) && (coordx == item.lon)) {
+                                        item.url = cctvurl;
+                                    }
+                                }); 
                             });
                         }
                     });
@@ -436,7 +437,12 @@
                             zIndex: 2
                         });
 
-                        customOverlay.setVisible(false);
+                        if( viewType == 0 ){
+                            customOverlay.setVisible(false);
+                        }else{
+                            customOverlay.setVisible(true);
+                        }
+
                         customOverlay.setMap(map);
                         labels[element.sidoname].push(customOverlay);
                         // ------------------------------------ 
