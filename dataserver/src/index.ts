@@ -31,6 +31,9 @@ if (require.main === module) {
         setServersFromRequest: true,
       },
     },
+    // REQUEST_BODY_PARSER_OPTIONS: {
+    //   limit: '100mb',
+    // },
   };
   main(config).catch(err => {
     console.error('Cannot start the application.', err);

@@ -185,17 +185,17 @@
                         $("#videosource")[0].player.pause();
                     })
                 });
-/*
-            // 도로공사 최신 스트림 URL목록 요청
-            $.ajax({
-                url: openAPIUrlex,
-                dataType: 'xml',
-                async: false,
-                success: function(xml) {
-                    openAPIData = $(xml).find("data");
-                }
-            });
-*/
+            /*
+                        // 도로공사 최신 스트림 URL목록 요청
+                        $.ajax({
+                            url: openAPIUrlex,
+                            dataType: 'xml',
+                            async: false,
+                            success: function(xml) {
+                                openAPIData = $(xml).find("data");
+                            }
+                        });
+            */
         })
 
         function UpdateMapNames() {
@@ -342,7 +342,7 @@
                     SaveNewMapOnDB();
                 }
             } else { // 아니면 id로 저장                
-                UpdateMapOnDB();
+                UpdateMapOnDB(selectedDBdata);
             }
         }
 

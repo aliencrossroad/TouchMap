@@ -5,7 +5,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
+import {RestApplication, RestBindings} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
@@ -26,8 +26,12 @@ export class DataserverApplication extends BootMixin(
 
     // Customize @loopback/rest-explorer configuration here
     this.configure(RestExplorerBindings.COMPONENT).to({
+      
+    })
+
+    this.configure(RestExplorerBindings.COMPONENT).to({
       path: '/explorer',
-    });
+    });    
     this.component(RestExplorerComponent);
 
     this.projectRoot = __dirname;
