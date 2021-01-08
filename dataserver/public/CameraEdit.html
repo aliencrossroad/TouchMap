@@ -37,6 +37,7 @@
         var openAPIUrl = "http://openapi.its.go.kr:8081/api/NCCTVInfo?key=1605772996947&ReqType=2&MinX=127.100000&MaxX=128.890000&MinY=34.100000 &MaxY=39.100000&cctvtype=1"
         var openAPIUrlits = "http://openapi.its.go.kr:8081/api/NCCTVInfo?key=1605761877784&ReqType=2&MinX=126.0&MaxX=129.5&MinY=34.3&MaxY=38.5&type=its&cctvtype=1";
         var openAPIUrlex = "http://openapi.its.go.kr:8081/api/NCCTVInfo?key=1605761877784&ReqType=2&MinX=126.0&MaxX=129.5&MinY=34.3&MaxY=38.5&type=ex&cctvtype=1"
+        var localApiUrl = "http://" + window.location.host + "/data/cameraurl.json"
         var openAPIData;
 
         // 칼럼정의
@@ -142,6 +143,15 @@
                         });
                     });
                     */
+                
+                    $.each(openAPIData,function(i, e) {
+                        $.each(selectedDBdata.cameralist, function(n, item) {
+                            if ((e.lan == item.lan) && (e.lon == item.lon)) {
+                                item.url = e.url;
+                            }
+                        });
+                    })
+
                     agrid.gridOptions.api.setRowData(selectedDBdata.cameralist);
                 });
 
@@ -185,17 +195,18 @@
                         $("#videosource")[0].player.pause();
                     })
                 });
-            /*
-                        // 도로공사 최신 스트림 URL목록 요청
-                        $.ajax({
-                            url: openAPIUrlex,
-                            dataType: 'xml',
-                            async: false,
-                            success: function(xml) {
-                                openAPIData = $(xml).find("data");
-                            }
-                        });
-            */
+            
+            // 도로공사 최신 스트림 URL목록 요청
+            $.ajax({
+                url: localApiUrl,
+                dataType: 'json',
+                async: false,
+                success: function(xml) {
+                    //openAPIData = $(xml).find("data");
+                    openAPIData = xml;
+                }
+            });
+            
         })
 
         function UpdateMapNames() {
