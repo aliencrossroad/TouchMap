@@ -39,6 +39,7 @@
         var selectedDBdata;
         var onairname = "방송용";
         var openAPIUrl = "http://openapi.its.go.kr:8081/api/NCCTVInfo?key=1605772996947&ReqType=2&MinX=127.100000&MaxX=128.890000&MinY=34.100000 &MaxY=39.100000&cctvtype=1"
+        var localApiUrl = "http://" + window.location.host + "/data/cameraurl.json"
         var openAPIData;
         var cameraData;
         var viewType = 0; //0 : 기본, 1 : 카메라 확인 
@@ -256,6 +257,21 @@
                         }
                     });
                     */
+                    $.ajax({
+                        url: localApiUrl,
+                        dataType: 'json',
+                        async: false,
+                        success: function(xml) {
+                            openAPIData = xml;
+                            $.each(openAPIData,function(i, e) {
+                                $.each(selectedDBdata.cameralist, function(n, item) {
+                                    if ((e.lan == item.lan) && (e.lon == item.lon)) {
+                                        item.url = e.url;
+                                    }
+                                });
+                            })
+                        }
+                    });
                 }
                 
 
