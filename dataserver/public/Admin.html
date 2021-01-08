@@ -108,6 +108,7 @@
 
             if (Array.isArray(newDBdata.cameralist))
                 $('#area1result').text("데이터수: " + newDBdata.cameralist.length);
+
             // 새맵 이름이 있거나 선택된 맵이 없으면 새맵으로 임포트
             if (($('#newname').val() !== '') ||
                 ($("#mapcombobox option:selected").val() === "맵선택")) {
