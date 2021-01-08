@@ -262,7 +262,7 @@
             <button id="GetRoadCCTVJson" class="topitem" onclick="GetRoadCCTVJson()">도로공사 Json 가져오기</button>
             <textarea class="textarea is-code will-clear" id="CCTVResult" name="data" data-gramm_editor="false" spellcheck="false" autofocus placeholder="" rows="5"></textarea>
             <div class="newmap">
-                <select name="maplist" id="mapcombobox" class="topitem">
+                <select name="maplist" id="mapcombobox" class="topitem" onfocus="UpdateMapNames()">
                     <option value="">맵선택</option>
                 </select>
 
