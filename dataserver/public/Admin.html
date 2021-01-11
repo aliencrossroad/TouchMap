@@ -22,8 +22,37 @@
         var sidoDic = {};
         SidoFilter();
 
+        var IsSelectOpen = false;
+
         $(document).ready(function() {
             UpdateMapNames();
+
+            $("#mapcombobox").on({
+                "click": function() {
+                    // 드롭다운이 안열려있을때 클릭하면 리스트 다시 가져옴
+                    if (IsSelectOpen === true) {
+                        console.log("IsSelectOpen:" + IsSelectOpen);
+                        UpdateMapNames();
+                        select.setAttribute("size", $('#mapcombobox option').length);
+                    }
+                },
+
+                "change": function() {
+                    $(this).blur();
+                },
+
+                "focus": function() {
+                    IsSelectOpen = true;
+                },
+                "blur": function() {
+                    IsSelectOpen = false;
+                },
+                "keyup": function(e) {
+                    if (e.keyCode == 27) {
+                        IsSelectOpen = true;
+                    }
+                }
+            });
         })
 
 
@@ -263,7 +292,7 @@
             <button id="GetRoadCCTVJson" class="topitem" onclick="GetRoadCCTVJson()">도로공사 Json 가져오기</button>
             <textarea class="textarea is-code will-clear" id="CCTVResult" name="data" data-gramm_editor="false" spellcheck="false" autofocus placeholder="" rows="5"></textarea>
             <div class="newmap">
-                <select name="maplist" id="mapcombobox" class="topitem" onfocus="UpdateMapNames()">
+                <select name="maplist" id="mapcombobox" class="topitem">
                     <option value="">맵선택</option>
                 </select>
 

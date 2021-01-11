@@ -108,6 +108,8 @@
             domLayout: 'autoHeight',
         };
 
+        var IsSelectOpen = false;
+
         $(document).ready(function() {
             var eGridDiv = document.querySelector('#myGrid');
             agrid = new agGrid.Grid(eGridDiv, gridOptions);
@@ -116,8 +118,10 @@
             gridOptions.api.setRowData(selectedDBdata.cameralist); // 데이터 초기화
 
             // 맵데이터를 선택하면 해당 데이터를 가져와서 그리드에 뿌려줌
-            $('#mapcombobox')
-                .on('change', function(e) {
+            $("#mapcombobox").on({
+                "change": function() {
+                    $(this).blur();
+
                     // 선택 메뉴가 맵선택이면 새리스트
                     if (this.value === "맵선택") {
                         selectedDBdata = {
@@ -143,8 +147,8 @@
                         });
                     });
                     */
-                
-                    $.each(openAPIData,function(i, e) {
+
+                    $.each(openAPIData, function(i, e) {
                         $.each(selectedDBdata.cameralist, function(n, item) {
                             if ((e.lan == item.lan) && (e.lon == item.lon)) {
                                 item.url = e.url;
@@ -153,7 +157,28 @@
                     })
 
                     agrid.gridOptions.api.setRowData(selectedDBdata.cameralist);
-                });
+                },
+
+                "click": function() {
+                    // 드롭다운이 안열려있을때 클릭하면 리스트 다시 가져옴
+                    if (IsSelectOpen === true) {
+                        UpdateMapNames();
+                        select.setAttribute("size", $('#mapcombobox option').length);
+                    }
+                },
+
+                "focus": function() {
+                    IsSelectOpen = true;
+                },
+                "blur": function() {
+                    IsSelectOpen = false;
+                },
+                "keyup": function(e) {
+                    if (e.keyCode == 27) {
+                        IsSelectOpen = true;
+                    }
+                }
+            });
 
             var player = videojs('videosource', {
                 "controls": false,
@@ -195,7 +220,7 @@
                         $("#videosource")[0].player.pause();
                     })
                 });
-            
+
             // 도로공사 최신 스트림 URL목록 요청
             $.ajax({
                 url: localApiUrl,
@@ -206,7 +231,7 @@
                     openAPIData = xml;
                 }
             });
-            
+
         })
 
         function UpdateMapNames() {
@@ -564,7 +589,7 @@
             <button id="addItem" class="topitem" onclick="onAddCamera()">Add Camera</button>
             <button id="deleteItem" class="topitem" onclick="onDeleteCamera()">Delete Camera</button>
 
-            <select name="maplist" id="mapcombobox" class="topitem" onfocus="UpdateMapNames()">
+            <select name="maplist" id="mapcombobox" class="topitem">
                     <option value="">맵선택</option>
                 </select>
             <button id="deleteData" class="topitem" onclick="onDeleteData()">맵 삭제</button>
