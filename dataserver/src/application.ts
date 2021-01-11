@@ -27,6 +27,7 @@ export class DataserverApplication extends BootMixin(
     this.configure(RestExplorerBindings.COMPONENT).to({
       path: '/explorer',
     });    
+    
     this.component(RestExplorerComponent);
 
     this.projectRoot = __dirname;
