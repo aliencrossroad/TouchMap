@@ -46,12 +46,10 @@
 
         $(document).ready(function() {
                 var mapname = new URLSearchParams(location.search).get("mapname");
-                cameraData = new URLSearchParams(location.search).get("cameradata");    
-                if( null != mapname && '' != mapname){
+                cameraData = new URLSearchParams(location.search).get("cameradata");
+                if (null != mapname && '' != mapname) {
                     onairname = mapname;
-                }
-                else if ( null != cameraData && '' != cameraData)
-                {
+                } else if (null != cameraData && '' != cameraData) {
                     selectedDBdata = new Object();
                     selectedDBdata.cameralist = new Array();
                     selectedDBdata.cameralist[0] = JSON.parse(cameraData);
@@ -231,8 +229,8 @@
                     }
                 });
 
-                
-                if( viewType == 0 ) {
+
+                if (viewType == 0) {
                     // REST로 온에어 카메라 정보 가져오기
                     selectedDBdata = GetSelectedMapFromDB(onairname);
                     /*
@@ -258,12 +256,13 @@
                     });
                     */
                     $.ajax({
-                        url: localApiUrl,
+                        //url: localApiUrl,
+                        url: "data/cameraurl.json",
                         dataType: 'json',
                         async: false,
                         success: function(xml) {
                             openAPIData = xml;
-                            $.each(openAPIData,function(i, e) {
+                            $.each(openAPIData, function(i, e) {
                                 $.each(selectedDBdata.cameralist, function(n, item) {
                                     if ((e.lan == item.lan) && (e.lon == item.lon)) {
                                         item.url = e.url;
@@ -273,7 +272,7 @@
                         }
                     });
                 }
-                
+
 
                 //행정구역 구분
                 $.getJSON("resources/json/CTPRVN.json", function(geojson) {
@@ -435,12 +434,12 @@
 
                         kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker));
 
-                        if( viewType == 0 ){
+                        if (viewType == 0) {
                             marker.setVisible(false);
-                        }else{
+                        } else {
                             marker.setVisible(true);
                         }
-                        
+
                         markers[element.sidoname].push(marker);
 
                         // ----------------------------------- 커스텀 오버레이                            
@@ -454,9 +453,9 @@
                             zIndex: 2
                         });
 
-                        if( viewType == 0 ){
+                        if (viewType == 0) {
                             customOverlay.setVisible(false);
-                        }else{
+                        } else {
                             customOverlay.setVisible(true);
                         }
 
@@ -538,7 +537,7 @@
                 }
 
                 function visibleMarker(sidoName) {
-                    if( viewType == 1 ){
+                    if (viewType == 1) {
                         return;
                     }
 

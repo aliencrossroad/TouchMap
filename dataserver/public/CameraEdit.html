@@ -222,7 +222,8 @@
 
             // 도로공사 최신 스트림 URL목록 요청
             $.ajax({
-                url: localApiUrl,
+                //url: localApiUrl,
+                url: "data/cameraurl.json",
                 dataType: 'json',
                 async: false,
                 success: function(xml) {
