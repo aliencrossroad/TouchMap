@@ -187,11 +187,20 @@
                     'nativeAudioTracks': false
                 }
             }, function onPlayerReady(e) {
-                this.src({
-                    type: "application/x-mpegURL",
-                    src: ""
-                });
+                // this.src({
+                //     type: "application/x-mpegURL",
+                //     src: ""
+                // });
                 this.tech_.off('dblclick');
+            });
+
+            player.on("play", function() {
+                $('#videosource').animate({
+                    width: videoresolution.width,
+                    height: videoresolution.height,
+                    left: 0,
+                    top: document.documentElement.scrollTop,
+                }, 'slow');
             });
 
             xhttp = new XMLHttpRequest();
@@ -287,7 +296,9 @@
         }
 
         function onPlayClicked(url) {
-            xhttp.open('GET', url, false);
+            //xhttp.open('GET', url, false);
+            xhttp.open('GET', url, true);
+            xhttp.timeout = 5000;
             xhttp.send();
 
             var e = window.event;
@@ -297,12 +308,12 @@
             $("#videosource").css("left", posX);
             $("#videosource").css("top", posY);
             $("#videosource").css("display", "initial");
-            $('#videosource').animate({
-                width: videoresolution.width,
-                height: videoresolution.height,
-                left: 0,
-                top: document.documentElement.scrollTop,
-            }, 'slow');
+            // $('#videosource').animate({
+            //     width: videoresolution.width,
+            //     height: videoresolution.height,
+            //     left: 0,
+            //     top: document.documentElement.scrollTop,
+            // }, 'slow');
         }
 
         function onCameraLocatClicked(data) {
