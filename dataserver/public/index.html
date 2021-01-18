@@ -76,11 +76,20 @@
                         'nativeAudioTracks': false
                     }
                 }, function onPlayerReady(e) {
-                    this.src({
-                        type: "application/x-mpegURL",
-                        src: ""
-                    });
+                    // this.src({
+                    //     type: "application/x-mpegURL",
+                    //     src: ""
+                    // });
                     this.tech_.off('dblclick');
+                });
+
+                player.on("play", function() {
+                    $('#videosource').animate({
+                        width: videoresolution.width,
+                        height: videoresolution.height,
+                        left: 0,
+                        top: 0
+                    }, 'slow');
                 });
 
                 var xhttp = new XMLHttpRequest();
@@ -193,8 +202,24 @@
                 }
 
                 function PrepareVideo(image_url) {
-                    xhttp.open('GET', image_url, false);
+                    //xhttp.open('GET', image_url, false);
+                    xhttp.open('GET', image_url, true);
+                    xhttp.timeout = 5000;
                     xhttp.send();
+
+                    var e = window.event;
+                    posX = e.clientX;
+                    posY = e.clientY;
+
+                    $("#videosource").css("left", posX);
+                    $("#videosource").css("top", posY);
+                    $("#videosource").css("display", "initial");
+                    // $('#videosource').animate({
+                    //     width: videoresolution.width,
+                    //     height: videoresolution.height,
+                    //     left: 0,
+                    //     top: 0
+                    // }, 'slow');
                 }
 
                 function getDistance(mapoint1, mapoint2) {
@@ -518,20 +543,7 @@
 
                 function makeOverListener(map, marker) {
                     return function() {
-                        var e = window.event;
-                        posX = e.clientX;
-                        posY = e.clientY;
                         PrepareVideo(marker.camera.url);
-
-                        $("#videosource").css("left", posX);
-                        $("#videosource").css("top", posY);
-                        $("#videosource").css("display", "initial");
-                        $('#videosource').animate({
-                            width: videoresolution.width,
-                            height: videoresolution.height,
-                            left: 0,
-                            top: 0
-                        }, 'slow');
                     };
                 }
 
