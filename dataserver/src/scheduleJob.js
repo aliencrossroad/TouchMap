@@ -143,6 +143,8 @@ function ScheduleStart(){
       newRow.lan = data[i].coordy;
       newRow.lon = data[i].coordx;
 
+      dataList.push(newRow);
+      /*
       let kakaoapi = `${kakaoAPI_coord2regioncode}?x=${newRow.lon}&y=${newRow.lan}`;
       status = await axios.get(kakaoapi, {headers: { "Authorization": "KakaoAK " + kakaoAPI_REST_KEY }})
                         .then(async (response) => {
@@ -161,16 +163,18 @@ function ScheduleStart(){
         //카카오 API 쿼터 소진 후 사용 제한 상태
         return;
       }
+      */
     }
   
     try {
       //파일로 저장한다.
+      logger.info(`CCTV Total : ${dataList.length}`);  
       dataList = JSON.stringify(dataList);
       fs.writeFileSync(openAPIFilePath, dataList);
     } catch(error) {
       logger.error(`CCTV Scheduling writeFileSync ${error.message}`);
     }
-    logger.info("End CCTV Scheduling");
+    logger.info(`End CCTV Scheduling`);
   })
 };
 
