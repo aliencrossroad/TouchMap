@@ -5,7 +5,7 @@ const config = {
   name: 'cameralist',
   connector: 'memory',
   localStorage: 'cameralist',
-  file: 'public/data/cameralist.json'
+  file: './public/data/cameralist.json'
 };
 
 // Observe application's life cycle to disconnect the datasource when
