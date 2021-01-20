@@ -1,5 +1,8 @@
+import './dotenv';
 import {ApplicationConfig, DataserverApplication} from './application';
 import { RestBindings } from '@loopback/rest'; // import added (obviously)
+import ScheduleStart from './scheduleJob';
+import { logger } from './wloggger';
 
 export * from './application';
 
@@ -15,9 +18,11 @@ export async function main(options: ApplicationConfig = {}) {
   //   text: {limit: '10MB'},
   // }); // line added
   const url = app.restServer.url;
-  console.log(`Server is running at ${url}`);
-  console.log(`Try ${url}/ping`);
-
+  //console.log(`Server is running at ${url}`);
+  //console.log(`Try ${url}/ping`);
+  logger.info(`Server is running at ${url}`);
+  logger.info(`Try ${url}/ping`);
+  
   return app;
 }
 
@@ -39,6 +44,9 @@ if (require.main === module) {
       },
     },
   };
+
+  ScheduleStart();
+
   main(config).catch(err => {
     console.error('Cannot start the application.', err);
     process.exit(1);
