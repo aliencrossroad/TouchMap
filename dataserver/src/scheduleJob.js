@@ -83,7 +83,10 @@ function ScheduleStart(){
     for(let i=1;i<=openAPIRetryCount;i++) {
       status = await axios.get(openAPIUrlits, axiosTimeout)
                 .then(async (response) => {
-                    data1 = response.data;
+                    data1 = convert.parse(response.data).response.data;
+                    if( data1.length == undefined || data1.length == 0 ) {
+                      return "Total : 0";
+                    }
                     return response.status;
                 })
                 .catch((error) => {
@@ -104,7 +107,10 @@ function ScheduleStart(){
     for(let i=1;i<=openAPIRetryCount;i++) {
       status = await axios.get(openAPIUrlex, axiosTimeout)
                         .then(async (response) => {
-                            data2 = response.data;
+                            data2 = convert.parse(response.data).response.data;
+                            if( data2.length == undefined || data2.length == 0 ) {
+                              return "Total : 0";
+                            }
                             return response.status;
                         })
                         .catch((error) => {
@@ -122,9 +128,9 @@ function ScheduleStart(){
     }
     
     // 고속도로와 국도 데이터를 합친다.
-    data1 = convert.parse(data1);
-    data2 = convert.parse(data2);
-    data = merge(data1,data2).response.data;
+    //data1 = convert.parse(data1);
+    //data2 = convert.parse(data2);
+    data = merge(data1,data2);
 
     //카카오 로컬 REST api로 CCTV좌표를 주소로 변환한 데이터를 가져와 업데이트한다.
     for(let i in data) {
