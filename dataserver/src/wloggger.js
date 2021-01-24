@@ -31,7 +31,7 @@ const logger = winston.createLogger({
         filename: `%DATE%.log`,
         maxsize: 10000000, //최대 10M까지 
         maxFiles: 5,  // 5개 로그 파일 저장
-        zippedArchive: true,
+        zippedArchive: false,
         json: false
       }),
       // error 레벨 로그를 저장할 파일 설정
@@ -42,7 +42,7 @@ const logger = winston.createLogger({
         filename: `%DATE%.error.log`,
         maxsize: 10000000, //최대 10M까지
         maxFiles: 5, // 5개 로그 파일 저장
-        zippedArchive: true,
+        zippedArchive: false,
         json: false
       }),
     ],
